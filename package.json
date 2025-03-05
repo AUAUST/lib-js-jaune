@@ -1,0 +1,53 @@
+{
+  "name": "@auaust/jaune",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "version": "0.36.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "A Color class that helps you work with colors!",
+  "packageManager": "pnpm@9.15.0",
+  "author": {
+    "name": "Aurian Aubert",
+    "email": "aurian@auaust.ch",
+    "url": "https://auaust.ch"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "pnpm test && pnpm run build:clean && pnpm run build:js",
+    "build:clean": "rimraf dist",
+    "build:js": "tsup",
+    "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm typecheck",
+    "watch": "vitest --config vitest.config.ts --typecheck --",
+    "coverage": "vitest run --coverage",
+    "typecheck": "echo 'Typechecking...' && tsc --noEmit && echo 'All good!'",
+    "ci:publish": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.10",
+    "@vitest/coverage-istanbul": "^2.1.8",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.3.5",
+    "type-testing": "^0.2.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "dependencies": {
+    "@auaust/primitive-kit": "^0.36.0",
+    "type-fest": "^4.37.0"
+  }
+}
