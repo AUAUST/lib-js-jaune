@@ -3,7 +3,7 @@ import { defineConfig } from "tsup";
 export default defineConfig({
   entry: {
     index: "src/index.ts",
-    // arrays: "src/arrays/methods.ts",
+    utils: "src/utils/index.ts",
   },
   format: ["esm", "cjs"],
   outDir: "dist",
