@@ -1,36 +1,57 @@
+import { N } from "@auaust/primitive-kit";
+import type { Writable } from "type-fest";
 import type { ColorChannels, ColorValue, MaybeNamedColor, Rgb } from "~/types";
 import { isNamedColor, parseHex, parseNamedColor, parseRgb } from "~/utils";
-import { fallbackColor, toAlphaChannel, toRgbChannel } from "~/utils/channels";
+import {
+  fallbackColor,
+  toAlphaChannel,
+  toColorChannels,
+  toRgbChannel,
+} from "~/utils/channels";
 import { isHex, toHex } from "~/utils/hex";
 import { isOpaque, isTranslucent, isTransparent } from "~/utils/opacity";
-import { isRgb, toRgb } from "~/utils/rgb";
+import { couldBeRgb, toRgb } from "~/utils/rgb";
 import { cache, channels } from "~/utils/symbols";
 
 export class Color {
-  protected [channels]: {
-    r: number;
-    g: number;
-    b: number;
-    a: number;
-  } = undefined!;
+  protected [channels]: Required<Writable<ColorChannels>> = undefined!;
   protected [cache]: Map<string, any> = new Map();
 
   constructor(value: ColorChannels) {
-    this[channels] = {
-      r: value.r,
-      g: value.g,
-      b: value.b,
-      a: value.a ?? 1,
-    };
-    this.updated();
+    this[channels] = { ...toColorChannels(value) };
   }
 
-  static from(value: ColorValue) {
-    if (value instanceof Color) return value.clone();
-    if (!value) return new this(fallbackColor);
-    if (isRgb(value)) return this.fromRgb(value);
-    if (isNamedColor(value)) return this.fromNamedColor(value);
-    if (isHex(value)) return this.fromHex(value);
+  static from(value: ColorValue): Color;
+  static from(red: number, green: number, blue: number, alpha?: number): Color;
+  static from(value: ColorValue | number, ...rest: number[]): Color {
+    if (!value) {
+      return new this(fallbackColor);
+    }
+
+    if (value instanceof Color) {
+      return value.clone();
+    }
+
+    if (N.is(value)) {
+      return new this({ r: value, g: rest[0], b: rest[1], a: rest[2] });
+    }
+
+    if (isNamedColor(value)) {
+      return this.fromNamedColor(value);
+    }
+
+    if (isHex(value)) {
+      return this.fromHex(value);
+    }
+
+    if (couldBeRgb(value)) {
+      const channels = parseRgb(value);
+
+      if (!channels.isFallback) {
+        return new this(channels);
+      }
+    }
+
     return new this(fallbackColor);
   }
 
@@ -52,6 +73,8 @@ export class Color {
 
   private updated() {
     this[cache].clear();
+    this[channels].isFallback = false; // once updated, it's no longer a fallback
+    this[channels].isTransformed = false;
     return this;
   }
 
@@ -113,6 +136,22 @@ export class Color {
   /** @see Color#alpha */
   get a() {
     return this[channels].a;
+  }
+
+  /**
+   * Whether the color is the fallback color, which is used when the input is invalid.
+   * As soon as a color channel is updated, this will always be `false`.
+   */
+  get isFallback() {
+    return this[channels].isFallback;
+  }
+
+  /**
+   * Whether any of the channels have been transformed by the color parser.
+   * As soon as a color channel is updated, this will always be `false`.
+   */
+  get isTransformed() {
+    return this[channels].isTransformed;
   }
 
   /** Helper to cache data until the channels are updated. */

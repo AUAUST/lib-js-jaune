@@ -21,6 +21,14 @@ export function isRgb(value: unknown): value is Rgb {
 }
 
 /**
+ * Whether the input could be a valid RGB color.
+ * As in, it checks if the input is an array of numbers without validating the values range.
+ */
+export function couldBeRgb(value: unknown): value is Rgb {
+  return A.is(value) && N.isBetween(value.length, 3, 4) && value.every(N.is);
+}
+
+/**
  * Parses a RGB tuple into an object of color channels.
  *
  * The input must already be a valid RGB tuple, otherwise the result will be unexpected.

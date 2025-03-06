@@ -27,7 +27,7 @@ export function isColorChannels(value: unknown): value is ColorChannels {
   );
 }
 
-export function toColorChannels(value: ColorChannels): ColorChannels;
+export function toColorChannels(value: ColorChannels): Required<ColorChannels>;
 export function toColorChannels(
   r: number,
   g: number,
@@ -35,7 +35,7 @@ export function toColorChannels(
   a?: number | null,
   isTransformed?: boolean,
   isFallback?: boolean
-): ColorChannels;
+): Required<ColorChannels>;
 
 /**
  * Formats the input into a readonly object of color channels.
@@ -51,7 +51,7 @@ export function toColorChannels(
   a?: number | null,
   isTransformed?: boolean,
   isFallback?: boolean
-): ColorChannels {
+): Required<ColorChannels> {
   if (O.is(r, false)) {
     ({ r, g, b, a, isTransformed, isFallback } = r);
   }

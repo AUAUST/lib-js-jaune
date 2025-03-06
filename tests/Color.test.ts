@@ -40,6 +40,15 @@ describe("Color instances", () => {
         expect(c.a).toBe(1);
       }
 
+      spread: {
+        const c = Color.from(255, 0, 255, 0.5);
+
+        expect(c.r).toBe(255);
+        expect(c.g).toBe(0);
+        expect(c.b).toBe(255);
+        expect(c.a).toBe(0.5);
+      }
+
       hex: {
         const c = Color.from("#f0f");
 
@@ -114,5 +123,34 @@ describe("Color instances", () => {
     expect(transparent.isOpaque).toBe(false);
     expect(transparent.isTransparent).toBe(true);
     expect(transparent.isTranslucent).toBe(true);
+  });
+
+  test("keep track of fallback colors", () => {
+    {
+      const c = Color.from(null!);
+
+      expect(c.isFallback).toBe(true);
+
+      c.red = 255;
+
+      expect(c.isFallback).toBe(false);
+    }
+
+    {
+      const black = Color.from("black");
+
+      expect(black.isFallback).toBe(false);
+
+      const unknown = Color.from("unknown");
+
+      expect(unknown.isFallback).toBe(true);
+    }
+  });
+
+  test("keep track of transformations when parsing", () => {
+    const c = Color.from([-1, 0, 3400]);
+
+    expect(c.isTransformed).toBe(true);
+    expect(c.toRgb()).toEqual([0, 0, 255, 1]);
   });
 });
