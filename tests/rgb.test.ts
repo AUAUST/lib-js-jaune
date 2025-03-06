@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { ColorChannels, Rgb } from "~/types";
 
-import { isRgb, parseRgb } from "~/utils/rgb";
+import { isRgb, parseRgb, toRgb } from "~/utils/rgb";
 
 describe("RGB colors", () => {
   test("can be recognized", () => {
@@ -57,5 +57,20 @@ describe("RGB colors", () => {
       expect(components.isTransformed).toBe(expected.isTransformed ?? false);
       expect(components.isFallback).toBe(expected.isFallback ?? false);
     });
+  });
+
+  test("can be created", () => {
+    const rgb = [0, 10, 255, 0.25];
+
+    expect(toRgb(parseRgb(rgb))).toEqual(rgb);
+
+    expect(
+      toRgb({
+        r: -1,
+        g: 2,
+        b: 256,
+        a: undefined,
+      })
+    ).toEqual([0, 2, 255, 1]);
   });
 });

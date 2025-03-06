@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { isHex, parseHex } from "~/utils/hex";
+import { isHex, parseHex, toHex } from "~/utils/hex";
 
 describe("HEX colors", () => {
   test("can be recognized", () => {
@@ -57,5 +57,43 @@ describe("HEX colors", () => {
 
     expect(parseHex("zzzzzz").isFallback).toBe(true);
     expect(parseHex("abcdef").isFallback).toBe(false);
+  });
+
+  test("can be created", () => {
+    expect(toHex(parseHex("c85"))).toBe("#cc8855");
+
+    expect(
+      toHex({
+        r: 255,
+        g: 255,
+        b: 255,
+      })
+    ).toBe("#ffffff");
+
+    expect(
+      toHex({
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 0,
+      })
+    ).toBe("#00000000");
+
+    expect(
+      toHex({
+        r: 13,
+        g: 27,
+        b: 39,
+        a: 0.5,
+      })
+    ).toBe("#0d1b2780");
+
+    expect(
+      toHex({
+        r: -1,
+        g: 128,
+        b: 1000,
+      })
+    ).toBe("#0080ff");
   });
 });

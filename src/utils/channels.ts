@@ -1,12 +1,20 @@
 import { N, O } from "@auaust/primitive-kit";
-import { ColorChannels } from "~/types";
+import type { ColorChannels } from "~/types";
 
 export function isRgbChannel(value: unknown): value is number {
   return N.is(value) && N.isBetween(value, 0, 255);
 }
 
+export function toRgbChannel(value: number | undefined | null): number {
+  return N.clamp(value, 0, 255);
+}
+
 export function isAlphaChannel(value: unknown): value is number {
   return N.is(value) && N.isBetween(value, 0, 1);
+}
+
+export function toAlphaChannel(value: number | undefined | null): number {
+  return N.clamp(value ?? 1, 0, 1);
 }
 
 export function isColorChannels(value: unknown): value is ColorChannels {
@@ -19,8 +27,8 @@ export function isColorChannels(value: unknown): value is ColorChannels {
   );
 }
 
-export function toChannels(value: ColorChannels): ColorChannels;
-export function toChannels(
+export function toColorChannels(value: ColorChannels): ColorChannels;
+export function toColorChannels(
   r: number,
   g: number,
   b: number,
@@ -36,7 +44,7 @@ export function toChannels(
  * If the passed `isTransformed` isn't already `true`, it will set it to `true` if any of the values were clamped.
  * If some channels are missing, it will return the fallback color.
  */
-export function toChannels(
+export function toColorChannels(
   r: number | ColorChannels,
   g?: number,
   b?: number,
@@ -74,4 +82,4 @@ export function toChannels(
   });
 }
 
-export const fallbackColor = toChannels(0, 0, 0, 1, false, true);
+export const fallbackColor = toColorChannels(0, 0, 0, 1, false, true);
