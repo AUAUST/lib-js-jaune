@@ -1,4 +1,4 @@
-import type { namedColors } from "~/utils/namedColors";
+import type { namedColorsMap } from "~/utils/namedColors";
 /**
  * A HEX color string.
  *
@@ -19,7 +19,7 @@ export type Rgb = readonly [number, number, number, number?];
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  */
-export type NamedColor = keyof typeof namedColors;
+export type NamedColor = keyof typeof namedColorsMap;
 
 /**
  * An object of each color channel.

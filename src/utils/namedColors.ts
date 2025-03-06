@@ -1,9 +1,13 @@
+import { O, S } from "@auaust/primitive-kit";
+import type { ColorChannels, NamedColor } from "~/types";
+import { parseHex } from "./hex";
+
 /**
  * A map of named colors and their HEX values.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  */
-export const namedColors = Object.freeze({
+export const namedColorsMap = Object.freeze({
   aliceblue: "#f0f8ffff",
   antiquewhite: "#faebd7ff",
   aqua: "#00ffffff",
@@ -154,3 +158,40 @@ export const namedColors = Object.freeze({
   yellow: "#ffff00ff",
   yellowgreen: "#9acd32ff",
 });
+
+const namedColorsChannelsCache: Partial<Record<NamedColor, ColorChannels>> = {};
+
+export const namedColors = new Set(O.keys(namedColorsMap));
+
+/**
+ * Whether the input is a valid named color.
+ *
+ * The check is case-sensitive.
+ */
+export function isNamedColor(
+  value: unknown
+): value is keyof typeof namedColorsMap {
+  if (!S.is(value)) {
+    return false;
+  }
+
+  return namedColors.has(<NamedColor>value.toLowerCase());
+}
+
+/**
+ * Returns the color channels from a named color.
+ */
+export function parseNamedColor(name: NamedColor): ColorChannels | undefined {
+  let hex;
+
+  return (namedColorsChannelsCache[name] ??= (hex = namedColorToHex(name))
+    ? parseHex(hex)
+    : undefined);
+}
+
+/**
+ * Returns the corresponding HEX value of a named color.
+ */
+export function namedColorToHex(name: NamedColor): string | undefined {
+  return namedColorsMap[<NamedColor>name.toLowerCase()] || undefined;
+}
