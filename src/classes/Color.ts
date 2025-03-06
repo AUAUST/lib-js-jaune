@@ -110,44 +110,36 @@ export class Color {
     return this[channels].a;
   }
 
-  /** Checks if the color is fully opaque. */
-  get isOpaque() {
-    return isOpaque(this[channels]);
-  }
-
-  /** Checks if the color is fully transparent. */
-  get isTransparent() {
-    return isTransparent(this[channels]);
-  }
-
-  /** Checks if the color is at least partially transparent. */
-  get isTranslucent() {
-    return isTranslucent(this[channels]);
-  }
-
   /** Helper to cache data until the channels are updated. */
-  private cache<T>(key: string, getter: () => T): T {
+  private memoize<T>(key: string, getter: (channels: ColorChannels) => T): T {
     if (!this[cache].has(key)) {
-      this[cache].set(key, getter());
+      this[cache].set(key, getter(this[channels]));
     }
 
     return this[cache].get(key);
   }
 
-  /** Helper to cache serialized values until the channels are updated. */
-  private convert<T extends ColorValue>(
-    key: string,
-    converter: (channels: ColorChannels) => T
-  ): T {
-    return this.cache(`convert:${key}`, () => converter(this[channels]));
+  /** Checks if the color is fully opaque. */
+  get isOpaque() {
+    return this.memoize("opaque", isOpaque);
+  }
+
+  /** Checks if the color is fully transparent. */
+  get isTransparent() {
+    return this.memoize("transparent", isTransparent);
+  }
+
+  /** Checks if the color is at least partially transparent. */
+  get isTranslucent() {
+    return this.memoize("translucent", isTranslucent);
   }
 
   toHex() {
-    return this.convert("hex", toHex);
+    return this.memoize("hex", toHex);
   }
 
   toRgb() {
-    return this.convert("rgb", toRgb);
+    return this.memoize("rgb", toRgb);
   }
 
   toString() {
