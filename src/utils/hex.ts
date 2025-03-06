@@ -1,5 +1,5 @@
 import { S } from "@auaust/primitive-kit";
-import type { ColorComponents, Hex } from "~/types";
+import type { ColorChannels, Hex } from "~/types";
 
 const hexadecimalRegex = /^[0-9a-f]+$/i;
 
@@ -31,7 +31,7 @@ export function isHex(value: unknown): value is Hex {
  *
  * The input must already be a valid HEX color, otherwise the result will be unexpected.
  */
-export function parseHex(value: Hex): ColorComponents {
+export function parseHex(value: Hex): ColorChannels {
   value = value.startsWith("#") ? value.slice(1) : value;
 
   const isShort = value.length < 6;

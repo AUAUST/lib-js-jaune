@@ -1,4 +1,4 @@
-import type { namedColors } from "~/config/namedColors";
+import type { namedColors } from "~/utils/namedColors";
 /**
  * A HEX color string.
  *
@@ -12,7 +12,7 @@ export type Hex = `#${string}` | (string & {});
  * The first three elements are integers between 0 and 255 representing the red, green, and blue channels, respectively.
  * The fourth element is a number between 0 and 1 representing the alpha channel.
  */
-export type Rgb = [number, number, number, number?];
+export type Rgb = readonly [number, number, number, number?];
 
 /**
  * A CSS color name.
@@ -27,9 +27,14 @@ export type NamedColor = keyof typeof namedColors;
  * `r`, `g`, and `b` are integers between 0 and 255 representing the red, green, and blue channels, respectively.
  * `a` is a number between 0 and 1 representing the alpha channel.
  */
-export type ColorComponents = { r: number; g: number; b: number; a?: number };
+export type ColorChannels = {
+  readonly r: number;
+  readonly g: number;
+  readonly b: number;
+  readonly a?: number;
+};
 
 /**
- * Any color representation.
+ * Represents a color in various formats.
  */
-export type ColorValue = Hex | Rgb | NamedColor | ColorComponents;
+export type ColorValue = Hex | Rgb | NamedColor | ColorChannels;
