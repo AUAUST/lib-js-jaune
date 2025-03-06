@@ -26,6 +26,7 @@ export class Color {
   }
 
   static from(value: ColorValue) {
+    if (value instanceof Color) return value.clone();
     if (!value) return new this(fallbackColor);
     if (isRgb(value)) return this.fromRgb(value);
     if (isNamedColor(value)) return this.fromNamedColor(value);
@@ -43,6 +44,10 @@ export class Color {
 
   static fromNamedColor(name: MaybeNamedColor) {
     return new this(parseNamedColor(name));
+  }
+
+  clone() {
+    return new Color(this[channels]);
   }
 
   private updated() {
