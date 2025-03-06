@@ -1,8 +1,9 @@
+import { S } from "@auaust/primitive-kit";
 import type { ColorChannels, ColorValue, MaybeNamedColor, Rgb } from "~/types";
-import { parseHex, parseNamedColor, parseRgb } from "~/utils";
-import { toAlphaChannel, toRgbChannel } from "~/utils/channels";
-import { toHex } from "~/utils/hex";
-import { toRgb } from "~/utils/rgb";
+import { isNamedColor, parseHex, parseNamedColor, parseRgb } from "~/utils";
+import { fallbackColor, toAlphaChannel, toRgbChannel } from "~/utils/channels";
+import { isHex, toHex } from "~/utils/hex";
+import { isRgb, toRgb } from "~/utils/rgb";
 import {
   alpha,
   blue,
@@ -29,8 +30,26 @@ export class Color {
     this.refreshChannels();
   }
 
-  static from(channels: ColorChannels) {
-    return new this(channels);
+  static from(value: ColorValue) {
+    if (!value) {
+      return new this(fallbackColor);
+    }
+
+    if (isRgb(value)) {
+      return this.fromRgb(value);
+    }
+
+    if (S.is(value)) {
+      if (isNamedColor(value)) {
+        return this.fromNamedColor(value);
+      }
+
+      if (isHex(value)) {
+        return this.fromHex(value);
+      }
+    }
+
+    return new this(fallbackColor);
   }
 
   static fromRgb(rgb: Rgb) {

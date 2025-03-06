@@ -29,6 +29,44 @@ describe("Color instances", () => {
       expect(c.b).toBe(0);
       expect(c.a).toBe(1);
     });
+
+    test("from unknown source", () => {
+      named: {
+        const c = Color.from("magenta");
+
+        expect(c.r).toBe(255);
+        expect(c.g).toBe(0);
+        expect(c.b).toBe(255);
+        expect(c.a).toBe(1);
+      }
+
+      hex: {
+        const c = Color.from("#f0f");
+
+        expect(c.r).toBe(255);
+        expect(c.g).toBe(0);
+        expect(c.b).toBe(255);
+        expect(c.a).toBe(1);
+      }
+
+      rgb: {
+        const c = Color.from([255, 0, 255]);
+
+        expect(c.r).toBe(255);
+        expect(c.g).toBe(0);
+        expect(c.b).toBe(255);
+        expect(c.a).toBe(1);
+      }
+
+      fallback: {
+        const c = Color.from(null!);
+
+        expect(c.r).toBe(0);
+        expect(c.g).toBe(0);
+        expect(c.b).toBe(0);
+        expect(c.a).toBe(1);
+      }
+    });
   });
 
   test("can be updated", () => {
