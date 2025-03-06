@@ -4,30 +4,25 @@ import { fallbackColor, toAlphaChannel, toRgbChannel } from "~/utils/channels";
 import { isHex, toHex } from "~/utils/hex";
 import { isOpaque, isTranslucent, isTransparent } from "~/utils/opacity";
 import { isRgb, toRgb } from "~/utils/rgb";
-import {
-  alpha,
-  blue,
-  channels,
-  conversions,
-  green,
-  red,
-} from "~/utils/symbols";
+import { cache, channels } from "~/utils/symbols";
 
 export class Color {
-  protected [red]: number;
-  protected [green]: number;
-  protected [blue]: number;
-  protected [alpha]: number;
-  protected [channels]: ColorChannels = undefined!;
-  protected [conversions]: Record<string, ColorValue>;
+  protected [channels]: {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+  } = undefined!;
+  protected [cache]: Map<string, any> = new Map();
 
   constructor(value: ColorChannels) {
-    this[red] = value.r;
-    this[green] = value.g;
-    this[blue] = value.b;
-    this[alpha] = value.a ?? 1;
-    this[conversions] = {};
-    this.refreshChannels();
+    this[channels] = {
+      r: value.r,
+      g: value.g,
+      b: value.b,
+      a: value.a ?? 1,
+    };
+    this.updated();
   }
 
   static from(value: ColorValue) {
@@ -51,83 +46,68 @@ export class Color {
   }
 
   private updated() {
-    this.clearCache();
-    this.refreshChannels();
-
+    this[cache].clear();
     return this;
-  }
-
-  private clearCache() {
-    this[conversions] = {};
-  }
-
-  private refreshChannels() {
-    this[channels] = {
-      r: this[red],
-      g: this[green],
-      b: this[blue],
-      a: this[alpha],
-    };
   }
 
   /** The red channel of the color. */
   get red() {
-    return this[red];
+    return this[channels].r;
   }
 
   /** @see Color#red */
   get r() {
-    return this[red];
+    return this[channels].r;
   }
 
   set red(value: number) {
-    this[red] = toRgbChannel(value);
+    this[channels].r = toRgbChannel(value);
     this.updated();
   }
 
   /** The green channel of the color. */
   get green() {
-    return this[green];
+    return this[channels].g;
   }
 
   /** @see Color#green */
   get g() {
-    return this[green];
+    return this[channels].g;
   }
 
   set green(value: number) {
-    this[green] = toRgbChannel(value);
+    this[channels].g = toRgbChannel(value);
     this.updated();
   }
 
   /** The blue channel of the color. */
-  set blue(value: number) {
-    this[blue] = toRgbChannel(value);
-    this.updated();
+  get blue() {
+    return this[channels].b;
   }
 
   /** @see Color#blue */
   get b() {
-    return this[blue];
+    return this[channels].b;
   }
 
-  get blue() {
-    return this[blue];
+  set blue(value: number) {
+    this[channels].b = toRgbChannel(value);
+    this.updated();
   }
 
   /** The alpha channel of the color. */
   get alpha() {
-    return this[alpha];
+    return this[channels].a;
   }
 
   set alpha(value: number) {
-    this[alpha] = toAlphaChannel(value);
+    this[channels].a = toAlphaChannel(value);
     this.updated();
   }
 
   /** @see Color#alpha */
   get a() {
-    return this[alpha];
+    return this[channels].a;
   }
 
   /** Checks if the color is fully opaque. */
@@ -145,12 +125,21 @@ export class Color {
     return isTranslucent(this[channels]);
   }
 
+  /** Helper to cache data until the channels are updated. */
+  private cache<T>(key: string, getter: () => T): T {
+    if (!this[cache].has(key)) {
+      this[cache].set(key, getter());
+    }
+
+    return this[cache].get(key);
+  }
+
   /** Helper to cache serialized values until the channels are updated. */
   private convert<T extends ColorValue>(
-    name: string,
+    key: string,
     converter: (channels: ColorChannels) => T
   ): T {
-    return ((<T>this[conversions][name]) ??= converter(this[channels]));
+    return this.cache(`convert:${key}`, () => converter(this[channels]));
   }
 
   toHex() {
