@@ -170,17 +170,15 @@ const namedColorsChannelsCache: Partial<Record<NamedColor, ColorChannels>> = {};
  * The check is case-sensitive.
  */
 export function isNamedColor(value: unknown): value is NamedColor {
-  if (!S.is(value)) {
-    return false;
-  }
-
-  return namedColors.has(value.toLowerCase());
+  return S.is(value) && namedColors.has(<NamedColor>value.toLowerCase());
 }
 
 /**
  * Returns the color channels from a named color.
  */
-export function parseNamedColor(name: NamedColor): ColorChannels {
+export function parseNamedColor(
+  name: NamedColor | (string & {})
+): ColorChannels {
   if (!isNamedColor(name)) {
     return fallbackColor;
   }
@@ -191,7 +189,9 @@ export function parseNamedColor(name: NamedColor): ColorChannels {
 /**
  * Returns the corresponding HEX value of a named color.
  */
-export function namedColorToHex(name: NamedColor): string | undefined {
+export function namedColorToHex(name: NamedColor): string;
+export function namedColorToHex(name: string): string | undefined;
+export function namedColorToHex(name: string): string | undefined {
   return (
     namedColorsMap[<keyof typeof namedColorsMap>name.toLowerCase()] || undefined
   );
