@@ -1,5 +1,6 @@
 import { S } from "@auaust/primitive-kit";
 import type { ColorChannels, Hex } from "~/types";
+import { toChannels } from "./channels";
 
 const hexadecimalRegex = /^[0-9a-f]+$/i;
 
@@ -44,5 +45,5 @@ export function parseHex(value: Hex): ColorChannels {
     ? parseInt(isShort ? value[3].repeat(2) : value.slice(6, 8), 16) / 255
     : 1;
 
-  return { r, g, b, a };
+  return toChannels(r, g, b, a);
 }
