@@ -159,23 +159,21 @@ export const namedColorsMap = Object.freeze({
   yellowgreen: "#9acd32ff",
 });
 
-const namedColorsChannelsCache: Partial<Record<NamedColor, ColorChannels>> = {};
+const namedColors = new Set<NamedColor>(O.keys(namedColorsMap));
 
-export const namedColors = new Set(O.keys(namedColorsMap));
+const namedColorsChannelsCache: Partial<Record<NamedColor, ColorChannels>> = {};
 
 /**
  * Whether the input is a valid named color.
  *
  * The check is case-sensitive.
  */
-export function isNamedColor(
-  value: unknown
-): value is keyof typeof namedColorsMap {
+export function isNamedColor(value: unknown): value is NamedColor {
   if (!S.is(value)) {
     return false;
   }
 
-  return namedColors.has(<NamedColor>value.toLowerCase());
+  return namedColors.has(value.toLowerCase());
 }
 
 /**
@@ -193,5 +191,7 @@ export function parseNamedColor(name: NamedColor): ColorChannels | undefined {
  * Returns the corresponding HEX value of a named color.
  */
 export function namedColorToHex(name: NamedColor): string | undefined {
-  return namedColorsMap[<NamedColor>name.toLowerCase()] || undefined;
+  return (
+    namedColorsMap[<keyof typeof namedColorsMap>name.toLowerCase()] || undefined
+  );
 }

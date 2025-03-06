@@ -19,7 +19,7 @@ export type Rgb = readonly [number, number, number, number?];
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  */
-export type NamedColor = keyof typeof namedColorsMap;
+export type NamedColor = keyof typeof namedColorsMap | (string & {});
 
 /**
  * An object of each color channel.
