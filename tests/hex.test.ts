@@ -54,5 +54,8 @@ describe("HEX colors", () => {
       expect(components.b).toBe(expected.b);
       expect(components.a).toBeCloseTo(expected.a);
     });
+
+    expect(parseHex("zzzzzz").isFallback).toBe(true);
+    expect(parseHex("abcdef").isFallback).toBe(false);
   });
 });

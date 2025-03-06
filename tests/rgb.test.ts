@@ -43,7 +43,8 @@ describe("RGB colors", () => {
       [[2, 34, 11, 0.5], { r: 2, g: 34, b: 11, a: 0.5 }],
       [[255, 255, 255], { r: 255, g: 255, b: 255 }],
       [[185.54, 0, 0, 0.9999999], { r: 185.54, g: 0, b: 0, a: 0.9999999 }],
-      [[-1, 0, 3400], { r: 0, g: 0, b: 255, transformed: true }],
+      [[-1, 0, 3400], { r: 0, g: 0, b: 255, isTransformed: true }],
+      [null, { r: 0, g: 0, b: 0, isFallback: true }],
     ] as [Rgb, ColorChannels][];
 
     rgb.forEach(([input, expected]) => {
@@ -53,7 +54,8 @@ describe("RGB colors", () => {
       expect(components.g).toBe(expected.g);
       expect(components.b).toBe(expected.b);
       expect(components.a).toBeCloseTo(expected.a ?? 1);
-      expect(components.transformed).toBe(expected.transformed ?? false);
+      expect(components.isTransformed).toBe(expected.isTransformed ?? false);
+      expect(components.isFallback).toBe(expected.isFallback ?? false);
     });
   });
 });

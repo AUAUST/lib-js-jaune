@@ -52,12 +52,16 @@ export type ColorChannels = {
    * The alpha channel.
    */
   readonly a?: number;
+
   /**
    * Whether any of the channels have been transformed by the color parser.
-   *
-   * @internal
    */
-  readonly transformed?: boolean;
+  readonly isTransformed?: boolean;
+
+  /**
+   * Whether the color is the fallback color, which is used when the input is invalid.
+   */
+  readonly isFallback?: boolean;
 };
 
 /**

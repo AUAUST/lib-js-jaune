@@ -1,5 +1,6 @@
 import { O, S } from "@auaust/primitive-kit";
 import type { ColorChannels, NamedColor } from "~/types";
+import { fallbackColor } from "./channels";
 import { parseHex } from "./hex";
 
 /**
@@ -179,12 +180,12 @@ export function isNamedColor(value: unknown): value is NamedColor {
 /**
  * Returns the color channels from a named color.
  */
-export function parseNamedColor(name: NamedColor): ColorChannels | undefined {
-  let hex;
+export function parseNamedColor(name: NamedColor): ColorChannels {
+  if (!isNamedColor(name)) {
+    return fallbackColor;
+  }
 
-  return (namedColorsChannelsCache[name] ??= (hex = namedColorToHex(name))
-    ? parseHex(hex)
-    : undefined);
+  return (namedColorsChannelsCache[name] ??= parseHex(namedColorToHex(name)!));
 }
 
 /**

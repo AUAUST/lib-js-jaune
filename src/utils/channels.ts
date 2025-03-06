@@ -25,39 +25,53 @@ export function toChannels(
   g: number,
   b: number,
   a?: number | null,
-  transformed?: boolean
+  isTransformed?: boolean,
+  isFallback?: boolean
 ): ColorChannels;
 
 /**
  * Formats the input into a readonly object of color channels.
+ *
+ * It clamps the values to the valid range and sets the alpha channel to 1 if not provided.
+ * If the passed `isTransformed` isn't already `true`, it will set it to `true` if any of the values were clamped.
+ * If some channels are missing, it will return the fallback color.
  */
 export function toChannels(
   r: number | ColorChannels,
   g?: number,
   b?: number,
   a?: number | null,
-  transformed?: boolean
+  isTransformed?: boolean,
+  isFallback?: boolean
 ): ColorChannels {
   if (O.is(r, false)) {
-    ({ r, g, b, a, transformed } = r);
+    ({ r, g, b, a, isTransformed, isFallback } = r);
   }
 
   const finalR = N.clamp(r, 0, 255);
   const finalG = N.clamp(g, 0, 255);
   const finalB = N.clamp(b, 0, 255);
-  const finalA = N.clamp(a ?? 1, 0, 1);
+
+  if (isNaN(finalR) || isNaN(finalG) || isNaN(finalB)) {
+    return fallbackColor;
+  }
+
+  const finalA = N.is(a) ? N.clamp(a, 0, 1) : 1;
 
   return O.freeze({
     r: finalR,
     g: finalG,
     b: finalB,
     a: finalA,
-    transformed: !!(
-      transformed ||
+    isTransformed: !!(
+      isTransformed ||
       finalR !== r ||
       finalG !== g ||
       finalB !== b ||
       finalA !== (a ?? 1)
     ),
+    isFallback: !!isFallback,
   });
 }
+
+export const fallbackColor = toChannels(0, 0, 0, 1, false, true);

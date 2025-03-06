@@ -1,6 +1,11 @@
 import { A, N } from "@auaust/primitive-kit";
 import type { ColorChannels, Rgb } from "~/types";
-import { isAlphaChannel, isRgbChannel, toChannels } from "./channels";
+import {
+  fallbackColor,
+  isAlphaChannel,
+  isRgbChannel,
+  toChannels,
+} from "./channels";
 
 /**
  * Whether the input is a valid RGB color.
@@ -19,5 +24,5 @@ export function isRgb(value: unknown): value is Rgb {
  * The input must already be a valid RGB tuple, otherwise the result will be unexpected.
  */
 export function parseRgb(value: Rgb): ColorChannels {
-  return toChannels(...value);
+  return A.is(value) ? toChannels(...(<Rgb>value)) : fallbackColor;
 }
