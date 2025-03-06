@@ -60,9 +60,7 @@ describe("RGB colors", () => {
   });
 
   test("can be created", () => {
-    const rgb = [0, 10, 255, 0.25];
-
-    expect(toRgb(parseRgb(rgb))).toEqual(rgb);
+    expect(toRgb(parseRgb([0, 10, 255, 0.25]))).toEqual([0, 10, 255, 0.25]);
 
     expect(
       toRgb({
