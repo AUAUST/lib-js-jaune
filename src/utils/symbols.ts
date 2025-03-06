@@ -24,6 +24,6 @@ export const alpha = Symbol("alpha");
 export const channels = Symbol("channels");
 
 /**
- * Used to privately store the color representations cache.
+ * Used to privately store the color conversions of a color.
  */
-export const representations = Symbol("representations");
+export const conversions = Symbol("conversions");

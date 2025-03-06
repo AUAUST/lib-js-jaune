@@ -1,16 +1,16 @@
-import { S } from "@auaust/primitive-kit";
 import type { ColorChannels, ColorValue, MaybeNamedColor, Rgb } from "~/types";
 import { isNamedColor, parseHex, parseNamedColor, parseRgb } from "~/utils";
 import { fallbackColor, toAlphaChannel, toRgbChannel } from "~/utils/channels";
 import { isHex, toHex } from "~/utils/hex";
+import { isOpaque, isTranslucent, isTransparent } from "~/utils/opacity";
 import { isRgb, toRgb } from "~/utils/rgb";
 import {
   alpha,
   blue,
   channels,
+  conversions,
   green,
   red,
-  representations,
 } from "~/utils/symbols";
 
 export class Color {
@@ -19,36 +19,22 @@ export class Color {
   protected [blue]: number;
   protected [alpha]: number;
   protected [channels]: ColorChannels = undefined!;
-  protected [representations]: Record<string, ColorValue>;
+  protected [conversions]: Record<string, ColorValue>;
 
   constructor(value: ColorChannels) {
     this[red] = value.r;
     this[green] = value.g;
     this[blue] = value.b;
     this[alpha] = value.a ?? 1;
-    this[representations] = {};
+    this[conversions] = {};
     this.refreshChannels();
   }
 
   static from(value: ColorValue) {
-    if (!value) {
-      return new this(fallbackColor);
-    }
-
-    if (isRgb(value)) {
-      return this.fromRgb(value);
-    }
-
-    if (S.is(value)) {
-      if (isNamedColor(value)) {
-        return this.fromNamedColor(value);
-      }
-
-      if (isHex(value)) {
-        return this.fromHex(value);
-      }
-    }
-
+    if (!value) return new this(fallbackColor);
+    if (isRgb(value)) return this.fromRgb(value);
+    if (isNamedColor(value)) return this.fromNamedColor(value);
+    if (isHex(value)) return this.fromHex(value);
     return new this(fallbackColor);
   }
 
@@ -72,7 +58,7 @@ export class Color {
   }
 
   private clearCache() {
-    this[representations] = {};
+    this[conversions] = {};
   }
 
   private refreshChannels() {
@@ -144,12 +130,35 @@ export class Color {
     return this[alpha];
   }
 
+  /** Checks if the color is fully opaque. */
+  get isOpaque() {
+    return isOpaque(this[channels]);
+  }
+
+  /** Checks if the color is fully transparent. */
+  get isTransparent() {
+    return isTransparent(this[channels]);
+  }
+
+  /** Checks if the color is at least partially transparent. */
+  get isTranslucent() {
+    return isTranslucent(this[channels]);
+  }
+
+  /** Helper to cache serialized values until the channels are updated. */
+  private convert<T extends ColorValue>(
+    name: string,
+    converter: (channels: ColorChannels) => T
+  ): T {
+    return ((<T>this[conversions][name]) ??= converter(this[channels]));
+  }
+
   toHex() {
-    return toHex(this[channels]);
+    return this.convert("hex", toHex);
   }
 
   toRgb() {
-    return toRgb(this[channels]);
+    return this.convert("rgb", toRgb);
   }
 
   toString() {

@@ -89,4 +89,30 @@ describe("Color instances", () => {
 
     expect(c.toHex()).toBe("#64003280");
   });
+
+  test("can be serialized", () => {
+    const c = Color.from("white");
+
+    expect(c.toHex()).toBe("#ffffff");
+    expect(c.toRgb()).toEqual([255, 255, 255, 1]);
+    expect(JSON.stringify({ color: c })).toBe('{"color":"#ffffff"}');
+  });
+
+  test("can be checked for opacity", () => {
+    const opaque = Color.from("white");
+    const translucent = Color.from("#ffffff80");
+    const transparent = Color.from("transparent");
+
+    expect(opaque.isOpaque).toBe(true);
+    expect(opaque.isTransparent).toBe(false);
+    expect(opaque.isTranslucent).toBe(false);
+
+    expect(translucent.isOpaque).toBe(false);
+    expect(translucent.isTransparent).toBe(false);
+    expect(translucent.isTranslucent).toBe(true);
+
+    expect(transparent.isOpaque).toBe(false);
+    expect(transparent.isTransparent).toBe(true);
+    expect(transparent.isTranslucent).toBe(true);
+  });
 });
