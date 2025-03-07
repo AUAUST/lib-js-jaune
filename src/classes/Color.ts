@@ -61,19 +61,19 @@ export class Color {
     return new this(fallbackColor);
   }
 
-  static fromChannels(channels: ColorChannels) {
+  static fromChannels(channels: ColorChannels): Color {
     return new this(channels);
   }
 
-  static fromRgb(rgb: Rgb) {
+  static fromRgb(rgb: Rgb): Color {
     return new this(parseRgb(rgb));
   }
 
-  static fromHex(hex: string) {
+  static fromHex(hex: string): Color {
     return new this(parseHex(hex));
   }
 
-  static fromName(name: MaybeNamedColor) {
+  static fromName(name: MaybeNamedColor): Color {
     return new this(parseNamedColor(name));
   }
 
@@ -94,45 +94,45 @@ export class Color {
   }
 
   /** Returns a new `Color` instance with the specified red channel. */
-  withRed(value: number) {
+  withRed(value: number): Color {
     return this.with({ r: value });
   }
 
   /** Returns a new `Color` instance with the specified green channel. */
-  withGreen(value: number) {
+  withGreen(value: number): Color {
     return this.with({ g: value });
   }
 
   /** Returns a new `Color` instance with the specified blue channel. */
-  withBlue(value: number) {
+  withBlue(value: number): Color {
     return this.with({ b: value });
   }
 
   /** Returns a new `Color` instance with the specified alpha channel. */
-  withAlpha(value: number) {
+  withAlpha(value: number): Color {
     return this.with({ a: value });
   }
 
-  private updated() {
+  private updated(): this {
     this[cache].clear();
     this[channels].isFallback = false; // once updated, it's no longer a fallback
     this[channels].isTransformed = false;
     return this;
   }
 
-  set(channel: "r" | "g" | "b" | "a", value: number) {
+  set(channel: "r" | "g" | "b" | "a", value: number): this {
     this[channels][channel] =
       channel === "a" ? toAlphaChannel(value) : toRgbChannel(value);
     return this.updated();
   }
 
   /** The red channel of the color. */
-  get red() {
+  get red(): number {
     return this[channels].r;
   }
 
   /** @see Color#red */
-  get r() {
+  get r(): number {
     return this[channels].r;
   }
 
@@ -140,17 +140,17 @@ export class Color {
     this.setRed(value);
   }
 
-  setRed(value: number) {
+  setRed(value: number): this {
     return this.set("r", value);
   }
 
   /** The green channel of the color. */
-  get green() {
+  get green(): number {
     return this[channels].g;
   }
 
   /** @see Color#green */
-  get g() {
+  get g(): number {
     return this[channels].g;
   }
 
@@ -158,17 +158,17 @@ export class Color {
     this.setGreen(value);
   }
 
-  setGreen(value: number) {
+  setGreen(value: number): this {
     return this.set("g", value);
   }
 
   /** The blue channel of the color. */
-  get blue() {
+  get blue(): number {
     return this[channels].b;
   }
 
   /** @see Color#blue */
-  get b() {
+  get b(): number {
     return this[channels].b;
   }
 
@@ -176,12 +176,17 @@ export class Color {
     this.setBlue(value);
   }
 
-  setBlue(value: number) {
+  setBlue(value: number): this {
     return this.set("b", value);
   }
 
   /** The alpha channel of the color. */
-  get alpha() {
+  get alpha(): number {
+    return this[channels].a;
+  }
+
+  /** @see Color#alpha */
+  get a(): number {
     return this[channels].a;
   }
 
@@ -189,13 +194,8 @@ export class Color {
     this.setAlpha(value);
   }
 
-  setAlpha(value: number) {
+  setAlpha(value: number): this {
     return this.set("a", value);
-  }
-
-  /** @see Color#alpha */
-  get a() {
-    return this[channels].a;
   }
 
   /**
