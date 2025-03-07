@@ -2,6 +2,7 @@ import { N } from "@auaust/primitive-kit";
 import type { Writable } from "type-fest";
 import type { ColorChannels, ColorValue, MaybeNamedColor, Rgb } from "~/types";
 import { isNamedColor, parseHex, parseNamedColor, parseRgb } from "~/utils";
+import { brightness, isBright, isDark } from "~/utils/brightness";
 import {
   fallbackColor,
   isColorChannels,
@@ -225,17 +226,17 @@ export class Color {
 
   /** Checks if the color is fully opaque. */
   get isOpaque() {
-    return this.memoize("opaque", isOpaque);
+    return this.memoize("isOpaque", isOpaque);
   }
 
   /** Checks if the color is fully transparent. */
   get isTransparent() {
-    return this.memoize("transparent", isTransparent);
+    return this.memoize("isTransparent", isTransparent);
   }
 
   /** Checks if the color is at least partially transparent. */
   get isTranslucent() {
-    return this.memoize("translucent", isTranslucent);
+    return this.memoize("isTranslucent", isTranslucent);
   }
 
   /** Returns the closest named color. */
@@ -243,12 +244,31 @@ export class Color {
     return this.memoize("closestNamedColor", closestNamedColor);
   }
 
+  /** The relative brightness of the color. */
+  get brightness() {
+    return this.memoize("brightness", brightness);
+  }
+
+  /** Whether the color is considered bright. */
+  get isBright() {
+    return this.memoize("isBright", isBright);
+  }
+
+  /** Whether the color is considered dark. */
+  get isDark() {
+    return this.memoize("isDark", isDark);
+  }
+
   toHex() {
-    return this.memoize("hex", toHex);
+    return this.memoize("toHex", toHex);
   }
 
   toRgb() {
-    return this.memoize("rgb", toRgb);
+    return this.memoize("toRgb", toRgb);
+  }
+
+  toChannels() {
+    return this.memoize("toChannels", toColorChannels); // can't return `this[channels]` directly as it's writable, and could cause unexpected behavior
   }
 
   toString() {
