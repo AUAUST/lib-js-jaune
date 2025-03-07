@@ -153,4 +153,56 @@ describe("Color instances", () => {
     expect(c.isTransformed).toBe(true);
     expect(c.toRgb()).toEqual([0, 0, 255, 1]);
   });
+
+  test("can be cloned", () => {
+    clonesAndKeepFallbackState: {
+      const c = Color.from("unknown");
+      const clone = c.clone();
+
+      expect(c).not.toBe(clone);
+      expect(c.toHex()).toBe(clone.toHex());
+      expect(clone.isFallback).toBe(true);
+    }
+
+    clonesAndKeepTransformedState: {
+      const c = Color.from([-1, 0, 3400]);
+      const clone = c.clone();
+
+      expect(c).not.toBe(clone);
+      expect(clone.toRgb()).toEqual([0, 0, 255, 1]);
+      expect(clone.isTransformed).toBe(true);
+    }
+  });
+
+  test("can be cloned with new channels", () => {
+    withChannels: {
+      const c = Color.from("black");
+      const clone = c.with({ r: 255, a: 0.5 });
+
+      expect(c).not.toBe(clone);
+      expect(clone.r).toBe(255);
+      expect(clone.g).toBe(0);
+      expect(clone.b).toBe(0);
+      expect(clone.a).toBe(0.5);
+    }
+
+    withRedChannel: {
+      const c = Color.from("black");
+      const clone = c.withRed(255);
+
+      expect(c).not.toBe(clone);
+      expect(c.r).toBe(0);
+      expect(clone.r).toBe(255);
+      expect(clone.g).toBe(0);
+    }
+
+    withAlphaChannel: {
+      const c = Color.from("black");
+      const clone = c.withAlpha(-1);
+
+      expect(c).not.toBe(clone);
+      expect(c.a).toBe(1);
+      expect(clone.a).toBe(0);
+    }
+  });
 });

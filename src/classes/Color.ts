@@ -76,8 +76,40 @@ export class Color {
     return new this(parseNamedColor(name));
   }
 
-  clone() {
+  /**
+   * Returns a new `Color` instance with the same channels as the current one.
+   * If you want the clone to have different channels, use the `with` method.
+   */
+  clone(): Color {
     return Color.fromChannels(this[channels]);
+  }
+
+  /** Returns a new `Color` instance with the passed channels overriding the current ones. */
+  with(value: Partial<Pick<ColorChannels, "r" | "g" | "b" | "a">>): Color {
+    return Color.fromChannels({
+      ...this[channels],
+      ...value,
+    });
+  }
+
+  /** Returns a new `Color` instance with the specified red channel. */
+  withRed(value: number) {
+    return this.with({ r: value });
+  }
+
+  /** Returns a new `Color` instance with the specified green channel. */
+  withGreen(value: number) {
+    return this.with({ g: value });
+  }
+
+  /** Returns a new `Color` instance with the specified blue channel. */
+  withBlue(value: number) {
+    return this.with({ b: value });
+  }
+
+  /** Returns a new `Color` instance with the specified alpha channel. */
+  withAlpha(value: number) {
+    return this.with({ a: value });
   }
 
   private updated() {
