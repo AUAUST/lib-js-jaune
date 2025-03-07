@@ -1,7 +1,8 @@
 import { O, S } from "@auaust/primitive-kit";
 import type { ColorChannels, MaybeNamedColor, NamedColor } from "~/types";
-import { fallbackColor } from "./channels";
-import { parseHex } from "./hex";
+import { fallbackColor } from "~/utils/channels";
+import { colorDistance } from "~/utils/colors";
+import { parseHex } from "~/utils/hex";
 
 /**
  * A map of named colors and their HEX values.
@@ -174,6 +175,15 @@ export function isNamedColor(value: unknown): value is NamedColor {
 }
 
 /**
+ * Returns the color channels from a named color. Must be a valid named color, already lowercased.
+ *
+ * @internal
+ */
+export function namedColorChannels(name: NamedColor): ColorChannels {
+  return (namedColorsChannelsCache[name] ??= parseHex(namedColorToHex(name)!));
+}
+
+/**
  * Returns the color channels from a named color.
  */
 export function parseNamedColor(name: MaybeNamedColor): ColorChannels {
@@ -181,7 +191,7 @@ export function parseNamedColor(name: MaybeNamedColor): ColorChannels {
     return fallbackColor;
   }
 
-  return (namedColorsChannelsCache[name] ??= parseHex(namedColorToHex(name)!));
+  return namedColorChannels(<NamedColor>name.toLowerCase());
 }
 
 /**
@@ -193,4 +203,24 @@ export function namedColorToHex(name: MaybeNamedColor): string | undefined {
   return (
     namedColorsMap[<keyof typeof namedColorsMap>name.toLowerCase()] || undefined
   );
+}
+
+/**
+ * Returns the closest named color of the passed channels.
+ */
+export function closestNamedColor(channels: ColorChannels): NamedColor {
+  let closest: NamedColor | undefined;
+  let distance = Infinity;
+
+  for (const name of namedColors) {
+    const value = namedColorChannels(name);
+    const d = colorDistance(value, channels, false);
+
+    if (d < distance) {
+      closest = name;
+      distance = d;
+    }
+  }
+
+  return closest!;
 }

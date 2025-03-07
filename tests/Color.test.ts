@@ -125,6 +125,13 @@ describe("Color instances", () => {
     expect(transparent.isTranslucent).toBe(true);
   });
 
+  test("can guess their closest named color", () => {
+    expect(Color.fromName("black").closestNamedColor).toBe("black");
+    expect(Color.from(1, 2, 3, 1).closestNamedColor).toBe("black");
+    expect(Color.from(250, 250, 250).closestNamedColor).toBe("snow");
+    expect(Color.fromHex("#fd6143").closestNamedColor).toBe("tomato");
+  });
+
   test("keep track of fallback colors", () => {
     {
       const c = Color.from(null!);

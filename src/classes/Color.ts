@@ -10,6 +10,7 @@ import {
   toRgbChannel,
 } from "~/utils/channels";
 import { isHex, toHex } from "~/utils/hex";
+import { closestNamedColor } from "~/utils/namedColors";
 import { isOpaque, isTranslucent, isTransparent } from "~/utils/opacity";
 import { couldBeRgb, toRgb } from "~/utils/rgb";
 import { cache, channels } from "~/utils/symbols";
@@ -42,7 +43,7 @@ export class Color {
     }
 
     if (isNamedColor(value)) {
-      return this.fromNamedColor(value);
+      return this.fromName(value);
     }
 
     if (isHex(value)) {
@@ -72,7 +73,7 @@ export class Color {
     return new this(parseHex(hex));
   }
 
-  static fromNamedColor(name: MaybeNamedColor) {
+  static fromName(name: MaybeNamedColor) {
     return new this(parseNamedColor(name));
   }
 
@@ -221,7 +222,7 @@ export class Color {
 
   /** Returns the closest named color. */
   get closestNamedColor() {
-    return;
+    return this.memoize("closestNamedColor", closestNamedColor);
   }
 
   toHex() {
