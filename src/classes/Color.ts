@@ -4,6 +4,7 @@ import type { ColorChannels, ColorValue, MaybeNamedColor, Rgb } from "~/types";
 import { isNamedColor, parseHex, parseNamedColor, parseRgb } from "~/utils";
 import {
   fallbackColor,
+  isColorChannels,
   toAlphaChannel,
   toColorChannels,
   toRgbChannel,
@@ -34,6 +35,10 @@ export class Color {
 
     if (N.is(value)) {
       return new this({ r: value, g: rest[0], b: rest[1], a: rest[2] });
+    }
+
+    if (isColorChannels(value)) {
+      return new this(value);
     }
 
     if (isNamedColor(value)) {
@@ -176,6 +181,11 @@ export class Color {
   /** Checks if the color is at least partially transparent. */
   get isTranslucent() {
     return this.memoize("translucent", isTranslucent);
+  }
+
+  /** Returns the closest named color. */
+  get closestNamedColor() {
+    return;
   }
 
   toHex() {

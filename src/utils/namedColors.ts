@@ -8,7 +8,7 @@ import { parseHex } from "./hex";
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  */
-export const namedColorsMap = Object.freeze({
+export const namedColorsMap = O.freeze({
   aliceblue: "#f0f8ffff",
   antiquewhite: "#faebd7ff",
   aqua: "#00ffffff",

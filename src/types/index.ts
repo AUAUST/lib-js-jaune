@@ -1,3 +1,4 @@
+import { Color } from "~/classes/Color";
 import type { namedColorsMap } from "~/utils/namedColors";
 /**
  * A HEX color string.
@@ -65,4 +66,4 @@ export type ColorChannels = {
 /**
  * Represents a color in various formats.
  */
-export type ColorValue = Hex | Rgb | NamedColor | ColorChannels;
+export type ColorValue = Hex | Rgb | NamedColor | ColorChannels | Color;

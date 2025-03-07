@@ -23,10 +23,17 @@ export function isColorChannels(value: unknown): value is ColorChannels {
     isRgbChannel(value.r) &&
     isRgbChannel(value.g) &&
     isRgbChannel(value.b) &&
-    isAlphaChannel(value.a)
+    isAlphaChannel(value.a ?? 1)
   );
 }
 
+/**
+ * Formats the input into a readonly object of color channels.
+ *
+ * It clamps the values to the valid range and sets the alpha channel to 1 if not provided.
+ * If the passed `isTransformed` isn't already `true`, it will set it to `true` if any of the values were clamped.
+ * If some channels are missing, it will return the fallback color.
+ */
 export function toColorChannels(value: ColorChannels): Required<ColorChannels>;
 export function toColorChannels(
   r: number,
@@ -36,14 +43,6 @@ export function toColorChannels(
   isTransformed?: boolean,
   isFallback?: boolean
 ): Required<ColorChannels>;
-
-/**
- * Formats the input into a readonly object of color channels.
- *
- * It clamps the values to the valid range and sets the alpha channel to 1 if not provided.
- * If the passed `isTransformed` isn't already `true`, it will set it to `true` if any of the values were clamped.
- * If some channels are missing, it will return the fallback color.
- */
 export function toColorChannels(
   r: number | ColorChannels,
   g?: number,

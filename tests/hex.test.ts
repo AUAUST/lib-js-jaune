@@ -1,3 +1,4 @@
+import { O } from "@auaust/primitive-kit";
 import { describe, expect, test } from "vitest";
 
 import { isHex, parseHex, toHex } from "~/utils/hex";
@@ -46,7 +47,7 @@ describe("HEX colors", () => {
       "#12345678": { r: 18, g: 52, b: 86, a: (1 / 256) * 120 },
     };
 
-    Object.entries(hex).forEach(([input, expected]) => {
+    O.entries(hex).forEach(([input, expected]) => {
       const components = parseHex(input);
 
       expect(components.r).toBe(expected.r);
