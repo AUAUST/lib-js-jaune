@@ -120,6 +120,12 @@ export class Color {
     return this;
   }
 
+  set(channel: "r" | "g" | "b" | "a", value: number) {
+    this[channels][channel] =
+      channel === "a" ? toAlphaChannel(value) : toRgbChannel(value);
+    return this.updated();
+  }
+
   /** The red channel of the color. */
   get red() {
     return this[channels].r;
@@ -131,8 +137,11 @@ export class Color {
   }
 
   set red(value: number) {
-    this[channels].r = toRgbChannel(value);
-    this.updated();
+    this.setRed(value);
+  }
+
+  setRed(value: number) {
+    return this.set("r", value);
   }
 
   /** The green channel of the color. */
@@ -146,8 +155,11 @@ export class Color {
   }
 
   set green(value: number) {
-    this[channels].g = toRgbChannel(value);
-    this.updated();
+    this.setGreen(value);
+  }
+
+  setGreen(value: number) {
+    return this.set("g", value);
   }
 
   /** The blue channel of the color. */
@@ -161,8 +173,11 @@ export class Color {
   }
 
   set blue(value: number) {
-    this[channels].b = toRgbChannel(value);
-    this.updated();
+    this.setBlue(value);
+  }
+
+  setBlue(value: number) {
+    return this.set("b", value);
   }
 
   /** The alpha channel of the color. */
@@ -171,8 +186,11 @@ export class Color {
   }
 
   set alpha(value: number) {
-    this[channels].a = toAlphaChannel(value);
-    this.updated();
+    this.setAlpha(value);
+  }
+
+  setAlpha(value: number) {
+    return this.set("a", value);
   }
 
   /** @see Color#alpha */
