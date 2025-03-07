@@ -259,6 +259,14 @@ export class Color {
     return this.memoize("isDark", isDark);
   }
 
+  /** Whether the color is brighter than the passed threshold. */
+  isBrighterThan(threshold: Color | number) {
+    return (
+      this.brightness >
+      (threshold instanceof Color ? threshold.brightness : threshold)
+    );
+  }
+
   toHex() {
     return this.memoize("toHex", toHex);
   }

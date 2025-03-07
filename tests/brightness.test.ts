@@ -3,6 +3,8 @@ import { Color } from "~/classes/Color";
 
 describe("Colors", () => {
   test("have a brightness value", () => {
+    expect(Color.from("white").isBrighterThan(Color.from("black"))).toBe(true);
+
     black: {
       const c = Color.fromRgb([0, 0, 0]);
 
