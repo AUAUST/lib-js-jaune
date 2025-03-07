@@ -1,5 +1,17 @@
 import { Color } from "~/classes/Color";
 import type { namedColorsMap } from "~/utils/namedColors";
+
+/**
+ * The known color types.
+ *
+ * `hex` - A HEX color string.
+ * `rgb` - A tuple representing RGB color channels.
+ * `named` - A CSS color name.
+ * `channels` - An object of each color channel.
+ * `color` - A `Color` instance.
+ */
+export type ColorType = "hex" | "rgb" | "named" | "channels" | "color";
+
 /**
  * A HEX color string.
  *

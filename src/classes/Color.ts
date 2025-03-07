@@ -38,7 +38,7 @@ export class Color {
     }
 
     if (isColorChannels(value)) {
-      return new this(value);
+      return this.fromChannels(value);
     }
 
     if (isNamedColor(value)) {
@@ -60,6 +60,10 @@ export class Color {
     return new this(fallbackColor);
   }
 
+  static fromChannels(channels: ColorChannels) {
+    return new this(channels);
+  }
+
   static fromRgb(rgb: Rgb) {
     return new this(parseRgb(rgb));
   }
@@ -73,7 +77,7 @@ export class Color {
   }
 
   clone() {
-    return new Color(this[channels]);
+    return Color.fromChannels(this[channels]);
   }
 
   private updated() {
