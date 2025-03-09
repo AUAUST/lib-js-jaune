@@ -1,7 +1,7 @@
 import { O, S } from "@auaust/primitive-kit";
 import type { ColorChannels, MaybeNamedColor, NamedColor } from "~/types";
 import { fallbackColor } from "~/utils/channels";
-import { colorDistance } from "~/utils/colors";
+import { distance } from "~/utils/distance";
 import { parseHex } from "~/utils/hex";
 
 /**
@@ -165,6 +165,10 @@ const namedColors = new Set<NamedColor>(O.keys(namedColorsMap));
 
 const namedColorsChannelsCache: Partial<Record<NamedColor, ColorChannels>> = {};
 
+const namedColorsAliasesCache: Partial<
+  Record<NamedColor, readonly NamedColor[]>
+> = {};
+
 /**
  * Whether the input is a valid named color.
  *
@@ -210,17 +214,53 @@ export function namedColorToHex(name: MaybeNamedColor): string | undefined {
  */
 export function closestNamedColor(channels: ColorChannels): NamedColor {
   let closest: NamedColor | undefined;
-  let distance = Infinity;
+  let smallestDistance = Infinity;
 
   for (const name of namedColors) {
     const value = namedColorChannels(name);
-    const d = colorDistance(value, channels, false);
+    const d = distance(
+      value,
+      channels,
+      value.a === 1 // Ignore alpha channel only if it's 1 -> allows to match transparent/black correctly
+    );
 
-    if (d < distance) {
+    if (d < smallestDistance) {
       closest = name;
-      distance = d;
+      smallestDistance = d;
     }
   }
 
   return closest!;
+}
+
+/**
+ * Returns all the aliases of a named color.
+ */
+export function namedColorAliases(name: NamedColor): readonly NamedColor[] {
+  name = <NamedColor>name.toLowerCase();
+
+  if (namedColorsAliasesCache[name]) {
+    return namedColorsAliasesCache[name]!;
+  }
+
+  const aliases: NamedColor[] = [];
+  const targetHex = namedColorToHex(name);
+
+  for (const [name, hex] of O.entries(namedColorsMap)) {
+    if (hex === targetHex) {
+      aliases.push(name);
+    }
+  }
+
+  return (namedColorsAliasesCache[name] = Object.freeze(aliases));
+}
+
+/**
+ * Returns a boolean indicating whether two named colors are aliases.
+ */
+export function isAliasToNamedColor(
+  name: NamedColor,
+  alias: NamedColor
+): boolean {
+  return namedColorAliases(name).includes(<NamedColor>alias.toLowerCase());
 }
