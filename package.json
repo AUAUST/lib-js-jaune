@@ -29,8 +29,8 @@
     "@vitest/coverage-istanbul": "^2.1.9",
     "rimraf": "^6.0.1",
     "tsup": "^8.4.0",
-    "type-testing": "^0.2.0",
     "typescript": "^5.8.2",
+    "type-fest": "^4.37.0",
     "vitest": "^2.1.9"
   },
   "files": [
@@ -51,7 +51,6 @@
     }
   },
   "dependencies": {
-    "@auaust/primitive-kit": "^0.36.1",
-    "type-fest": "^4.37.0"
+    "@auaust/primitive-kit": "^0.36.1"
   }
 }
