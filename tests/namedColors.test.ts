@@ -1,11 +1,13 @@
 import { O } from "node_modules/@auaust/primitive-kit/dist/index.cjs";
 import { describe, expect, test } from "vitest";
 import { Color } from "~/classes/Color";
-import type { ColorChannels } from "~/types";
+import type { ColorChannels, NamedColor } from "~/types";
 import {
+  isAliasToNamedColor,
   isNamedColor,
   namedColorAliases,
   namedColorsMap,
+  namedColorToHex,
   parseNamedColor,
 } from "~/utils";
 
@@ -96,6 +98,18 @@ describe("Named colors", () => {
 
       expect(foundAliases).toEqual(expect.arrayContaining(aliases));
     }
+
+    expect(isAliasToNamedColor("darkgray", "darkgrey")).toBe(true);
+    expect(isAliasToNamedColor("darkgray", "lightgray")).toBe(false);
+    expect(
+      isAliasToNamedColor(<NamedColor>"unknown", <NamedColor>"unknown")
+    ).toBe(false);
+  });
+
+  test("can be converted to HEX", () => {
+    expect(namedColorToHex("white")).toBe("#ffffffff"); // this low level function returns the whole hex, including alpha
+    expect(namedColorToHex("black")).toBe("#000000ff");
+    expect(namedColorToHex("")).toBeUndefined();
   });
 });
 

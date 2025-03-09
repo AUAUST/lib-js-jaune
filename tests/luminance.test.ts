@@ -44,6 +44,18 @@ test("Colors have a luminance and brightness value", () => {
   }
 });
 
+test("Colors can be compared for brightness", () => {
+  expect(Color.from("black").isBrighterThan(Color.from("white"))).toBe(false);
+  expect(Color.from("white").isBrighterThan(0.5)).toBe(true);
+  expect(Color.from("lime").isBrighterThan(Color.from("gray"))).toBe(true);
+  expect(Color.from("lime").isBrighterThan(Color.from("white"))).toBe(false);
+
+  expect(Color.from("black").isDarkerThan(Color.from("white"))).toBe(true);
+  expect(Color.from("white").isDarkerThan(0.5)).toBe(false);
+  expect(Color.from("gray").isDarkerThan(Color.from("black"))).toBe(false);
+  expect(Color.from("lime").isDarkerThan(Color.from("gray"))).toBe(false);
+});
+
 test("Colors can be compared for contrast", () => {
   // The below values have been picked from Google Chrome's web inspector's color contrast checker.
   expect(Color.from("#000000").contrast([255, 255, 255])).toBeCloseTo(21);

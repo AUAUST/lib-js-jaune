@@ -1,11 +1,13 @@
 import { describe, expect, test } from "vitest";
 import { Color } from "~/classes/Color";
 import {
+  isAliasToNamedColor,
   isColor,
   isColorChannels,
   isHex,
   isNamedColor,
   isRgb,
+  namedColorAliases,
   type,
 } from "~/utils";
 
@@ -29,7 +31,45 @@ describe("Static Color", () => {
       expect(c.a).toBe(1);
     });
 
+    test("from named colors", () => {
+      expect(Color.fromName("black").toHex()).toBe("#000000");
+      expect(Color.fromName("white").toHex()).toBe("#ffffff");
+      expect(Color.fromName("red").toHex()).toBe("#ff0000");
+    });
+
     test("from unknown sources", () => {
+      undefined: {
+        // @ts-expect-error
+        const c = Color.from();
+
+        expect(c.r).toBe(0);
+        expect(c.g).toBe(0);
+        expect(c.b).toBe(0);
+        expect(c.a).toBe(1);
+
+        expect(c.isFallback).toBe(true);
+
+        expect(Color.from("").isFallback).toBe(true);
+
+        // @ts-expect-error
+        expect(Color.from(null).isFallback).toBe(true);
+        // @ts-expect-error
+        expect(Color.from(false).isFallback).toBe(true);
+        // @ts-expect-error // should return a color with red as 123 and the rest as 0
+        expect(Color.from(123).toChannels()).toEqual({
+          r: 123,
+          g: 0,
+          b: 0,
+          a: 1,
+          isTransformed: true,
+          isFallback: false,
+        });
+      }
+
+      color: {
+        expect(Color.from(Color.from("black")).toHex()).toBe("#000000");
+      }
+
       named: {
         const c = Color.from("magenta");
 
@@ -84,6 +124,8 @@ describe("Static Color", () => {
     expect(Color.isRgb).toBe(isRgb);
     expect(Color.isNamedColor).toBe(isNamedColor);
     expect(Color.isColorChannels).toBe(isColorChannels);
+    expect(Color.namedColorAliases).toBe(namedColorAliases);
+    expect(Color.isAliasToNamedColor).toBe(isAliasToNamedColor);
   });
 });
 
@@ -118,6 +160,14 @@ describe("Color instances", () => {
     c.alpha = 0.5;
 
     expect(c.toHex()).toBe("#64003280");
+
+    c.green = 255;
+
+    expect(c.g).toBe(255);
+
+    c.setRed(255).setGreen(0).setBlue(255).setAlpha(1);
+
+    expect(c.toHex()).toBe("#ff00ff");
   });
 
   test("can be serialized", () => {
@@ -126,6 +176,29 @@ describe("Color instances", () => {
     expect(c.toHex()).toBe("#ffffff");
     expect(c.toRgb()).toEqual([255, 255, 255, 1]);
     expect(JSON.stringify({ color: c })).toBe('{"color":"#ffffff"}');
+  });
+
+  test("can be converted to strings", () => {
+    expect(Color.from("black") + "").toBe("#000000");
+    expect(Color.from("white").valueOf()).toBe("#ffffff");
+    expect(Color.from("gray").toString()).toBe("#808080");
+    expect(`${Color.from("red")}`).toBe("#ff0000");
+  });
+
+  test("expose inner channels", () => {
+    const c = Color.from("black");
+
+    expect(c.toChannels()).toEqual(
+      expect.objectContaining({ r: 0, g: 0, b: 0, a: 1 })
+    );
+    expect(c.r).toBe(0);
+    expect(c.r).toBe(c.red);
+    expect(c.g).toBe(0);
+    expect(c.g).toBe(c.green);
+    expect(c.b).toBe(0);
+    expect(c.b).toBe(c.blue);
+    expect(c.a).toBe(1);
+    expect(c.a).toBe(c.alpha);
   });
 
   test("can be checked for opacity", () => {
@@ -207,7 +280,7 @@ describe("Color instances", () => {
       expect(clone.a).toBe(0.5);
     }
 
-    withRedChannel: {
+    withChannel: {
       const c = Color.from("black");
       const clone = c.withRed(255);
 
@@ -215,6 +288,9 @@ describe("Color instances", () => {
       expect(c.r).toBe(0);
       expect(clone.r).toBe(255);
       expect(clone.g).toBe(0);
+
+      expect(clone.withGreen(255).g).toBe(255);
+      expect(clone.withBlue(255).b).toBe(255);
     }
 
     withAlphaChannel: {
