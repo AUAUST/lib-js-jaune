@@ -235,6 +235,10 @@ export function closestNamedColor(channels: ColorChannels): NamedColor {
 export function namedColorAliases(name: NamedColor): readonly NamedColor[] {
   name = <NamedColor>name.toLowerCase();
 
+  if (!isNamedColor(name)) {
+    return [];
+  }
+
   if (namedColorsAliasesCache[name]) {
     return namedColorsAliasesCache[name]!;
   }

@@ -1,6 +1,6 @@
 import type { ColorChannels } from "~/types";
 
-/** Calculate the distance between two colors. */
+/** Calculate the distance between two colors. It is mostly useful for comparing distances between colors, but the value itself is not very meaningful. */
 export function distance(
   a: ColorChannels,
   b: ColorChannels,

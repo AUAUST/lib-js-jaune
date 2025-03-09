@@ -11,8 +11,10 @@ import {
   brightness,
   closestNamedColor,
   contrast,
+  distance,
   fallbackColor,
   grayscale,
+  isAliasToNamedColor,
   isBright,
   isColor,
   isColorChannels,
@@ -24,6 +26,7 @@ import {
   isTranslucent,
   isTransparent,
   luminance,
+  namedColorAliases,
   parseColor,
   parseHex,
   parseNamedColor,
@@ -96,6 +99,12 @@ export class Color {
 
   /** Returns a boolean indicating whether the passed value is a RGB color tuple. */
   static isRgb = isRgb;
+
+  /** Returns all the aliases of a named color, including the name itself. */
+  static namedColorAliases = namedColorAliases;
+
+  /** Returns a boolean whether two named colors are aliases, meaning they have the same HEX value. */
+  static isAliasToNamedColor = isAliasToNamedColor;
 
   /**
    * Returns a new `Color` instance with the same channels as the current one.
@@ -311,6 +320,11 @@ export class Color {
   /** Returns the contrast ratio between this color and another. */
   contrast(color: ColorValue): number {
     return contrast(this[channels], Color.from(color)[channels]);
+  }
+
+  /** Returns the distance between this color and another. If `alpha` is `true`, the alpha channel is included in the calculation. */
+  distance(color: ColorValue, alpha = false): number {
+    return distance(this[channels], Color.from(color)[channels], alpha);
   }
 
   /** Returns a new color with the grayscale equivalent of the current color, preserving the alpha channel. */
