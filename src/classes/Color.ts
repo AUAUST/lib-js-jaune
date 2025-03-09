@@ -38,6 +38,7 @@ import {
   toRgbChannel,
   type,
 } from "~/utils";
+import { random } from "~/utils/random";
 import { cache, channels } from "~/utils/symbols";
 
 export class Color {
@@ -72,6 +73,10 @@ export class Color {
 
   static fromName(name: MaybeNamedColor): Color {
     return new this(parseNamedColor(name));
+  }
+
+  static random(presets: Parameters<typeof random>[0] = {}): Color {
+    return new this(random(presets));
   }
 
   /**

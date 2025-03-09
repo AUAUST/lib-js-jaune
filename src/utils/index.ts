@@ -31,4 +31,5 @@ export {
   parseNamedColor,
 } from "~/utils/namedColors";
 export { isOpaque, isTranslucent, isTransparent } from "~/utils/opacity";
+export { random, type ChannelRange } from "~/utils/random";
 export { couldBeRgb, isRgb, parseRgb, toRgb } from "~/utils/rgb";
