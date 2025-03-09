@@ -14,7 +14,7 @@ export function isAlphaChannel(value: unknown): value is number {
 }
 
 export function toAlphaChannel(value: number | undefined | null): number {
-  return N.clamp(value ?? 1, 0, 1);
+  return N.is(value) ? N.clamp(value, 0, 1) : 1;
 }
 
 export function isColorChannels(value: unknown): value is ColorChannels {
@@ -55,15 +55,15 @@ export function toColorChannels(
     ({ r, g, b, a, isTransformed, isFallback } = r);
   }
 
-  const finalR = N.clamp(r, 0, 255);
-  const finalG = N.clamp(g, 0, 255);
-  const finalB = N.clamp(b, 0, 255);
+  const finalR = toRgbChannel(r);
+  const finalG = toRgbChannel(g);
+  const finalB = toRgbChannel(b);
 
   if (isNaN(finalR) || isNaN(finalG) || isNaN(finalB)) {
     return fallbackColor;
   }
 
-  const finalA = N.is(a) ? N.clamp(a, 0, 1) : 1;
+  const finalA = toAlphaChannel(a);
 
   return O.freeze({
     r: finalR,
