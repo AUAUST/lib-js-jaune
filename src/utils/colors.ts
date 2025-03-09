@@ -40,8 +40,8 @@ export function type(value: unknown): ColorType | undefined {
   return undefined;
 }
 
-/** Tries to parse the value as a color. */
-export function parseColor(value: unknown): ColorChannels | undefined {
+/** Tries to parse the value as a color. If it fails, returns the fallback color. */
+export function parseColor(value: unknown): ColorChannels {
   if (!value) {
     return fallbackColor;
   }

@@ -52,7 +52,7 @@ export class Color {
       return new this({ r: value, g: rest[0], b: rest[1], a: rest[2] });
     }
 
-    return new this(parseColor(value) ?? fallbackColor);
+    return new this(parseColor(value ?? fallbackColor));
   }
 
   static fromChannels(channels: ColorChannels): Color {
