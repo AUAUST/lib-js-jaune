@@ -1,6 +1,6 @@
 import { A, N } from "@auaust/primitive-kit";
 import type { ColorChannels } from "~/types";
-import { toColorChannels } from "./channels";
+import { toColorChannels } from "~/utils";
 
 export type ChannelRange = number | [min: number, max: number];
 
