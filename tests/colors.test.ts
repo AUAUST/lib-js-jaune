@@ -1,8 +1,19 @@
 import { describe, expect, test } from "vitest";
 import { Color } from "~/classes/Color";
-import { isColor } from "~/utils/colors";
+import { isColor, type } from "~/utils/colors";
 
 describe("Colors", () => {
+  test("'s type can be checked", () => {
+    expect(type("black")).toBe("named");
+    expect(type([1, 2, 3])).toBe("rgb");
+    expect(type("#fff")).toBe("hex");
+    expect(type(Color.from(1, 2, 3, 0.1))).toBe("color");
+    expect(type({ r: 1, g: 2, b: 3 })).toBe("channels");
+
+    expect(type({})).toBeUndefined();
+    expect(type(null!)).toBeUndefined();
+  });
+
   test("can be recognized", () => {
     const colors = [
       "#c85",

@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest";
 import { Color } from "~/classes/Color";
 import { isHex, isNamedColor, isRgb } from "~/utils";
 import { isColorChannels } from "~/utils/channels";
+import { isColor, type } from "~/utils/colors";
 
 describe("Static Color", () => {
   describe("can instantiate Color instances", () => {
@@ -71,32 +72,9 @@ describe("Static Color", () => {
     });
   });
 
-  test("can test whether a value is a color", () => {
-    expect(Color.isColor("black")).toBe(true);
-    expect(Color.isColor([1, 2, 3])).toBe(true);
-    expect(Color.isColor("#fff")).toBe(true);
-    expect(Color.isColor(Color.from(1, 2, 3, 0.1))).toBe(true);
-    expect(Color.isColor({ r: 1, g: 2, b: 3 })).toBe(true);
-
-    expect(Color.isColor(" transparent")).toBe(false);
-    expect(Color.isColor([1, 2, 3, 0.1, 0])).toBe(false);
-    expect(Color.isColor("#fffg")).toBe(false);
-    expect(Color.isColor({ r: -1, g: 256, b: 3 })).toBe(false);
-    expect(Color.isColor({})).toBe(false);
-    expect(Color.isColor(null!)).toBe(false);
-  });
-
-  test("can test values for color type", () => {
-    expect(Color.type("black")).toBe("named");
-    expect(Color.type([1, 2, 3])).toBe("rgb");
-    expect(Color.type("#fff")).toBe("hex");
-    expect(Color.type(Color.from(1, 2, 3, 0.1))).toBe("color");
-    expect(Color.type({ r: 1, g: 2, b: 3 })).toBe("channels");
-    expect(Color.type({})).toBeUndefined();
-    expect(Color.type(null!)).toBeUndefined();
-  });
-
   test("exposes internal color helpers as properties", () => {
+    expect(Color.isColor).toBe(isColor);
+    expect(Color.type).toBe(type);
     expect(Color.isHex).toBe(isHex);
     expect(Color.isRgb).toBe(isRgb);
     expect(Color.isNamedColor).toBe(isNamedColor);
