@@ -2,13 +2,12 @@ import { O } from "node_modules/@auaust/primitive-kit/dist/index.cjs";
 import { describe, expect, test } from "vitest";
 import { Color } from "~/classes/Color";
 import type { ColorChannels } from "~/types";
-
 import {
   isNamedColor,
   namedColorAliases,
   namedColorsMap,
   parseNamedColor,
-} from "~/utils/namedColors";
+} from "~/utils";
 
 describe("Named colors", () => {
   test("can be recognized", () => {
@@ -109,6 +108,10 @@ test("Colors can match their closest named color", () => {
     expect(aliases).toContain(Color.from(hex).closestNamedColor);
   }
 
+  expect(Color.from("black").closestNamedColor).toBe("black");
+  expect(Color.from(1, 2, 3, 1).closestNamedColor).toBe("black");
+  expect(Color.from(250, 250, 250).closestNamedColor).toBe("snow");
+  expect(Color.from("#fd6143").closestNamedColor).toBe("tomato");
   expect(Color.from("#001").closestNamedColor).toBe("black");
   expect(Color.from("#fefefe").closestNamedColor).toBe("white");
   expect(Color.from("#f80000").closestNamedColor).toBe("red");

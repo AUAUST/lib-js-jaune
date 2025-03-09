@@ -1,8 +1,13 @@
 import { describe, expect, test } from "vitest";
 import { Color } from "~/classes/Color";
-import { isHex, isNamedColor, isRgb } from "~/utils";
-import { isColorChannels } from "~/utils/channels";
-import { isColor, type } from "~/utils/colors";
+import {
+  isColor,
+  isColorChannels,
+  isHex,
+  isNamedColor,
+  isRgb,
+  type,
+} from "~/utils";
 
 describe("Static Color", () => {
   describe("can instantiate Color instances", () => {
@@ -24,7 +29,7 @@ describe("Static Color", () => {
       expect(c.a).toBe(1);
     });
 
-    test("from unknown source", () => {
+    test("from unknown sources", () => {
       named: {
         const c = Color.from("magenta");
 
@@ -139,13 +144,6 @@ describe("Color instances", () => {
     expect(transparent.isOpaque).toBe(false);
     expect(transparent.isTransparent).toBe(true);
     expect(transparent.isTranslucent).toBe(true);
-  });
-
-  test("can guess their closest named color", () => {
-    expect(Color.fromName("black").closestNamedColor).toBe("black");
-    expect(Color.from(1, 2, 3, 1).closestNamedColor).toBe("black");
-    expect(Color.from(250, 250, 250).closestNamedColor).toBe("snow");
-    expect(Color.fromHex("#fd6143").closestNamedColor).toBe("tomato");
   });
 
   test("keep track of fallback colors", () => {

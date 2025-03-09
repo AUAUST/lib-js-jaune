@@ -1,7 +1,6 @@
 import { O } from "@auaust/primitive-kit";
 import { describe, expect, test } from "vitest";
-
-import { isHex, parseHex, toHex } from "~/utils/hex";
+import { isHex, parseHex, toHex } from "~/utils";
 
 describe("HEX colors", () => {
   test("can be recognized", () => {

@@ -1,7 +1,34 @@
-export { isHex, parseHex } from "~/utils/hex";
 export {
+  fallbackColor,
+  isAlphaChannel,
+  isColorChannels,
+  isRgbChannel,
+  toAlphaChannel,
+  toColorChannels,
+  toRgbChannel,
+} from "~/utils/channels";
+export { isColor, parseColor, type } from "~/utils/colors";
+export { distance } from "~/utils/distance";
+export { isHex, parseHex, toHex } from "~/utils/hex";
+export {
+  brightness,
+  contrast,
+  grayscale,
+  isBright,
+  isDark,
+  linearTosRGB,
+  luminance,
+  sRGBtoLinear,
+} from "~/utils/luminance";
+export {
+  closestNamedColor,
+  isAliasToNamedColor,
   isNamedColor,
+  namedColorAliases,
+  namedColorChannels,
+  namedColorsMap,
   namedColorToHex,
   parseNamedColor,
 } from "~/utils/namedColors";
-export { isRgb, parseRgb } from "~/utils/rgb";
+export { isOpaque, isTranslucent, isTransparent } from "~/utils/opacity";
+export { couldBeRgb, isRgb, parseRgb, toRgb } from "~/utils/rgb";

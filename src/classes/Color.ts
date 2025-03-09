@@ -6,28 +6,35 @@ import type {
   MaybeNamedColor,
   NamedColor,
   Rgb,
-} from "~/types";
-import { parseHex, parseNamedColor, parseRgb } from "~/utils";
-import {
-  fallbackColor,
-  isColorChannels,
-  toAlphaChannel,
-  toColorChannels,
-  toRgbChannel,
-} from "~/utils/channels";
-import { isColor, parseColor, type } from "~/utils/colors";
-import { isHex, toHex } from "~/utils/hex";
+} from "~";
 import {
   brightness,
+  closestNamedColor,
   contrast,
+  fallbackColor,
   grayscale,
   isBright,
+  isColor,
+  isColorChannels,
   isDark,
+  isHex,
+  isNamedColor,
+  isOpaque,
+  isRgb,
+  isTranslucent,
+  isTransparent,
   luminance,
-} from "~/utils/luminance";
-import { closestNamedColor, isNamedColor } from "~/utils/namedColors";
-import { isOpaque, isTranslucent, isTransparent } from "~/utils/opacity";
-import { isRgb, toRgb } from "~/utils/rgb";
+  parseColor,
+  parseHex,
+  parseNamedColor,
+  parseRgb,
+  toAlphaChannel,
+  toColorChannels,
+  toHex,
+  toRgb,
+  toRgbChannel,
+  type,
+} from "~/utils";
 import { cache, channels } from "~/utils/symbols";
 
 export class Color {

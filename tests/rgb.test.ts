@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { ColorChannels, Rgb } from "~/types";
-
-import { isRgb, parseRgb, toRgb } from "~/utils/rgb";
+import type { ColorChannels, Rgb } from "~/types";
+import { isRgb, parseRgb, toRgb } from "~/utils";
 
 describe("RGB colors", () => {
   test("can be recognized", () => {

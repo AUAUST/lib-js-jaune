@@ -1,5 +1,13 @@
-import { Color } from "~/classes/Color";
-import type { namedColorsMap } from "~/utils/namedColors";
+import type { Color } from "~/classes/Color";
+import type { namedColorsMap } from "~/utils";
+
+type ColorTypeMap = {
+  channels: ColorChannels;
+  color: Color;
+  hex: Hex;
+  named: NamedColor;
+  rgb: Rgb;
+};
 
 /**
  * The known color types.
@@ -10,7 +18,10 @@ import type { namedColorsMap } from "~/utils/namedColors";
  * `named` - A CSS color name.
  * `rgb` - A tuple representing RGB color channels.
  */
-export type ColorType = "channels" | "color" | "hex" | "named" | "rgb";
+export type ColorType = keyof ColorTypeMap;
+
+/** Represents a color in any of the various supported formats. */
+export type ColorValue = ColorTypeMap[ColorType];
 
 /** A HEX color string. It must start with a hash (#) character followed by 3, 4, 6, or 8 hexadecimal digits. */
 export type Hex = `#${string}` | (string & {});
@@ -71,6 +82,3 @@ export type ColorChannels = {
    */
   readonly isFallback?: boolean;
 };
-
-/** Represents a color in any of the various supported formats. */
-export type ColorValue = Color | ColorChannels | Hex | NamedColor | Rgb;

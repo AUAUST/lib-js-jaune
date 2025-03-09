@@ -1,8 +1,6 @@
 import { O, S } from "@auaust/primitive-kit";
 import type { ColorChannels, MaybeNamedColor, NamedColor } from "~/types";
-import { fallbackColor } from "~/utils/channels";
-import { distance } from "~/utils/distance";
-import { parseHex } from "~/utils/hex";
+import { distance, fallbackColor, parseHex } from "~/utils";
 
 /**
  * A map of named colors and their HEX values.
@@ -209,9 +207,7 @@ export function namedColorToHex(name: MaybeNamedColor): string | undefined {
   );
 }
 
-/**
- * Returns the closest named color of the passed channels.
- */
+/** Returns the closest named color to the passed color channels. */
 export function closestNamedColor(channels: ColorChannels): NamedColor {
   let closest: NamedColor | undefined;
   let smallestDistance = Infinity;

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { Color } from "~/classes/Color";
-import { isColor, type } from "~/utils/colors";
+import { isColor, type } from "~/utils";
 
 describe("Colors", () => {
   test("'s type can be checked", () => {
