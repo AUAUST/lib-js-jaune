@@ -7,7 +7,7 @@ import type {
   NamedColor,
   Rgb,
 } from "~/types";
-import { isNamedColor, parseHex, parseNamedColor, parseRgb } from "~/utils";
+import { parseHex, parseNamedColor, parseRgb } from "~/utils";
 import {
   fallbackColor,
   isColorChannels,
@@ -15,6 +15,7 @@ import {
   toColorChannels,
   toRgbChannel,
 } from "~/utils/channels";
+import { isColor, parseColor, type } from "~/utils/colors";
 import { isHex, toHex } from "~/utils/hex";
 import {
   brightness,
@@ -24,9 +25,9 @@ import {
   isDark,
   luminance,
 } from "~/utils/luminance";
-import { closestNamedColor } from "~/utils/namedColors";
+import { closestNamedColor, isNamedColor } from "~/utils/namedColors";
 import { isOpaque, isTranslucent, isTransparent } from "~/utils/opacity";
-import { couldBeRgb, toRgb } from "~/utils/rgb";
+import { isRgb, toRgb } from "~/utils/rgb";
 import { cache, channels } from "~/utils/symbols";
 
 export class Color {
@@ -40,39 +41,11 @@ export class Color {
   static from(value: ColorValue): Color;
   static from(red: number, green: number, blue: number, alpha?: number): Color;
   static from(value: ColorValue | number, ...rest: number[]): Color {
-    if (!value) {
-      return new this(fallbackColor);
-    }
-
-    if (value instanceof Color) {
-      return value.clone();
-    }
-
     if (N.is(value)) {
       return new this({ r: value, g: rest[0], b: rest[1], a: rest[2] });
     }
 
-    if (isColorChannels(value)) {
-      return this.fromChannels(value);
-    }
-
-    if (isNamedColor(value)) {
-      return this.fromName(value);
-    }
-
-    if (isHex(value)) {
-      return this.fromHex(value);
-    }
-
-    if (couldBeRgb(value)) {
-      const channels = parseRgb(value);
-
-      if (!channels.isFallback) {
-        return new this(channels);
-      }
-    }
-
-    return new this(fallbackColor);
+    return new this(parseColor(value) ?? fallbackColor);
   }
 
   static fromChannels(channels: ColorChannels): Color {
@@ -92,6 +65,32 @@ export class Color {
   }
 
   /**
+   * Returns the color type of the passed value, or `undefined` if it's not a color.
+   *
+   * It is slightly stricter than the logic used to parse colors.
+   * It would return false for an array of channels which values are not within the expected range, where `parseColor` would return a color with the invalid values clamped.
+   */
+  static type = type;
+
+  /** Returns a boolean indicating whether the passed value is a color. */
+  static isColor = isColor;
+
+  /** @alias Color#isColor */
+  static is = isColor;
+
+  /** Returns a boolean indicating whether the passed value is a HEX color string. */
+  static isHex = isHex;
+
+  /** Returns a boolean indicating whether the passed value is a named color. */
+  static isNamedColor = isNamedColor;
+
+  /** Returns a boolean indicating whether the passed value is a color channel object. */
+  static isColorChannels = isColorChannels;
+
+  /** Returns a boolean indicating whether the passed value is a RGB color tuple. */
+  static isRgb = isRgb;
+
+  /**
    * Returns a new `Color` instance with the same channels as the current one.
    * If you want the clone to have different channels, use the `with` method.
    */
@@ -104,6 +103,8 @@ export class Color {
     return Color.fromChannels({
       ...this[channels],
       ...value,
+      isFallback: false,
+      isTransformed: false,
     });
   }
 
@@ -256,7 +257,10 @@ export class Color {
     return this.memoize(isTranslucent);
   }
 
-  /** Returns the closest named color. */
+  /**
+   * Returns the closest named color. If aliases exist, which one is returned is not guaranteed.
+   * In some cases, calling `namedColorAliases()` on the result might help achieve the desired result.
+   */
   get closestNamedColor(): NamedColor {
     return this.memoize(closestNamedColor);
   }

@@ -1,17 +1,10 @@
 import { describe, expect, test } from "vitest";
 import { Color } from "~/classes/Color";
+import { isHex, isNamedColor, isRgb } from "~/utils";
+import { isColorChannels } from "~/utils/channels";
 
-describe("Color instances", () => {
-  describe("can be created", () => {
-    test("from channels", () => {
-      const c = new Color({ r: 0, g: 0, b: 0 });
-
-      expect(c.r).toBe(0);
-      expect(c.g).toBe(0);
-      expect(c.b).toBe(0);
-      expect(c.a).toBe(1);
-    });
-
+describe("Static Color", () => {
+  describe("can instantiate Color instances", () => {
     test("from RGB", () => {
       const c = Color.fromRgb([0, 0, 0]);
 
@@ -75,6 +68,51 @@ describe("Color instances", () => {
         expect(c.b).toBe(0);
         expect(c.a).toBe(1);
       }
+    });
+  });
+
+  test("can test whether a value is a color", () => {
+    expect(Color.isColor("black")).toBe(true);
+    expect(Color.isColor([1, 2, 3])).toBe(true);
+    expect(Color.isColor("#fff")).toBe(true);
+    expect(Color.isColor(Color.from(1, 2, 3, 0.1))).toBe(true);
+    expect(Color.isColor({ r: 1, g: 2, b: 3 })).toBe(true);
+
+    expect(Color.isColor(" transparent")).toBe(false);
+    expect(Color.isColor([1, 2, 3, 0.1, 0])).toBe(false);
+    expect(Color.isColor("#fffg")).toBe(false);
+    expect(Color.isColor({ r: -1, g: 256, b: 3 })).toBe(false);
+    expect(Color.isColor({})).toBe(false);
+    expect(Color.isColor(null!)).toBe(false);
+  });
+
+  test("can test values for color type", () => {
+    expect(Color.type("black")).toBe("named");
+    expect(Color.type([1, 2, 3])).toBe("rgb");
+    expect(Color.type("#fff")).toBe("hex");
+    expect(Color.type(Color.from(1, 2, 3, 0.1))).toBe("color");
+    expect(Color.type({ r: 1, g: 2, b: 3 })).toBe("channels");
+    expect(Color.type({})).toBeUndefined();
+    expect(Color.type(null!)).toBeUndefined();
+  });
+
+  test("exposes internal color helpers as properties", () => {
+    expect(Color.isHex).toBe(isHex);
+    expect(Color.isRgb).toBe(isRgb);
+    expect(Color.isNamedColor).toBe(isNamedColor);
+    expect(Color.isColorChannels).toBe(isColorChannels);
+  });
+});
+
+describe("Color instances", () => {
+  describe("can be created", () => {
+    test("from channels", () => {
+      const c = new Color({ r: 0, g: 0, b: 0 });
+
+      expect(c.r).toBe(0);
+      expect(c.g).toBe(0);
+      expect(c.b).toBe(0);
+      expect(c.a).toBe(1);
     });
   });
 

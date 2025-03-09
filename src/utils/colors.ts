@@ -1,20 +1,14 @@
 import { Color } from "~/classes/Color";
-import type { ColorType, ColorValue } from "~/types";
-import { isColorChannels } from "./channels";
-import { isHex } from "./hex";
-import { isNamedColor } from "./namedColors";
-import { isRgb } from "./rgb";
+import type { ColorChannels, ColorType, ColorValue } from "~/types";
+import { fallbackColor, isColorChannels } from "./channels";
+import { isHex, parseHex } from "./hex";
+import { isNamedColor, parseNamedColor } from "./namedColors";
+import { couldBeRgb, isRgb, parseRgb } from "./rgb";
+import { channels } from "./symbols";
 
 /** Returns true if the value is any format of supported color. */
 export function isColor(value: unknown): value is ColorValue {
-  return (
-    !!value && // no falsy value represents a color
-    (value instanceof Color ||
-      isNamedColor(value) ||
-      isHex(value) ||
-      isRgb(value) ||
-      isColorChannels(value))
-  );
+  return type(value) !== undefined;
 }
 
 /** Returns the color type of the value, or undefined if it's not a color. */
@@ -44,4 +38,35 @@ export function type(value: unknown): ColorType | undefined {
   }
 
   return undefined;
+}
+
+/** Tries to parse the value as a color. */
+export function parseColor(value: unknown): ColorChannels | undefined {
+  if (!value) {
+    return fallbackColor;
+  }
+
+  if (value instanceof Color) {
+    return value[channels];
+  }
+
+  if (isColorChannels(value)) {
+    return value;
+  }
+
+  if (isNamedColor(value)) {
+    return parseNamedColor(value);
+  }
+
+  if (isHex(value)) {
+    return parseHex(value);
+  }
+
+  if (couldBeRgb(value)) {
+    // It might not be a valid RGB, in which case `parseRgb` is responsible for returning the fallback color
+    // In case more color types are added, it might be required to only return the result of `parseRgb` if `isFallback` is false
+    return parseRgb(value);
+  }
+
+  return fallbackColor;
 }

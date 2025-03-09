@@ -4,19 +4,15 @@ import type { namedColorsMap } from "~/utils/namedColors";
 /**
  * The known color types.
  *
- * `hex` - A HEX color string.
- * `rgb` - A tuple representing RGB color channels.
- * `named` - A CSS color name.
  * `channels` - An object of each color channel.
  * `color` - A `Color` instance.
+ * `hex` - A HEX color string.
+ * `named` - A CSS color name.
+ * `rgb` - A tuple representing RGB color channels.
  */
-export type ColorType = "hex" | "rgb" | "named" | "channels" | "color";
+export type ColorType = "channels" | "color" | "hex" | "named" | "rgb";
 
-/**
- * A HEX color string.
- *
- * It must start with a hash (#) character followed by 3, 4, 6, or 8 hexadecimal digits.
- */
+/** A HEX color string. It must start with a hash (#) character followed by 3, 4, 6, or 8 hexadecimal digits. */
 export type Hex = `#${string}` | (string & {});
 
 /**
@@ -42,6 +38,7 @@ export type MaybeNamedColor = NamedColor | (string & {});
  *
  * `r`, `g`, and `b` are integers between 0 and 255 representing the red, green, and blue channels, respectively.
  * `a` is a number between 0 and 1 representing the alpha channel.
+ * It may contain metadata about the color and its handling by the color parser.
  */
 export type ColorChannels = {
   /**
@@ -75,7 +72,5 @@ export type ColorChannels = {
   readonly isFallback?: boolean;
 };
 
-/**
- * Represents a color in various formats.
- */
-export type ColorValue = Hex | Rgb | NamedColor | ColorChannels | Color;
+/** Represents a color in any of the various supported formats. */
+export type ColorValue = Color | ColorChannels | Hex | NamedColor | Rgb;
