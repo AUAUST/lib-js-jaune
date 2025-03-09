@@ -8,6 +8,11 @@ import type { ColorChannels } from "~/types";
 export function brightness(channels: ColorChannels): number {
   const { r, g, b } = channels;
 
+  // Without this check, perfect white returns 0.9999999999999999 rather than 1.
+  if (r + g + b === 3 * 255) {
+    return 1;
+  }
+
   return Math.sqrt(0.299 * r ** 2 + 0.587 * g ** 2 + 0.114 * b ** 2) / 255;
 }
 

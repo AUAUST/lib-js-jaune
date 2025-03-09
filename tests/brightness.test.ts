@@ -8,7 +8,7 @@ describe("Colors", () => {
     black: {
       const c = Color.fromRgb([0, 0, 0]);
 
-      expect(c.brightness).toBeCloseTo(0);
+      expect(c.brightness).toBe(0);
       expect(c.isBright).toBe(false);
       expect(c.isDark).toBe(true);
     }
@@ -16,7 +16,7 @@ describe("Colors", () => {
     white: {
       const c = Color.fromRgb([255, 255, 255]);
 
-      expect(c.brightness).toBeCloseTo(1);
+      expect(c.brightness).toBe(1);
       expect(c.isBright).toBe(true);
       expect(c.isDark).toBe(false);
     }
