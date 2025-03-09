@@ -18,7 +18,7 @@ import { cache, channels } from "~/utils/symbols";
 
 export class Color {
   protected [channels]: Required<Writable<ColorChannels>> = undefined!;
-  protected [cache]: Map<string, any> = new Map();
+  protected [cache]: Map<string | Function, any> = new Map();
 
   constructor(value: ColorChannels) {
     this[channels] = { ...toColorChannels(value) };
@@ -216,47 +216,51 @@ export class Color {
   }
 
   /** Helper to cache data until the channels are updated. */
-  private memoize<T>(key: string, getter: (channels: ColorChannels) => T): T {
-    if (!this[cache].has(key)) {
-      this[cache].set(key, getter(this[channels]));
+  private memoize<T>(getter: (channels: ColorChannels) => T, key?: string): T {
+    // If no key is passed, we use the getter function as the key
+    // This means no key is required when the getter is a named function, while allowing to use anonymous functions within getters as well by passing a key
+    const cacheKey = key ?? getter;
+
+    if (!this[cache].has(cacheKey)) {
+      this[cache].set(cacheKey, getter(this[channels]));
     }
 
-    return this[cache].get(key);
+    return this[cache].get(cacheKey);
   }
 
   /** Checks if the color is fully opaque. */
   get isOpaque() {
-    return this.memoize("isOpaque", isOpaque);
+    return this.memoize(isOpaque);
   }
 
   /** Checks if the color is fully transparent. */
   get isTransparent() {
-    return this.memoize("isTransparent", isTransparent);
+    return this.memoize(isTransparent);
   }
 
   /** Checks if the color is at least partially transparent. */
   get isTranslucent() {
-    return this.memoize("isTranslucent", isTranslucent);
+    return this.memoize(isTranslucent);
   }
 
   /** Returns the closest named color. */
   get closestNamedColor() {
-    return this.memoize("closestNamedColor", closestNamedColor);
+    return this.memoize(closestNamedColor);
   }
 
   /** The relative brightness of the color. */
   get brightness() {
-    return this.memoize("brightness", brightness);
+    return this.memoize(brightness);
   }
 
   /** Whether the color is considered bright. */
   get isBright() {
-    return this.memoize("isBright", isBright);
+    return this.memoize(isBright);
   }
 
   /** Whether the color is considered dark. */
   get isDark() {
-    return this.memoize("isDark", isDark);
+    return this.memoize(isDark);
   }
 
   /** Whether the color is brighter than the passed threshold. */
@@ -268,15 +272,15 @@ export class Color {
   }
 
   toHex() {
-    return this.memoize("toHex", toHex);
+    return this.memoize(toHex);
   }
 
   toRgb() {
-    return this.memoize("toRgb", toRgb);
+    return this.memoize(toRgb);
   }
 
   toChannels() {
-    return this.memoize("toChannels", toColorChannels); // can't return `this[channels]` directly as it's writable, and could cause unexpected behavior
+    return this.memoize(toColorChannels); // can't return `this[channels]` directly as it's writable, and could cause unexpected behavior
   }
 
   toString() {
