@@ -1,8 +1,13 @@
 import { N } from "@auaust/primitive-kit";
 import type { Writable } from "type-fest";
-import type { ColorChannels, ColorValue, MaybeNamedColor, Rgb } from "~/types";
+import type {
+  ColorChannels,
+  ColorValue,
+  MaybeNamedColor,
+  NamedColor,
+  Rgb,
+} from "~/types";
 import { isNamedColor, parseHex, parseNamedColor, parseRgb } from "~/utils";
-import { brightness, isBright, isDark } from "~/utils/brightness";
 import {
   fallbackColor,
   isColorChannels,
@@ -11,6 +16,14 @@ import {
   toRgbChannel,
 } from "~/utils/channels";
 import { isHex, toHex } from "~/utils/hex";
+import {
+  brightness,
+  contrast,
+  grayscale,
+  isBright,
+  isDark,
+  luminance,
+} from "~/utils/luminance";
 import { closestNamedColor } from "~/utils/namedColors";
 import { isOpaque, isTranslucent, isTransparent } from "~/utils/opacity";
 import { couldBeRgb, toRgb } from "~/utils/rgb";
@@ -203,7 +216,7 @@ export class Color {
    * Whether the color is the fallback color, which is used when the input is invalid.
    * As soon as a color channel is updated, this will always be `false`.
    */
-  get isFallback() {
+  get isFallback(): boolean {
     return this[channels].isFallback;
   }
 
@@ -211,7 +224,7 @@ export class Color {
    * Whether any of the channels have been transformed by the color parser.
    * As soon as a color channel is updated, this will always be `false`.
    */
-  get isTransformed() {
+  get isTransformed(): boolean {
     return this[channels].isTransformed;
   }
 
@@ -229,73 +242,96 @@ export class Color {
   }
 
   /** Checks if the color is fully opaque. */
-  get isOpaque() {
+  get isOpaque(): boolean {
     return this.memoize(isOpaque);
   }
 
   /** Checks if the color is fully transparent. */
-  get isTransparent() {
+  get isTransparent(): boolean {
     return this.memoize(isTransparent);
   }
 
   /** Checks if the color is at least partially transparent. */
-  get isTranslucent() {
+  get isTranslucent(): boolean {
     return this.memoize(isTranslucent);
   }
 
   /** Returns the closest named color. */
-  get closestNamedColor() {
+  get closestNamedColor(): NamedColor {
     return this.memoize(closestNamedColor);
   }
 
   /** The relative brightness of the color. */
-  get brightness() {
+  get brightness(): number {
     return this.memoize(brightness);
   }
 
   /** Whether the color is considered bright. */
-  get isBright() {
+  get isBright(): boolean {
     return this.memoize(isBright);
   }
 
   /** Whether the color is considered dark. */
-  get isDark() {
+  get isDark(): boolean {
     return this.memoize(isDark);
   }
 
-  /** Whether the color is brighter than the passed threshold. */
-  isBrighterThan(threshold: Color | number) {
+  /** Whether the color is brighter than the passed threshold or color. */
+  isBrighterThan(threshold: Color | number): boolean {
     return (
       this.brightness >
       (threshold instanceof Color ? threshold.brightness : threshold)
     );
   }
 
-  toHex() {
+  /** Whether the color is darker than the passed threshold or color. */
+  isDarkerThan(threshold: Color | number): boolean {
+    return (
+      this.brightness <
+      (threshold instanceof Color ? threshold.brightness : threshold)
+    );
+  }
+
+  /** Returns the relative luminance of the color. */
+  get luminance(): number {
+    return this.memoize(luminance);
+  }
+
+  /** Returns the contrast ratio between this color and another. */
+  contrast(color: ColorValue): number {
+    return contrast(this[channels], Color.from(color)[channels]);
+  }
+
+  /** Returns a new color with the grayscale equivalent of the current color, preserving the alpha channel. */
+  toGrayscale(): Color {
+    return Color.fromChannels(grayscale(this[channels]));
+  }
+
+  toHex(): string {
     return this.memoize(toHex);
   }
 
-  toRgb() {
+  toRgb(): Rgb {
     return this.memoize(toRgb);
   }
 
-  toChannels() {
+  toChannels(): ColorChannels {
     return this.memoize(toColorChannels); // can't return `this[channels]` directly as it's writable, and could cause unexpected behavior
   }
 
-  toString() {
+  toString(): string {
     return this.toHex();
   }
 
-  valueOf() {
+  valueOf(): string {
     return this.toString();
   }
 
-  [Symbol.toPrimitive]() {
+  [Symbol.toPrimitive](): string {
     return this.toString();
   }
 
-  toJSON() {
+  toJSON(): string {
     return this.toString();
   }
 }
