@@ -1,5 +1,11 @@
 # @auaust/jaune
 
+## 0.0.4
+
+### Patch Changes
+
+- 87827d1: Switch from `this` to `Color` in static method to avoid problems with bound function calls.
+
 ## 0.0.3
 
 ### Patch Changes
