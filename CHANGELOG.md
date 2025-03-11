@@ -1,5 +1,11 @@
 # @auaust/jaune
 
+## 0.0.3
+
+### Patch Changes
+
+- 725a141: Fixed a bug in `brightness()` which caused colors close to black to have a brightness value 100x too large.
+
 ## 0.0.2
 
 ### Patch Changes
