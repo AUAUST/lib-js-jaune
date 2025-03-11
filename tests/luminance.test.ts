@@ -1,4 +1,5 @@
-import { expect, test } from "vitest";
+import { N } from "@auaust/primitive-kit";
+import { assert, expect, test } from "vitest";
 import { Color } from "~/classes/Color";
 
 test("Colors have a luminance and brightness value", () => {
@@ -36,11 +37,28 @@ test("Colors have a luminance and brightness value", () => {
     expect(c.isDark).toBe(false);
   }
 
+  darkgray: {
+    const c = Color.from("#080808");
+
+    expect(c.luminance).toBeLessThan(0.05);
+    expect(c.brightness).toBeLessThan(0.05);
+    expect(c.isBright).toBe(false);
+    expect(c.isDark).toBe(true);
+  }
+
   lime: {
     const c = Color.from("lime");
 
     expect(c.isBright).toBe(true);
     expect(c.isDark).toBe(false);
+  }
+
+  random: for (let i = 0; i <= 100; i++) {
+    const c = Color.random();
+
+    assert(N.isBetween(c.luminance, 0, 1));
+    assert(N.isBetween(c.brightness, 0, 1));
+    assert(c.isBright === !c.isDark);
   }
 });
 

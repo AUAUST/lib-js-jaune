@@ -51,7 +51,7 @@ export function brightness(channels: ColorChannels): number {
   const l = luminance(channels);
 
   if (l <= 216 / 24389) {
-    return l * (24389 / 27);
+    return (l * (24389 / 27)) / 100;
   }
 
   return (Math.pow(l, 1 / 3) * 116 - 16) / 100;
