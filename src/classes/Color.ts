@@ -53,30 +53,30 @@ export class Color {
   static from(red: number, green: number, blue: number, alpha?: number): Color;
   static from(value: ColorValue | number, ...rest: number[]): Color {
     if (N.is(value)) {
-      return new this({ r: value, g: rest[0], b: rest[1], a: rest[2] });
+      return new Color({ r: value, g: rest[0], b: rest[1], a: rest[2] });
     }
 
-    return new this(parseColor(value ?? fallbackColor));
+    return new Color(parseColor(value ?? fallbackColor));
   }
 
   static fromChannels(channels: ColorChannels): Color {
-    return new this(channels);
+    return new Color(channels);
   }
 
   static fromRgb(rgb: Rgb): Color {
-    return new this(parseRgb(rgb));
+    return new Color(parseRgb(rgb));
   }
 
   static fromHex(hex: string): Color {
-    return new this(parseHex(hex));
+    return new Color(parseHex(hex));
   }
 
   static fromName(name: MaybeNamedColor): Color {
-    return new this(parseNamedColor(name));
+    return new Color(parseNamedColor(name));
   }
 
   static random(presets: Parameters<typeof random>[0] = {}): Color {
-    return new this(random(presets));
+    return new Color(random(presets));
   }
 
   /**
