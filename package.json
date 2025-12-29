@@ -25,13 +25,13 @@
     "ci:publish": "changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.28.1",
-    "@vitest/coverage-istanbul": "^2.1.9",
-    "rimraf": "^6.0.1",
-    "tsup": "^8.4.0",
-    "type-fest": "^4.37.0",
-    "typescript": "^5.8.2",
-    "vitest": "^2.1.9"
+    "@changesets/cli": "^2.29.8",
+    "@vitest/coverage-istanbul": "^4.0.16",
+    "rimraf": "^6.1.2",
+    "tsup": "^8.5.1",
+    "type-fest": "^5.3.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
   },
   "files": [
     "dist",
@@ -51,6 +51,6 @@
     }
   },
   "dependencies": {
-    "@auaust/primitive-kit": "^0.41.0"
+    "@auaust/primitive-kit": "^0.41.9"
   }
 }
