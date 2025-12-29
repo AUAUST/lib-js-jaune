@@ -170,7 +170,7 @@ const namedColorsAliasesCache: Partial<
 /**
  * Whether the input is a valid named color.
  *
- * The check is case-sensitive.
+ * The check is case-insensitive.
  */
 export function isNamedColor(value: unknown): value is NamedColor {
   return S.is(value) && namedColors.has(<NamedColor>value.toLowerCase());
