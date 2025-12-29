@@ -75,6 +75,12 @@ export class Color {
     return new Color(parseNamedColor(name));
   }
 
+  static parse(value: ColorValue): ColorChannels | undefined {
+    const color = parseColor(value);
+
+    return color.isFallback ? undefined : color;
+  }
+
   static random(presets: Parameters<typeof random>[0] = {}): Color {
     return new Color(random(presets));
   }
@@ -324,12 +330,12 @@ export class Color {
 
   /** Returns the contrast ratio between this color and another. */
   contrast(color: ColorValue): number {
-    return contrast(this[channels], Color.from(color)[channels]);
+    return contrast(this[channels], parseColor(color));
   }
 
   /** Returns the distance between this color and another. If `alpha` is `true`, the alpha channel is included in the calculation. */
   distance(color: ColorValue, alpha = false): number {
-    return distance(this[channels], Color.from(color)[channels], alpha);
+    return distance(this[channels], parseColor(color), alpha);
   }
 
   /** Returns a new color with the grayscale equivalent of the current color, preserving the alpha channel. */
