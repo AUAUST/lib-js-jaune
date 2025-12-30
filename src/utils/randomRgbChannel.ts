@@ -1,14 +1,15 @@
-import { A, N } from "@auaust/primitive-kit";
+import { isArray } from "@auaust/primitive-kit/arrays";
+import { isNumber, randomInteger } from "@auaust/primitive-kit/numbers";
 import type { ChannelRange } from "~/types";
 
 export function randomRgbChannel(range?: ChannelRange | undefined): number {
-  if (N.is(range)) {
+  if (isNumber(range)) {
     return range;
   }
 
-  if (A.is(range)) {
-    return N.randInt(range[0], range[1]);
+  if (isArray(range)) {
+    return randomInteger(range[0], range[1]);
   }
 
-  return N.randInt(0, 255);
+  return randomInteger(0, 255);
 }

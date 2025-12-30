@@ -1,4 +1,5 @@
-import { A, N } from "@auaust/primitive-kit";
+import { isArray } from "@auaust/primitive-kit/arrays";
+import { isBetween, isNumber } from "@auaust/primitive-kit/numbers";
 import type { Rgb } from "~/types";
 
 /**
@@ -6,5 +7,7 @@ import type { Rgb } from "~/types";
  * As in, it checks if the input is an array of numbers without validating the values range.
  */
 export function couldBeRgb(value: unknown): value is Rgb {
-  return A.is(value) && N.isBetween(value.length, 3, 4) && value.every(N.is);
+  return (
+    isArray(value) && isBetween(value.length, 3, 4) && value.every(isNumber)
+  );
 }

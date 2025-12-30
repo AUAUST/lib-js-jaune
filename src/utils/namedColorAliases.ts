@@ -1,4 +1,4 @@
-import { O } from "@auaust/primitive-kit";
+import { entries } from "@auaust/primitive-kit/objects";
 import type { NamedColor } from "~/types";
 import { isNamedColor, namedColorToHex, namedColorsMap } from "~/utils";
 
@@ -23,7 +23,7 @@ export function namedColorAliases(name: NamedColor): readonly NamedColor[] {
   const aliases: NamedColor[] = [];
   const targetHex = namedColorToHex(name);
 
-  for (const [name, hex] of O.entries(namedColorsMap)) {
+  for (const [name, hex] of entries(namedColorsMap)) {
     if (hex === targetHex) {
       aliases.push(name);
     }

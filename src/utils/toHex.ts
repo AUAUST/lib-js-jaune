@@ -1,4 +1,4 @@
-import { N } from "@auaust/primitive-kit";
+import { isNumber, max, round } from "@auaust/primitive-kit/numbers";
 import type { ColorChannels, Hex } from "~/types";
 import { toRgbChannel } from "~/utils";
 
@@ -20,8 +20,8 @@ export function toHex(channels: ColorChannels): Hex {
     )
       .toString(16)
       .substring(1) +
-    (N.is(a) && a < 1
-      ? N.round(N.max(0, a) * 255)
+    (isNumber(a) && a < 1
+      ? round(max(0, a) * 255)
           .toString(16)
           .padStart(2, "0")
       : "")

@@ -1,4 +1,4 @@
-import { N } from "@auaust/primitive-kit";
+import { isNumber } from "@auaust/primitive-kit/numbers";
 import type { Writable } from "type-fest";
 import type {
   ColorChannels,
@@ -54,7 +54,7 @@ export class Color {
   static from(value: ColorValue): Color;
   static from(red: number, green: number, blue: number, alpha?: number): Color;
   static from(value: ColorValue | number, ...rest: number[]): Color {
-    if (N.is(value)) {
+    if (isNumber(value)) {
       return new Color({ r: value, g: rest[0], b: rest[1], a: rest[2] });
     }
 

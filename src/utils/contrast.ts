@@ -1,4 +1,4 @@
-import { N } from "@auaust/primitive-kit";
+import { minMax } from "@auaust/primitive-kit/numbers";
 import type { ColorChannels } from "~/types";
 import { luminance } from "~/utils";
 
@@ -8,7 +8,7 @@ import { luminance } from "~/utils";
  * @see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
  */
 export function contrast(channelsA: ColorChannels, channelsB: ColorChannels) {
-  const [darkest, brightest] = N.minMax(
+  const [darkest, brightest] = minMax(
     luminance(channelsA),
     luminance(channelsB)
   );

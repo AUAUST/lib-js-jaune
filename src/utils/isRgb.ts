@@ -1,4 +1,5 @@
-import { A, N } from "@auaust/primitive-kit";
+import { isArray } from "@auaust/primitive-kit/arrays";
+import { isBetween } from "@auaust/primitive-kit/numbers";
 import type { Rgb } from "~/types";
 import { isAlphaChannel, isRgbChannel } from "~/utils";
 
@@ -7,8 +8,8 @@ import { isAlphaChannel, isRgbChannel } from "~/utils";
  */
 export function isRgb(value: unknown): value is Rgb {
   return (
-    A.is(value) &&
-    N.isBetween(value.length, 3, 4) &&
+    isArray(value) &&
+    isBetween(value.length, 3, 4) &&
     value.every((n, i) => (i === 3 ? isAlphaChannel(n) : isRgbChannel(n)))
   );
 }

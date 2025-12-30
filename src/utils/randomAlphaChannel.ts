@@ -1,13 +1,14 @@
-import { A, N } from "@auaust/primitive-kit";
+import { isArray } from "@auaust/primitive-kit/arrays";
+import { isNumber, randomFloat } from "@auaust/primitive-kit/numbers";
 import type { ChannelRange } from "~/types";
 
 export function randomAlphaChannel(range?: ChannelRange | undefined): number {
-  if (N.is(range)) {
+  if (isNumber(range)) {
     return range;
   }
 
-  if (A.is(range)) {
-    return N.randFloat(range[0], range[1]);
+  if (isArray(range)) {
+    return randomFloat(range[0], range[1]);
   }
 
   return 1;

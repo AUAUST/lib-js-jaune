@@ -1,5 +1,5 @@
 import { Color } from "@auaust/jaune";
-import { N } from "@auaust/primitive-kit";
+import { isBetween, isInteger } from "@auaust/primitive-kit/numbers";
 import { assert, describe, expect, test } from "vitest";
 
 describe("Random colors", () => {
@@ -7,16 +7,16 @@ describe("Random colors", () => {
     for (let i = 0; i < 10; i++) {
       const c = Color.random();
 
-      assert(N.isBetween(c.r, 0, 255));
-      assert(N.isInteger(c.r));
+      assert(isBetween(c.r, 0, 255));
+      assert(isInteger(c.r));
 
-      assert(N.isBetween(c.g, 0, 255));
-      assert(N.isInteger(c.g));
+      assert(isBetween(c.g, 0, 255));
+      assert(isInteger(c.g));
 
-      assert(N.isBetween(c.b, 0, 255));
-      assert(N.isInteger(c.b));
+      assert(isBetween(c.b, 0, 255));
+      assert(isInteger(c.b));
 
-      assert(N.isBetween(c.a, 0, 1));
+      assert(isBetween(c.a, 0, 1));
     }
   });
 
@@ -29,8 +29,8 @@ describe("Random colors", () => {
       expect(c.r).toBe(24);
       expect(c.a).toBe(1);
 
-      assert(N.isBetween(c.g, 0, 255));
-      assert(N.isBetween(c.b, 0, 255));
+      assert(isBetween(c.g, 0, 255));
+      assert(isBetween(c.b, 0, 255));
     }
 
     multiple: for (let i = 0; i < 10; i++) {
@@ -44,7 +44,7 @@ describe("Random colors", () => {
       expect(c.g).toBe(32);
       expect(c.a).toBe(0.5);
 
-      assert(N.isBetween(c.b, 0, 255));
+      assert(isBetween(c.b, 0, 255));
     }
 
     all: {
@@ -67,13 +67,13 @@ describe("Random colors", () => {
         a: [0.5, 0.55],
       });
 
-      assert(N.isBetween(c.r, 24, 32));
-      assert(N.isInteger(c.r));
+      assert(isBetween(c.r, 24, 32));
+      assert(isInteger(c.r));
 
-      assert(N.isBetween(c.g, 0, 255));
-      assert(N.isInteger(c.g));
+      assert(isBetween(c.g, 0, 255));
+      assert(isInteger(c.g));
 
-      assert(N.isBetween(c.a, 0.5, 0.55));
+      assert(isBetween(c.a, 0.5, 0.55));
     }
   });
 
@@ -87,8 +87,8 @@ describe("Random colors", () => {
 
       expect(c.r).toBe(24);
 
-      assert(N.isBetween(c.g, 32, 64));
-      assert(N.isInteger(c.g));
+      assert(isBetween(c.g, 32, 64));
+      assert(isInteger(c.g));
 
       expect(c.a).toBe(0.5);
     }

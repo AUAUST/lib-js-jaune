@@ -1,5 +1,5 @@
-import { N } from "@auaust/primitive-kit";
+import { isBetween, isNumber } from "@auaust/primitive-kit/numbers";
 
 export function isRgbChannel(value: unknown): value is number {
-  return N.is(value) && N.isBetween(value, 0, 255);
+  return isNumber(value) && isBetween(value, 0, 255);
 }

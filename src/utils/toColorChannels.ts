@@ -1,4 +1,4 @@
-import { O } from "@auaust/primitive-kit";
+import { isObject } from "@auaust/primitive-kit/objects";
 import type { ColorChannels } from "~/types";
 import { fallbackColor, toAlphaChannel, toRgbChannel } from "~/utils";
 
@@ -26,7 +26,7 @@ export function toColorChannels(
   isTransformed?: boolean,
   isFallback?: boolean
 ): Required<ColorChannels> {
-  if (O.is(r, false)) {
+  if (isObject(r, false)) {
     ({ r, g, b, a, isTransformed, isFallback } = r);
   }
 
@@ -40,7 +40,7 @@ export function toColorChannels(
 
   const finalA = toAlphaChannel(a);
 
-  return O.freeze({
+  return Object.freeze({
     r: finalR,
     g: finalG,
     b: finalB,

@@ -1,5 +1,5 @@
 import { Color } from "@auaust/jaune";
-import { N } from "@auaust/primitive-kit";
+import { isBetween } from "@auaust/primitive-kit/numbers";
 import { assert, expect, test } from "vitest";
 
 test("Colors have a luminance and brightness value", () => {
@@ -56,8 +56,8 @@ test("Colors have a luminance and brightness value", () => {
   random: for (let i = 0; i <= 100; i++) {
     const c = Color.random();
 
-    assert(N.isBetween(c.luminance, 0, 1));
-    assert(N.isBetween(c.brightness, 0, 1));
+    assert(isBetween(c.luminance, 0, 1));
+    assert(isBetween(c.brightness, 0, 1));
     assert(c.isBright === !c.isDark);
   }
 });

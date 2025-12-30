@@ -1,5 +1,5 @@
-import { N } from "@auaust/primitive-kit";
+import { clamp, round } from "@auaust/primitive-kit/numbers";
 
 export function toRgbChannel(value: number | undefined | null): number {
-  return N.clamp(N.round(value), 0, 255);
+  return clamp(round(value), 0, 255);
 }
