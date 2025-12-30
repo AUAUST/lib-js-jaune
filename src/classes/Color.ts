@@ -16,6 +16,7 @@ import {
   distance,
   fallbackColor,
   grayscale,
+  invert,
   isAliasToNamedColor,
   isBright,
   isColor,
@@ -342,6 +343,10 @@ export class Color {
   /** Returns a new color with the grayscale equivalent of the current color, preserving the alpha channel. */
   toGrayscale(): Color {
     return Color.fromChannels(grayscale(this[channels]));
+  }
+
+  toInvert(): Color {
+    return Color.fromChannels(invert(this[channels]));
   }
 
   toHex(): string {

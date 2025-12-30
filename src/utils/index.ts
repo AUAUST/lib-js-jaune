@@ -11,6 +11,7 @@ export { contrast } from "~/utils/contrast";
 export { couldBeRgb } from "~/utils/couldBeRgb";
 export { distance } from "~/utils/distance";
 export { grayscale } from "~/utils/grayscale";
+export { invert } from "~/utils/invert";
 export { isAliasToNamedColor } from "~/utils/isAliasToNamedColor";
 export { isAlphaChannel } from "~/utils/isAlphaChannel";
 export { isBright } from "~/utils/isBright";
