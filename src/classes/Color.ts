@@ -9,6 +9,8 @@ import type {
 } from "~/index";
 import {
   brightness,
+  cache,
+  channels,
   closestNamedColor,
   contrast,
   distance,
@@ -31,6 +33,7 @@ import {
   parseHex,
   parseNamedColor,
   parseRgb,
+  random,
   toAlphaChannel,
   toColorChannels,
   toHex,
@@ -38,8 +41,6 @@ import {
   toRgbChannel,
   type,
 } from "~/utils";
-import { random } from "~/utils/random";
-import { cache, channels } from "~/utils/symbols";
 
 export class Color {
   protected [channels]: Required<Writable<ColorChannels>> = undefined!;

@@ -82,3 +82,5 @@ export type ColorChannels = {
    */
   readonly isFallback?: boolean;
 };
+
+export type ChannelRange = number | [min: number, max: number];

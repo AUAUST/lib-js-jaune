@@ -49,7 +49,7 @@
       "require": "./dist/index.cjs"
     },
     "./utils": {
-      "types": "./dist/utils.d.cts",
+      "types": "./dist/utils.d.ts",
       "import": "./dist/utils.js",
       "require": "./dist/utils.cjs"
     }

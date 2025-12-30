@@ -10,8 +10,8 @@ export default defineConfig(({ mode }) => {
 
   if (!shouldTestDist) {
     alias["~"] = "/src";
-    alias["@auaust/toolkit"] = "/src/index.ts";
-    alias["@auaust/toolkit/utils"] = "/src/utils/index.ts";
+    alias["@auaust/jaune/utils"] = "/src/utils/index.ts";
+    alias["@auaust/jaune"] = "/src/index.ts";
   }
 
   return {

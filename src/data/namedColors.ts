@@ -1,13 +1,11 @@
-import { O, S } from "@auaust/primitive-kit";
-import type { ColorChannels, MaybeNamedColor, NamedColor } from "~/types";
-import { distance, fallbackColor, parseHex } from "~/utils";
+import type { NamedColor } from "~/types";
 
 /**
  * A map of named colors and their HEX values.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  */
-export const namedColorsMap = O.freeze({
+export const namedColorsMap = Object.freeze({
   aliceblue: "#f0f8ffff",
   antiquewhite: "#faebd7ff",
   aqua: "#00ffffff",
@@ -159,108 +157,6 @@ export const namedColorsMap = O.freeze({
   yellowgreen: "#9acd32ff",
 });
 
-const namedColors = new Set<NamedColor>(O.keys(namedColorsMap));
-
-const namedColorsChannelsCache: Partial<Record<NamedColor, ColorChannels>> = {};
-
-const namedColorsAliasesCache: Partial<
-  Record<NamedColor, readonly NamedColor[]>
-> = {};
-
-/**
- * Whether the input is a valid named color.
- *
- * The check is case-insensitive.
- */
-export function isNamedColor(value: unknown): value is NamedColor {
-  return S.is(value) && namedColors.has(<NamedColor>value.toLowerCase());
-}
-
-/**
- * Returns the color channels from a named color. Must be a valid named color, already lowercased.
- *
- * @internal
- */
-export function namedColorChannels(name: NamedColor): ColorChannels {
-  return (namedColorsChannelsCache[name] ??= parseHex(namedColorToHex(name)!));
-}
-
-/**
- * Returns the color channels from a named color.
- */
-export function parseNamedColor(name: MaybeNamedColor): ColorChannels {
-  if (!isNamedColor(name)) {
-    return fallbackColor;
-  }
-
-  return namedColorChannels(<NamedColor>name.toLowerCase());
-}
-
-/**
- * Returns the corresponding HEX value of a named color.
- */
-export function namedColorToHex(name: NamedColor): string;
-export function namedColorToHex(name: MaybeNamedColor): string | undefined;
-export function namedColorToHex(name: MaybeNamedColor): string | undefined {
-  return (
-    namedColorsMap[<keyof typeof namedColorsMap>name.toLowerCase()] || undefined
-  );
-}
-
-/** Returns the closest named color to the passed color channels. */
-export function closestNamedColor(channels: ColorChannels): NamedColor {
-  let closest: NamedColor | undefined;
-  let smallestDistance = Infinity;
-
-  for (const name of namedColors) {
-    const value = namedColorChannels(name);
-    const d = distance(
-      value,
-      channels,
-      value.a === 1 // Ignore alpha channel only if it's 1 -> allows to match transparent/black correctly
-    );
-
-    if (d < smallestDistance) {
-      closest = name;
-      smallestDistance = d;
-    }
-  }
-
-  return closest!;
-}
-
-/**
- * Returns all the aliases of a named color.
- */
-export function namedColorAliases(name: NamedColor): readonly NamedColor[] {
-  name = <NamedColor>name.toLowerCase();
-
-  if (!isNamedColor(name)) {
-    return [];
-  }
-
-  if (namedColorsAliasesCache[name]) {
-    return namedColorsAliasesCache[name]!;
-  }
-
-  const aliases: NamedColor[] = [];
-  const targetHex = namedColorToHex(name);
-
-  for (const [name, hex] of O.entries(namedColorsMap)) {
-    if (hex === targetHex) {
-      aliases.push(name);
-    }
-  }
-
-  return (namedColorsAliasesCache[name] = Object.freeze(aliases));
-}
-
-/**
- * Returns a boolean indicating whether two named colors are aliases.
- */
-export function isAliasToNamedColor(
-  name: NamedColor,
-  alias: NamedColor
-): boolean {
-  return namedColorAliases(name).includes(<NamedColor>alias.toLowerCase());
-}
+export const namedColors = new Set<NamedColor>(
+  Object.keys(namedColorsMap) as NamedColor[]
+);

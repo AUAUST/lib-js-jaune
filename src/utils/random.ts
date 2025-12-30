@@ -1,32 +1,5 @@
-import { A, N } from "@auaust/primitive-kit";
-import type { ColorChannels } from "~/types";
-import { toColorChannels } from "~/utils";
-
-export type ChannelRange = number | [min: number, max: number];
-
-function randomRgbChannel(range?: ChannelRange | undefined): number {
-  if (N.is(range)) {
-    return range;
-  }
-
-  if (A.is(range)) {
-    return N.randInt(range[0], range[1]);
-  }
-
-  return N.randInt(0, 255);
-}
-
-function randomAlphaChannel(range?: ChannelRange | undefined): number {
-  if (N.is(range)) {
-    return range;
-  }
-
-  if (A.is(range)) {
-    return N.randFloat(range[0], range[1]);
-  }
-
-  return 1;
-}
+import type { ChannelRange, ColorChannels } from "~/types";
+import { randomAlphaChannel, randomRgbChannel, toColorChannels } from "~/utils";
 
 /**
  * Generates a random color.
