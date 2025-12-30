@@ -1,6 +1,6 @@
 import { Color } from "@auaust/jaune";
+import { invert, parseHex } from "@auaust/jaune/utils";
 import { expect, test } from "vitest";
-import { invert, parseHex } from "~/utils";
 
 test("Colors can be inverted", () => {
   expect(Color.from("black").toInvert().toHex()).toBe("#ffffff");
