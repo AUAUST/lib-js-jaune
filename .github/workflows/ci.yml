@@ -35,7 +35,7 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
 
+      # test:dist will build the project then test against the dist folder
       - name: Build & Test
         run: |
-          pnpm run test
-          pnpm run build
+          pnpm run test:dist
