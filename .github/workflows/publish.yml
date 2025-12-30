@@ -9,6 +9,11 @@ jobs:
   publish:
     name: Publish to npm
 
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+
     runs-on: ubuntu-latest
 
     steps:
