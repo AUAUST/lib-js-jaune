@@ -1,5 +1,11 @@
 # @auaust/jaune
 
+## 0.0.5
+
+### Patch Changes
+
+- 2d96017: Add `Color.toInvert()` and `invert()` util
+
 ## 0.0.4
 
 ### Patch Changes
