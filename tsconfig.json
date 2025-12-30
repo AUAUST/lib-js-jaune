@@ -8,12 +8,15 @@
     "declarationDir": "dist/types",
     "declarationMap": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "~": ["./src"],
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@auaust/jaune": ["./src/index.ts"],
+      "@auaust/jaune/utils": ["./src/utils/index.ts"]
     }
   },
   "include": ["src", "tests"],

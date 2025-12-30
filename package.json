@@ -15,10 +15,12 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "build": "pnpm test && pnpm run build:clean && pnpm run build:js",
+    "build": "pnpm test && pnpm build:notest",
+    "build:notest": "pnpm run build:clean && pnpm run build:js",
     "build:clean": "rimraf dist",
     "build:js": "tsup",
     "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm typecheck",
+    "test:dist": "pnpm build:notest && vitest run --config vitest.config.ts --typecheck --mode build --",
     "watch": "vitest --config vitest.config.ts --typecheck --",
     "coverage": "vitest run --coverage",
     "typecheck": "echo 'Typechecking...' && tsc --noEmit && echo 'All good!'",
@@ -42,10 +44,12 @@
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./utils": {
+      "types": "./dist/utils.d.cts",
       "import": "./dist/utils.js",
       "require": "./dist/utils.cjs"
     }
