@@ -1,6 +1,6 @@
+import { Color } from "@auaust/jaune";
 import { N } from "@auaust/primitive-kit";
 import { assert, describe, expect, test } from "vitest";
-import { Color } from "~";
 
 describe("Random colors", () => {
   test("can be generated", () => {

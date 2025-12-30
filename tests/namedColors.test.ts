@@ -1,7 +1,4 @@
-import { O } from "node_modules/@auaust/primitive-kit/dist/index.cjs";
-import { describe, expect, test } from "vitest";
-import { Color } from "~/classes/Color";
-import type { ColorChannels, NamedColor } from "~/types";
+import { Color, type ColorChannels, type NamedColor } from "@auaust/jaune";
 import {
   isAliasToNamedColor,
   isNamedColor,
@@ -9,7 +6,9 @@ import {
   namedColorsMap,
   namedColorToHex,
   parseNamedColor,
-} from "~/utils";
+} from "@auaust/jaune/utils";
+import { O } from "node_modules/@auaust/primitive-kit/dist/index.cjs";
+import { describe, expect, test } from "vitest";
 
 describe("Named colors", () => {
   test("can be recognized", () => {

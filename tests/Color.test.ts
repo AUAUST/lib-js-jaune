@@ -1,5 +1,4 @@
-import { describe, expect, test } from "vitest";
-import { Color } from "~/classes/Color";
+import { Color } from "@auaust/jaune";
 import {
   isAliasToNamedColor,
   isColor,
@@ -9,7 +8,8 @@ import {
   isRgb,
   namedColorAliases,
   type,
-} from "~/utils";
+} from "@auaust/jaune/utils";
+import { describe, expect, test } from "vitest";
 
 describe("Static Color", () => {
   describe("can instantiate Color instances", () => {

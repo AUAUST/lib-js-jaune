@@ -6,7 +6,7 @@ import type {
   MaybeNamedColor,
   NamedColor,
   Rgb,
-} from "~";
+} from "~/index";
 import {
   brightness,
   closestNamedColor,

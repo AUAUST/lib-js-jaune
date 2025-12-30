@@ -1,6 +1,6 @@
+import { Color } from "@auaust/jaune";
+import { isColor, type } from "@auaust/jaune/utils";
 import { describe, expect, test } from "vitest";
-import { Color } from "~/classes/Color";
-import { isColor, type } from "~/utils";
 
 describe("Colors", () => {
   test("'s type can be checked", () => {

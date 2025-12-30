@@ -1,5 +1,5 @@
+import { Color } from "@auaust/jaune";
 import { expect, test } from "vitest";
-import { Color } from "~/classes/Color";
 
 test("Colors can be compared by distance", () => {
   expect(Color.from("black").distance("white")).toBeCloseTo(441.673);

@@ -1,6 +1,6 @@
+import { Color } from "@auaust/jaune";
 import { N } from "@auaust/primitive-kit";
 import { assert, expect, test } from "vitest";
-import { Color } from "~/classes/Color";
 
 test("Colors have a luminance and brightness value", () => {
   black: {

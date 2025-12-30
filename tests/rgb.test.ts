@@ -1,6 +1,6 @@
+import type { ColorChannels, Rgb } from "@auaust/jaune";
+import { isRgb, parseRgb, toRgb } from "@auaust/jaune/utils";
 import { describe, expect, test } from "vitest";
-import type { ColorChannels, Rgb } from "~/types";
-import { isRgb, parseRgb, toRgb } from "~/utils";
 
 describe("RGB colors", () => {
   test("can be recognized", () => {
