@@ -14,15 +14,17 @@ import type { ColorInputType } from "#parse/types/ColorInputType";
  */
 export function colorType(value: unknown): ColorInputType | undefined {
   if (isString(value)) {
-    if (isHex(value)) {
+    if (!parseCss(value)) {
+      return;
+    }
+
+    const normalized = value.trim().toLowerCase();
+
+    if (isHex(normalized)) {
       return "hex";
     }
 
-    if (isNamedColor(value.toLowerCase())) {
-      return "named";
-    }
-
-    return parseCss(value) ? "css" : undefined;
+    return isNamedColor(normalized) ? "named" : "css";
   }
 
   if (isColor(value)) {

@@ -4,8 +4,6 @@ import { isColor } from "#color/utils/isColor";
 import { parseRgbChannels } from "#formats/channels/utils/parseRgbChannels";
 import { parseRgbTuple } from "#formats/channels/utils/parseRgbTuple";
 import { parseCss } from "#formats/css/utils/parseCss";
-import { parseHex } from "#formats/hex/utils/parseHex";
-import { parseNamedColor } from "#formats/named/utils/parseNamedColor";
 import type { Color } from "#color/types/Color";
 
 /**
@@ -15,8 +13,7 @@ import type { Color } from "#color/types/Color";
  */
 export function parseColor(value: unknown): Color | undefined {
   if (isString(value)) {
-    // @debt parseCss already covers hex and names; this chain only rejects surrounding whitespace, a policy neither the issue nor the plan settles.
-    return parseHex(value) ?? parseNamedColor(value) ?? parseCss(value);
+    return parseCss(value);
   }
 
   if (isColor(value)) {

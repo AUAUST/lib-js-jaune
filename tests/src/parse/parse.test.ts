@@ -42,6 +42,11 @@ describe("parse", () => {
     );
   });
 
+  test("ignores surrounding whitespace", () => {
+    expect(parseColor(" #fff ")).toEqual(toColor("#fff"));
+    expect(colorType(" #fff ")).toBe("hex");
+  });
+
   test("rejects invalid inputs", () => {
     expect(parseColor([Number.NaN, 0, 0])).toBeUndefined();
 
