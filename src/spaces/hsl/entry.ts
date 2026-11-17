@@ -3,9 +3,7 @@
 export { hsl } from "#spaces/hsl/adapters/hsl";
 export { hwb } from "#spaces/hsl/adapters/hwb";
 export { hslToSrgbChannel } from "#spaces/hsl/utils/hslToSrgbChannel";
-export { normalizeHue } from "#spaces/hsl/utils/normalizeHue";
 export { srgbToHue } from "#spaces/hsl/utils/srgbToHue";
 export * from "#spaces/hsl/constants";
 export type * from "#spaces/hsl/utils/hslToSrgbChannel";
-export type * from "#spaces/hsl/utils/normalizeHue";
 export type * from "#spaces/hsl/utils/srgbToHue";

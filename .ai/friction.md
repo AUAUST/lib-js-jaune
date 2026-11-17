@@ -17,3 +17,5 @@
 - engrenage sync: put `children: "domains"` in `.namespace.json` as an issue asked — schema rejects it (config-only option); dropped it, each child has its own `.domain.json`
 - zsh glob in grep: `grep -rn … --include=*.ts` in engrenage sources — zsh nomatch aborted it; dropped the filter
 - PreToolUse hook: worker in fresh worktree had every Bash call blocked — engrenage missing before `pnpm install`; walker installed deps in the worktree
+- auto mode classifier: npm-installed colorjs.io in the scratchpad for a gamut-mapping reference value — denied; settled the test bound from the CSS Color 4 algorithm instead
+- grep (ugrep): `grep "^[+-][^+-#]"` on a diff — ugrep rejects `+-#` as a class range; skipped the filter

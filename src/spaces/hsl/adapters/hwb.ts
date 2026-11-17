@@ -1,9 +1,9 @@
 import { max, min } from "@auaust/toolkit/math";
 
 import { createSpace } from "#space/utils/createSpace";
-import { achromaticThreshold } from "#spaces/hsl/constants";
+import { normalizeHue } from "#space/utils/normalizeHue";
+import { hslAchromaticThreshold } from "#spaces/hsl/constants";
 import { hslToSrgbChannel } from "#spaces/hsl/utils/hslToSrgbChannel";
-import { normalizeHue } from "#spaces/hsl/utils/normalizeHue";
 import { srgbToHue } from "#spaces/hsl/utils/srgbToHue";
 import { srgb } from "#spaces/rgb/adapters/srgb";
 
@@ -61,7 +61,7 @@ export const hwb = createSpace({
     const whiteness = min(coords[0], coords[1], coords[2]);
     const blackness = 1 - max(coords[0], coords[1], coords[2]);
 
-    out[0] = whiteness + blackness >= 1 - achromaticThreshold
+    out[0] = whiteness + blackness >= 1 - hslAchromaticThreshold
       ? 0
       : srgbToHue(coords[0], coords[1], coords[2]);
 
@@ -70,5 +70,5 @@ export const hwb = createSpace({
 
     return out;
   },
-  isAchromatic: (coords) => coords[1] + coords[2] >= 1 - achromaticThreshold,
+  isAchromatic: (coords) => coords[1] + coords[2] >= 1 - hslAchromaticThreshold,
 });

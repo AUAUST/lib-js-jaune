@@ -1,0 +1,6 @@
+{
+  "purpose": "CIE Lab spaces: Lab and LCH, D50.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./lab"
+}

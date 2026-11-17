@@ -1,6 +1,6 @@
 import { max, min } from "@auaust/toolkit/math";
 
-import { normalizeHue } from "#spaces/hsl/utils/normalizeHue";
+import { normalizeHue } from "#space/utils/normalizeHue";
 
 /**
  * Hue in degrees, in [0, 360), of gamma-encoded sRGB channels, per the CSS Color

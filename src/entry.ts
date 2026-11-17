@@ -4,5 +4,6 @@ export * from "#color/entry";
 export * as utils from "#helpers/entry";
 export * from "#space/entry";
 export * from "#spaces/hsl/entry";
+export * from "#spaces/lab/entry";
 export * from "#spaces/rgb/entry";
 export * from "#spaces/xyz/entry";

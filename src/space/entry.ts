@@ -3,6 +3,7 @@
 export { convertCoords } from "#space/utils/convertCoords";
 export { createSpace } from "#space/utils/createSpace";
 export { multiplyMatrix } from "#space/utils/multiplyMatrix";
+export { normalizeHue } from "#space/utils/normalizeHue";
 export type * from "#space/ports/ColorSpace";
 export type * from "#space/types/ColorChannel";
 export type * from "#space/types/ColorSpaceDefinition";
@@ -11,3 +12,4 @@ export type * from "#space/types/Matrix3";
 export type * from "#space/utils/convertCoords";
 export type * from "#space/utils/createSpace";
 export type * from "#space/utils/multiplyMatrix";
+export type * from "#space/utils/normalizeHue";

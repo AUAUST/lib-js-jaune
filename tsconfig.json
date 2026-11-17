@@ -19,6 +19,7 @@
       "@auaust/jaune/utils": ["./src/helpers/entry.ts"],
       "@auaust/jaune/space": ["./src/space/entry.ts"],
       "@auaust/jaune/hsl": ["./src/spaces/hsl/entry.ts"],
+      "@auaust/jaune/lab": ["./src/spaces/lab/entry.ts"],
       "@auaust/jaune/rgb": ["./src/spaces/rgb/entry.ts"],
       "@auaust/jaune/xyz": ["./src/spaces/xyz/entry.ts"]
     }

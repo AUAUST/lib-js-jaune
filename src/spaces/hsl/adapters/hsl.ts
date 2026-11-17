@@ -1,9 +1,9 @@
 import { abs, max, min } from "@auaust/toolkit/math";
 
 import { createSpace } from "#space/utils/createSpace";
-import { achromaticThreshold } from "#spaces/hsl/constants";
+import { normalizeHue } from "#space/utils/normalizeHue";
+import { hslAchromaticThreshold } from "#spaces/hsl/constants";
 import { hslToSrgbChannel } from "#spaces/hsl/utils/hslToSrgbChannel";
-import { normalizeHue } from "#spaces/hsl/utils/normalizeHue";
 import { srgbToHue } from "#spaces/hsl/utils/srgbToHue";
 import { srgb } from "#spaces/rgb/adapters/srgb";
 
@@ -59,11 +59,11 @@ export const hsl = createSpace({
       saturation = abs(saturation);
     }
 
-    out[0] = saturation < achromaticThreshold ? 0 : hue;
+    out[0] = saturation < hslAchromaticThreshold ? 0 : hue;
     out[1] = saturation;
     out[2] = lightness;
 
     return out;
   },
-  isAchromatic: (coords) => abs(coords[1]) < achromaticThreshold,
+  isAchromatic: (coords) => abs(coords[1]) < hslAchromaticThreshold,
 });

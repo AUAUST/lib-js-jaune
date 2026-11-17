@@ -22,6 +22,7 @@ src/  space < spaces < formats < computations < color < helpers  (global roles: 
 ├─ space*  The color space contract, space creation and coordinate conversion.
 └─ spaces/  #spaces/…  xyz < rgb < *  Built-in color spaces, one domain per family.
    ├─ hsl*  Cylindrical sRGB spaces: HSL and HWB.
+   ├─ lab*  CIE Lab spaces: Lab and LCH, D50.
    ├─ rgb*  RGB spaces: sRGB, linear sRGB and the wide-gamut RGB spaces.
    └─ xyz*  CIE XYZ spaces: the D65 reference and D50.
 ```
