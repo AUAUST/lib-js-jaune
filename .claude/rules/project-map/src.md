@@ -9,6 +9,7 @@ paths:
 src/  space < spaces < color < gamut < formats < computations < parse  (global roles: *.d.ts constants.ts)
 ├─ color*  The color record, the color encoding contract and record conversion.
 ├─ computations/  #computations/…  Operations over color records: measures, derived colors, mixing and randomness.
+│  ├─ composite*  Compositing and blending colors over a backdrop.
 │  ├─ metrics*  Measures and predicates over colors: luminance, lightness, contrast, distance and opacity.
 │  ├─ random*  Random colors and channels.
 │  └─ transformations*  Colors derived from one color: grayscale, inversion and hue rotation.

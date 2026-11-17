@@ -1,0 +1,6 @@
+{
+  "purpose": "Compositing and blending colors over a backdrop.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./composite"
+}
