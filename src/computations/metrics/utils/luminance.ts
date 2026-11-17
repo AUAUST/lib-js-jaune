@@ -1,16 +1,14 @@
-import { sRGBtoLinear } from "#computations/gamma/index";
-import type { ColorChannels } from "#formats/channels/index";
+import { convertCoords } from "#space/utils/convertCoords";
+import { xyzD65 } from "#spaces/xyz/adapters/xyzD65";
+import type { Color } from "#color/types/Color";
+
+const scratch: [number, number, number] = [0, 0, 0];
 
 /**
- * Returns the luminance of a color normalized to the range [0, 1].
+ * The relative luminance of `color`: its `y` in XYZ D65, 1 for white.
  *
- * @see https://stackoverflow.com/a/56678483
- * @see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+ * @see https://www.w3.org/TR/WCAG21/#dfn-relative-luminance
  */
-export function luminance(channels: ColorChannels) {
-  let { r, g, b } = channels;
-
-  [r, g, b] = [r, g, b].map((v) => sRGBtoLinear(v / 255));
-
-  return r * 0.2126 + g * 0.7152 + b * 0.0722;
+export function luminance(color: Color): number {
+  return convertCoords(color.space, xyzD65, color.coords, scratch)[1];
 }

@@ -1,9 +1,9 @@
 import { isOpaque } from "#computations/metrics/utils/isOpaque";
-import type { ColorChannels } from "#formats/channels/index";
+import type { Color } from "#color/types/Color";
 
 /**
- * Checks if the color is at least partially transparent.
+ * Whether `color` is at least partially transparent.
  */
-export function isTranslucent(channels: ColorChannels) {
-  return !isOpaque(channels);
+export function isTranslucent(color: Color): boolean {
+  return !isOpaque(color);
 }

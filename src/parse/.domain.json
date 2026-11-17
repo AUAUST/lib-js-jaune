@@ -1,0 +1,6 @@
+{
+  "purpose": "Any accepted color input to a record, and input detection.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./parse"
+}

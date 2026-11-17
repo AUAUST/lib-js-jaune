@@ -1,8 +1,8 @@
-import type { ColorChannels } from "#formats/channels/index";
+import type { Color } from "#color/types/Color";
 
 /**
- * Checks if the color is fully transparent.
+ * Whether `color` is fully transparent.
  */
-export function isTransparent(channels: ColorChannels) {
-  return channels.a === 0;
+export function isTransparent(color: Color): boolean {
+  return color.alpha === 0;
 }

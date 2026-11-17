@@ -1,10 +1,13 @@
-import { brightness } from "#computations/metrics/utils/brightness";
-import type { ColorChannels } from "#formats/channels/index";
+import { lightnessThreshold } from "#computations/metrics/constants";
+import { lightness } from "#computations/metrics/utils/lightness";
+import type { Color } from "#color/types/Color";
 
 /**
- * Returns whether the color is dark, as in its brightness is less than or equal
- * to 0.5 or the provided threshold.
+ * Whether the lightness of `color` is at or below `threshold`.
  */
-export function isDark(channels: ColorChannels, threshold = 0.5): boolean {
-  return brightness(channels) <= threshold;
+export function isDark(
+  color: Color,
+  threshold: number = lightnessThreshold,
+): boolean {
+  return lightness(color) <= threshold;
 }

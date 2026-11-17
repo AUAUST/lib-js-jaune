@@ -1,98 +1,26 @@
-import { assert, describe, expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
-import { Color } from "@auaust/jaune";
-import { isInteger } from "@auaust/toolkit/guard";
-import { isBetween } from "@auaust/toolkit/number";
+import { rgba32Encoding } from "@auaust/jaune/channels";
+import { toHex } from "@auaust/jaune/hex";
+import { oklch } from "@auaust/jaune/oklab";
+import { randomColor, randomColors } from "@auaust/jaune/random";
+import { isNumber } from "@auaust/toolkit/guard";
 
-describe("Random colors", () => {
-  test("can be generated", () => {
-    for (let index = 0; index < 10; index++) {
-      const c = Color.random();
+describe("random colors", () => {
+  test("draw within ranges", () => {
+    expect(toHex(randomColor({ ranges: [0.5, 0.5, 0.5] }))).toBe("#808080");
 
-      assert(isBetween(c.r, 0, 255));
-      assert(isInteger(c.r));
+    const color = randomColor({ space: oklch, alpha: [0, 0.5] });
 
-      assert(isBetween(c.g, 0, 255));
-      assert(isInteger(c.g));
-
-      assert(isBetween(c.b, 0, 255));
-      assert(isInteger(c.b));
-
-      assert(isBetween(c.a, 0, 1));
-    }
+    expect(color.space).toBe(oklch);
+    expect(color.alpha).toBeLessThanOrEqual(0.5);
   });
 
-  test("can be generated with defined channels", () => {
-    for (let index = 0; index < 10; index++) {
-      const c = Color.random({
-        r: 24,
-      });
+  test("yield encoded batches", () => {
+    const packed = [...randomColors({ count: 3, encoding: rgba32Encoding })];
 
-      expect(c.r).toBe(24);
-      expect(c.a).toBe(1);
-
-      assert(isBetween(c.g, 0, 255));
-      assert(isBetween(c.b, 0, 255));
-    }
-
-    for (let index = 0; index < 10; index++) {
-      const c = Color.random({
-        r: 24,
-        g: 32,
-        a: 0.5,
-      });
-
-      expect(c.r).toBe(24);
-      expect(c.g).toBe(32);
-      expect(c.a).toBe(0.5);
-
-      assert(isBetween(c.b, 0, 255));
-    }
-
-    {
-      // Setting all channels to a single value is effectively creating the provided color
-      const c = Color.random({
-        r: 24,
-        g: 32,
-        b: 64,
-        a: 0.5,
-      });
-
-      expect(c.toRgb()).toEqual([24, 32, 64, 0.5]);
-    }
-  });
-
-  test("can be generated with channel ranges", () => {
-    for (let index = 0; index < 10; index++) {
-      const c = Color.random({
-        r: [24, 32],
-        a: [0.5, 0.55],
-      });
-
-      assert(isBetween(c.r, 24, 32));
-      assert(isInteger(c.r));
-
-      assert(isBetween(c.g, 0, 255));
-      assert(isInteger(c.g));
-
-      assert(isBetween(c.a, 0.5, 0.55));
-    }
-  });
-
-  test("can be generated with mixed channel ranges and values", () => {
-    for (let index = 0; index < 10; index++) {
-      const c = Color.random({
-        r: 24,
-        g: [32, 64],
-        a: 0.5,
-      });
-
-      expect(c.r).toBe(24);
-
-      assert(isBetween(c.g, 32, 64));
-      assert(isInteger(c.g));
-
-      expect(c.a).toBe(0.5);
-    }
+    expect(packed).toHaveLength(3);
+    expect(packed.every((value) => isNumber(value))).toBe(true);
+    expect([...randomColors({ count: 2 })][0].alpha).toBe(1);
   });
 });

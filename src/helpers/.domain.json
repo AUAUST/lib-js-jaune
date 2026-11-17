@@ -1,6 +1,0 @@
-{
-  "purpose": "Every helper of the library, exposed as the utils entry.",
-  "specifier": "./utils",
-  "collects": ["utils", "constants"],
-  "public": true
-}

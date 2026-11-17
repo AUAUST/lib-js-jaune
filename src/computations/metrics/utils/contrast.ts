@@ -1,18 +1,16 @@
 import { minMax } from "@auaust/toolkit/math";
 
+import { contrastFlare } from "#computations/metrics/constants";
 import { luminance } from "#computations/metrics/utils/luminance";
-import type { ColorChannels } from "#formats/channels/index";
+import type { Color } from "#color/types/Color";
 
 /**
- * Returns the contrast ratio between two colors.
+ * The WCAG contrast ratio between two colors, from 1 to 21.
  *
- * @see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+ * @see https://www.w3.org/TR/WCAG21/#dfn-contrast-ratio
  */
-export function contrast(channelsA: ColorChannels, channelsB: ColorChannels) {
-  const [
-    darkest,
-    brightest,
-  ] = minMax(luminance(channelsA), luminance(channelsB));
+export function contrast(a: Color, b: Color): number {
+  const [darkest, brightest] = minMax(luminance(a), luminance(b));
 
-  return (brightest + 0.05) / (darkest + 0.05);
+  return (brightest + contrastFlare) / (darkest + contrastFlare);
 }

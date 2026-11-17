@@ -1,22 +1,25 @@
 import { distance } from "#computations/metrics/utils/distance";
-import {
-  namedColorChannels,
-  namedColors,
-  type NamedColor,
-} from "#formats/named/index";
-import type { ColorChannels } from "#formats/channels/index";
+import { namedColors } from "#formats/named/constants";
+import { parseNamedColor } from "#formats/named/utils/parseNamedColor";
+import type { Color } from "#color/types/Color";
+import type { NamedColor } from "#formats/named/types/NamedColor";
 
 /**
- * Returns the closest named color to the passed color channels.
+ * The CSS color name closest to `color`, comparing alpha only against
+ * opaque named colors.
  */
-export function closestNamedColor(channels: ColorChannels): NamedColor {
-  let closest: NamedColor | undefined;
+export function closestNamedColor(color: Color): NamedColor {
+  let closest: NamedColor = namedColors[0];
   let smallestDistance = Infinity;
 
   for (const name of namedColors) {
-    const value = namedColorChannels(name);
-    const comparesAlpha = value.a === 1;
-    const d = distance(value, channels, comparesAlpha);
+    const named = parseNamedColor(name);
+
+    if (!named) {
+      continue;
+    }
+
+    const d = distance(named, color, named.alpha === 1);
 
     if (d >= smallestDistance) {
       continue;
@@ -26,5 +29,5 @@ export function closestNamedColor(channels: ColorChannels): NamedColor {
     smallestDistance = d;
   }
 
-  return closest!;
+  return closest;
 }

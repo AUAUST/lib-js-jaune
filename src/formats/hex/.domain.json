@@ -1,1 +1,6 @@
-{ "purpose": "HEX color strings: detection, parsing and serialization." }
+{
+  "purpose": "HEX color strings: detection, parsing and serialization.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./hex"
+}

@@ -1,33 +1,33 @@
-import { withoutPrefix } from "@auaust/toolkit/string";
-
-import {
-  fallbackColor,
-  toColorChannels,
-  type ColorChannels,
-} from "#formats/channels/index";
+import { rgbChannelMax } from "#formats/channels/constants";
+import { parseRgbTuple } from "#formats/channels/utils/parseRgbTuple";
 import { isHex } from "#formats/hex/utils/isHex";
-import type { Hex } from "#formats/hex/types/Hex";
+import type { Color } from "#color/types/Color";
 
 /**
- * Parses a HEX color into an object of color channels, or returns the fallback
- * color when the input is not a HEX color.
+ * The `srgb` color of a HEX string, or `undefined` when `value` is not one.
  */
-export function parseHex(value: Hex): ColorChannels {
+export function parseHex(value: string): Color | undefined {
   if (!isHex(value)) {
-    return fallbackColor;
+    return;
   }
 
-  const digits = withoutPrefix(value, "#");
+  const digits = value.slice(1);
   const isShort = digits.length < 6;
-  const hasAlpha = isShort ? digits.length === 4 : digits.length === 8;
 
-  const r = parseInt(isShort ? digits[0].repeat(2) : digits.slice(0, 2), 16);
-  const g = parseInt(isShort ? digits[1].repeat(2) : digits.slice(2, 4), 16);
-  const b = parseInt(isShort ? digits[2].repeat(2) : digits.slice(4, 6), 16);
+  const byte = (index: number) => {
+    return parseInt(
+      isShort
+        ? digits[index].repeat(2)
+        : digits.slice(index * 2, index * 2 + 2),
+      16,
+    );
+  };
 
-  const a = hasAlpha
-    ? parseInt(isShort ? digits[3].repeat(2) : digits.slice(6, 8), 16) / 255
-    : 1;
+  const hasAlpha = digits.length === 4 || digits.length === 8;
 
-  return toColorChannels(r, g, b, a);
+  return parseRgbTuple(
+    hasAlpha
+      ? [byte(0), byte(1), byte(2), byte(3) / rgbChannelMax]
+      : [byte(0), byte(1), byte(2)],
+  );
 }

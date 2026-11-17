@@ -1,4 +1,4 @@
 {
-  "purpose": "Color representations: channel objects, HEX strings, RGB tuples and CSS names.",
-  "layers": ["channels", "*", "named"]
+  "purpose": "Color notations: 8-bit channels, HEX strings and CSS names.",
+  "layers": ["*", "named"]
 }

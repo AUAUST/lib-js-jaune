@@ -2,10 +2,10 @@
   "layers": [
     "space",
     "spaces",
+    "color",
     "gamut",
     "formats",
     "computations",
-    "color",
-    "helpers"
+    "parse"
   ]
 }

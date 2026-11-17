@@ -1,6 +1,6 @@
 {
-  "purpose": "The Color class and the detection and parsing of any color value.",
+  "purpose": "The color record, the color encoding contract and record conversion.",
   "public": true,
   "reexport": "flat",
-  "collects": ["types"]
+  "specifier": "./color"
 }

@@ -1,1 +1,6 @@
-{ "purpose": "Random colors and channels." }
+{
+  "purpose": "Random colors and channels.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./random"
+}

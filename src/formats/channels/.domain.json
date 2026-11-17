@@ -1,3 +1,6 @@
 {
-  "purpose": "The canonical channel object, channel validation and normalization, and the fallback color."
+  "purpose": "8-bit sRGB channels as objects, tuples and packed integers.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./channels"
 }

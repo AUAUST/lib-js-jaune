@@ -6,12 +6,7 @@
 - want: engrenage passes `tsc.eager`, so libraries can take current tsdown.
 - done: Jaune builds with the latest tsdown 0.23 and the pin is removed.
 
-## 2. Root entry re-exports every public domain, with no way to opt one out
-
-- why: Jaune's `helpers` domain exists only to keep the `./utils` subpath, yet the generated `src/entry.ts` also re-exports it as a `utils` namespace.
-- want: a domain `reexport` value that leaves it out of the root entry.
-
-## 3. `engrenage sync --check` accepts `package.json` exports in an order `engrenage tsdown` rewrites
+## 2. `engrenage sync --check` accepts `package.json` exports in an order `engrenage tsdown` rewrites
 
 - why: the build reorders hand-appended `exports` alphabetically, so every `pnpm run build` dirties `package.json` while the gate passes.
 - want: sync writes or checks `exports` in the order tsdown emits.

@@ -5,10 +5,8 @@ import { namedColorsMap } from "#formats/named/constants";
 import type { NamedColor } from "#formats/named/types/NamedColor";
 
 /**
- * Whether the input is a valid named color.
- *
- * The check is case-insensitive.
+ * Whether `value` is a CSS color name, matched exactly: names are lowercase.
  */
 export function isNamedColor(value: unknown): value is NamedColor {
-  return isString(value) && hasOwn(namedColorsMap, value.toLowerCase());
+  return isString(value) && hasOwn(namedColorsMap, value);
 }

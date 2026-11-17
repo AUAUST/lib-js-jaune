@@ -16,8 +16,16 @@
     "paths": {
       "@auaust/jaune": ["./src/entry.ts"],
       "@auaust/jaune/color": ["./src/color/entry.ts"],
+      "@auaust/jaune/metrics": ["./src/computations/metrics/entry.ts"],
+      "@auaust/jaune/random": ["./src/computations/random/entry.ts"],
+      "@auaust/jaune/transformations": [
+        "./src/computations/transformations/entry.ts"
+      ],
+      "@auaust/jaune/channels": ["./src/formats/channels/entry.ts"],
+      "@auaust/jaune/hex": ["./src/formats/hex/entry.ts"],
+      "@auaust/jaune/named": ["./src/formats/named/entry.ts"],
       "@auaust/jaune/gamut": ["./src/gamut/entry.ts"],
-      "@auaust/jaune/utils": ["./src/helpers/entry.ts"],
+      "@auaust/jaune/parse": ["./src/parse/entry.ts"],
       "@auaust/jaune/space": ["./src/space/entry.ts"],
       "@auaust/jaune/hsl": ["./src/spaces/hsl/entry.ts"],
       "@auaust/jaune/lab": ["./src/spaces/lab/entry.ts"],

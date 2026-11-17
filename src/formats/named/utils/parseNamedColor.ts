@@ -1,16 +1,31 @@
-import { fallbackColor, type ColorChannels } from "#formats/channels/index";
+import { getOrSet } from "@auaust/toolkit/maplike";
+
+import { parseHex } from "#formats/hex/utils/parseHex";
+import { namedColorsMap } from "#formats/named/constants";
 import { isNamedColor } from "#formats/named/utils/isNamedColor";
-import { namedColorChannels } from "#formats/named/utils/namedColorChannels";
-import type { MaybeNamedColor } from "#formats/named/types/MaybeNamedColor";
+import type { Color } from "#color/types/Color";
+import type { NamedColor } from "#formats/named/types/NamedColor";
+
+const records = new Map<NamedColor, Color>();
+
+function toRecord(name: NamedColor): Color {
+  const color = parseHex(namedColorsMap[name]);
+
+  if (!color) {
+    throw new TypeError(`Named color "${name}" maps to an invalid HEX string.`);
+  }
+
+  return color;
+}
 
 /**
- * Returns the color channels of a named color, matched case-insensitively, or
- * the fallback color when it is not a named color.
+ * The cached `srgb` color of a CSS color name, matched case-insensitively, or
+ * `undefined` when `name` is not one.
  */
-export function parseNamedColor(name: MaybeNamedColor): ColorChannels {
+export function parseNamedColor(name: string): Color | undefined {
   const lowercased = name.toLowerCase();
 
   return isNamedColor(lowercased)
-    ? namedColorChannels(lowercased)
-    : fallbackColor;
+    ? getOrSet(records, lowercased, () => toRecord(lowercased))
+    : undefined;
 }

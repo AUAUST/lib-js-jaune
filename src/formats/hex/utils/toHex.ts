@@ -1,31 +1,21 @@
-import { isNumber } from "@auaust/toolkit/guard";
-import { max, round } from "@auaust/toolkit/math";
+import { round } from "@auaust/toolkit/math";
 
-import { toRgbChannel, type ColorChannels } from "#formats/channels/index";
+import { rgbChannelMax } from "#formats/channels/constants";
+import { toRgbTuple } from "#formats/channels/utils/toRgbTuple";
+import type { Color } from "#color/types/Color";
 import type { Hex } from "#formats/hex/types/Hex";
 
-/**
- * Returns the corresponding hex string of a color channels object.
- *
- * If the alpha channel is 1, it will be omitted.
- */
-export function toHex(channels: ColorChannels): Hex {
-  const { r, g, b, a } = channels;
+function toDigits(byte: number): string {
+  return byte.toString(16).padStart(2, "0");
+}
 
-  return (
-    "#" +
-    (
-      (1 << 24) +
-      (toRgbChannel(r) << 16) +
-      (toRgbChannel(g) << 8) +
-      toRgbChannel(b)
-    )
-      .toString(16)
-      .slice(1) +
-    (isNumber(a) && a < 1
-      ? round(max(0, a) * 255)
-          .toString(16)
-          .padStart(2, "0")
-      : "")
-  );
+/**
+ * The HEX string of `color` gamut-mapped to `srgb`: 6 digits, or 8 when its alpha
+ * quantized to a byte is below 255.
+ */
+export function toHex(color: Color): Hex {
+  const [r, g, b] = toRgbTuple(color);
+  const a = round(color.alpha * rgbChannelMax);
+
+  return `#${toDigits(r)}${toDigits(g)}${toDigits(b)}${a < rgbChannelMax ? toDigits(a) : ""}`;
 }

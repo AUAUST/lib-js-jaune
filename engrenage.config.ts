@@ -10,20 +10,10 @@ import {
   index,
   operations,
   ports,
-  role,
   testsetup,
   types,
   utils,
 } from "@auaust/engrenage/roles";
-
-const classes = role({
-  name: "classes",
-  purpose: "Classes, one per module.",
-  exports: "named-match",
-  effects: "confined",
-  public: true,
-  collected: true,
-});
 
 const roles = [
   index(),
@@ -55,7 +45,6 @@ export default defineConfig({
       }),
       types({ public: true, collected: true }),
       utils({ public: true, collected: true }),
-      classes,
       ports({ collected: true }),
       adapters({ effects: "confined", collected: true }),
     ],

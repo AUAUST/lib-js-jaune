@@ -1,1 +1,6 @@
-{ "purpose": "CSS named colors, their aliases and their channels." }
+{
+  "purpose": "CSS named colors, their aliases and their records.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./named"
+}

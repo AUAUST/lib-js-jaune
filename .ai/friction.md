@@ -25,3 +25,4 @@
 - vitest console output: console.log in a probe test printed nothing — threw an Error carrying the values
 - debugging skill: /debugging not in the session's skill list (disable-model-invocation) — read .claude/skills/debugging/SKILL.md directly
 - npx engrenage: ran via npx — EBADDEVENGINES (pnpm required), used pnpm exec
+- engrenage eslint:fix: ran without file args expecting per-file use — it lints the whole project; pass file paths

@@ -1,9 +1,29 @@
-import { type } from "#color/utils/type";
-import type { ColorValue } from "#color/types/ColorValue";
+import { isArray, isFinite, isFunction, isObject } from "@auaust/toolkit/guard";
+
+import type { Color } from "#color/types/Color";
 
 /**
- * Returns true if the value is any format of supported color.
+ * Whether `value` has the `Color` shape: a space with conversion kernels, three
+ * finite coordinates and a finite alpha within [0, 1].
  */
-export function isColor(value: unknown): value is ColorValue {
-  return type(value) !== undefined;
+export function isColor(value: unknown): value is Color {
+  if (!isObject(value)) {
+    return false;
+  }
+
+  const { space, coords, alpha }: Partial<Record<keyof Color, unknown>> = value;
+
+  return (
+    isObject(space) &&
+    "toBase" in space &&
+    isFunction(space.toBase) &&
+    "fromBase" in space &&
+    isFunction(space.fromBase) &&
+    isArray(coords) &&
+    coords.length === 3 &&
+    coords.every((coord) => isFinite(coord)) &&
+    isFinite(alpha) &&
+    alpha >= 0 &&
+    alpha <= 1
+  );
 }

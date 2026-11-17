@@ -1,8 +1,8 @@
-import type { ColorChannels } from "#formats/channels/index";
+import type { Color } from "#color/types/Color";
 
 /**
- * Checks if the color is fully opaque.
+ * Whether `color` is fully opaque.
  */
-export function isOpaque(channels: ColorChannels) {
-  return (channels.a ?? 1) === 1;
+export function isOpaque(color: Color): boolean {
+  return color.alpha === 1;
 }

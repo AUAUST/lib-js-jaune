@@ -1,3 +1,6 @@
 {
-  "purpose": "Colors derived from others: grayscale, inversion and hue rotation."
+  "purpose": "Colors derived from one color: grayscale, inversion and hue rotation.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./transformations"
 }
