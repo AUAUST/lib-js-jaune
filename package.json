@@ -7,14 +7,12 @@
     "access": "public"
   },
   "description": "A Color class that helps you work with colors!",
-  "packageManager": "pnpm@9.15.0",
   "author": {
     "name": "Aurian Aubert",
     "email": "aurian@auaust.ch",
     "url": "https://auaust.ch"
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "build": "pnpm test && pnpm build:notest",
     "build:notest": "pnpm run build:clean && pnpm run build:js",
     "build:clean": "rimraf dist",
@@ -27,6 +25,7 @@
     "ci:publish": "changeset publish"
   },
   "devDependencies": {
+    "@auaust/engrenage": "^0.13.1",
     "@changesets/cli": "^2.29.8",
     "@vitest/coverage-istanbul": "^4.0.16",
     "rimraf": "^6.1.2",

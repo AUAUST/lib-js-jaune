@@ -1,0 +1,3 @@
+allowBuilds:
+  "@auaust/primitive-kit": false
+  esbuild: false
