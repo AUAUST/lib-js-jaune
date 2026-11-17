@@ -32,3 +32,4 @@
 - git apply --index: worktree patch touching .ai/friction.md failed against main's uncommitted line — used --3way and union-resolved
 - npx vitest: ran tests via npx — devEngines requires pnpm; used pnpm exec
 - zsh glob in grep: `grep -rn … --include=*.ts` and an unmatched `**` path — zsh nomatch aborted the command; dropped the filter
+- npx/engrenage on PATH: ran \`npx prettier\` and bare \`engrenage gate\` — npx fails on pnpm devEngines and engrenage is not on PATH; used \`pnpm exec\`

@@ -1,7 +1,7 @@
 {
   "name": "@auaust/jaune",
   "version": "0.0.5",
-  "description": "A Color class that helps you work with colors!",
+  "description": "A functional toolkit over immutable color records: color spaces, parsing, CSS strings, mixing, gradients and metrics.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AUAUST/lib-js-jaune.git"
