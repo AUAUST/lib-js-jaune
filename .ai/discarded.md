@@ -24,3 +24,4 @@
 - Float64Array coords: fixed-length, typed coordinates — cannot be frozen, breaks `readonly` tuple types and literals; plain arrays already packed doubles
 - packed-number coords: one number per color — 3 float64 do not fit 53 bits; `rgba32Encoding` already covers lossy per-pixel packing
 - symbol keys on records: cheaper property access — V8 hidden classes make string and symbol keys cost the same; symbols hurt debugging, JSON and spread
+- optional-backdrop flatten helper: one owner for `luminance`/`lightness` compositing — a new public metrics export for one expression

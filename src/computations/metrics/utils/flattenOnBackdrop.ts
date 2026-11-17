@@ -1,3 +1,5 @@
+import { freeze } from "@auaust/toolkit/object";
+
 import { createColor } from "#color/utils/createColor";
 import { composite } from "#computations/composite/utils/composite";
 import { srgb } from "#spaces/rgb/adapters/srgb";
@@ -16,7 +18,7 @@ export function flattenOnBackdrop(
 ): readonly [foreground: Color, background: Color] {
   const flatBackground = composite(background, backdrop);
 
-  return Object.freeze([
+  return freeze([
     composite(foreground, flatBackground),
     flatBackground,
   ] as const);

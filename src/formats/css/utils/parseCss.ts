@@ -3,6 +3,7 @@ import { clamp } from "@auaust/toolkit/math";
 import { createColor } from "#color/utils/createColor";
 import { rgbChannelMax } from "#formats/channels/constants";
 import { cssSpace } from "#formats/css/utils/cssSpace";
+import { normalizeCss } from "#formats/css/utils/normalizeCss";
 import { parseHex } from "#formats/hex/utils/parseHex";
 import { parseNamedColor } from "#formats/named/utils/parseNamedColor";
 import { hsl } from "#spaces/hsl/adapters/hsl";
@@ -198,7 +199,7 @@ function toRecord(
  * keep them out of range. `undefined` when `value` is none of these.
  */
 export function parseCss(value: string): Color | undefined {
-  const normalized = value.trim().toLowerCase();
+  const normalized = normalizeCss(value);
   const literal = parseHex(normalized) ?? parseNamedColor(normalized);
 
   if (literal) {

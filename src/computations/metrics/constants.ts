@@ -1,3 +1,5 @@
+import { freeze } from "@auaust/toolkit/object";
+
 /**
  * Lightness above which a color is light, and at or below which it is dark.
  */
@@ -21,7 +23,9 @@ export const apcaMainTrc = 2.4;
 /**
  * APCA weights of the red, green and blue channels.
  */
-export const apcaChannelWeights = [0.21267_29, 0.71515_22, 0.07217_5] as const;
+export const apcaChannelWeights = freeze([
+  0.21267_29, 0.71515_22, 0.07217_5,
+] as const);
 
 /**
  * APCA exponent of the background luminance for dark text on a light background.

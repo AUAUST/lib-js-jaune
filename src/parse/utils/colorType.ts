@@ -3,6 +3,7 @@ import { isString } from "@auaust/toolkit/guard";
 import { isColor } from "#color/utils/isColor";
 import { isRgbChannels } from "#formats/channels/utils/isRgbChannels";
 import { isRgbTuple } from "#formats/channels/utils/isRgbTuple";
+import { normalizeCss } from "#formats/css/utils/normalizeCss";
 import { parseCss } from "#formats/css/utils/parseCss";
 import { isHex } from "#formats/hex/utils/isHex";
 import { isNamedColor } from "#formats/named/utils/isNamedColor";
@@ -18,7 +19,7 @@ export function colorType(value: unknown): ColorInputType | undefined {
       return;
     }
 
-    const normalized = value.trim().toLowerCase();
+    const normalized = normalizeCss(value);
 
     if (isHex(normalized)) {
       return "hex";

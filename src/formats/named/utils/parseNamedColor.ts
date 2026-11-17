@@ -22,6 +22,8 @@ function toRecord(name: NamedColor): Color {
  * The cached `srgb` color of a CSS color name, matched case-insensitively, or
  * `undefined` when `name` is not one.
  */
+export function parseNamedColor(name: NamedColor): Color;
+export function parseNamedColor(name: string): Color | undefined;
 export function parseNamedColor(name: string): Color | undefined {
   const lowercased = name.toLowerCase();
 

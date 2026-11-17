@@ -1,3 +1,5 @@
+import { abs, clamp, max, min, sqrt } from "@auaust/toolkit/math";
+
 import { blendLuminosityWeights } from "#computations/composite/constants";
 import type { BlendMode } from "#computations/composite/types/BlendMode";
 import type { Coords } from "#space/types/Coords";
@@ -9,84 +11,84 @@ function lum(r: number, g: number, b: number): number {
 }
 
 function sat(r: number, g: number, b: number): number {
-  return Math.max(r, g, b) - Math.min(r, g, b);
+  return max(r, g, b) - min(r, g, b);
 }
 
-function hardLight(callback: number, cs: number): number {
-  return cs <= 0.5
-    ? callback * 2 * cs
-    : callback + (2 * cs - 1) - callback * (2 * cs - 1);
+function hardLight(backdrop: number, source: number): number {
+  return source <= 0.5
+    ? backdrop * 2 * source
+    : backdrop + (2 * source - 1) - backdrop * (2 * source - 1);
 }
 
-// @debt `Math.sqrt` of an unclamped negative backdrop channel yields `NaN`, which `createColor` rejects.
-function softLight(callback: number, cs: number): number {
-  if (cs <= 0.5) {
-    return callback - (1 - 2 * cs) * callback * (1 - callback);
+// @debt `sqrt` of an unclamped negative backdrop channel yields `NaN`, which `createColor` rejects.
+function softLight(backdrop: number, source: number): number {
+  if (source <= 0.5) {
+    return backdrop - (1 - 2 * source) * backdrop * (1 - backdrop);
   }
 
-  const d = callback <= 0.25
-    ? ((16 * callback - 12) * callback + 4) * callback
-    : Math.sqrt(callback);
+  const d = backdrop <= 0.25
+    ? ((16 * backdrop - 12) * backdrop + 4) * backdrop
+    : sqrt(backdrop);
 
-  return callback + (2 * cs - 1) * (d - callback);
+  return backdrop + (2 * source - 1) * (d - backdrop);
 }
 
-function separable(mode: BlendMode, callback: number, cs: number): number {
+function separable(mode: BlendMode, backdrop: number, source: number): number {
   switch (mode) {
     case "multiply": {
-      return callback * cs;
+      return backdrop * source;
     }
 
     case "screen": {
-      return callback + cs - callback * cs;
+      return backdrop + source - backdrop * source;
     }
 
     case "overlay": {
-      return hardLight(cs, callback);
+      return hardLight(source, backdrop);
     }
 
     case "darken": {
-      return Math.min(callback, cs);
+      return min(backdrop, source);
     }
 
     case "lighten": {
-      return Math.max(callback, cs);
+      return max(backdrop, source);
     }
 
     case "color-dodge": {
-      if (callback === 0) {
+      if (backdrop === 0) {
         return 0;
       }
 
-      return cs >= 1 ? 1 : Math.min(1, callback / (1 - cs));
+      return source >= 1 ? 1 : min(1, backdrop / (1 - source));
     }
 
     case "color-burn": {
-      if (callback === 1) {
+      if (backdrop === 1) {
         return 1;
       }
 
-      return cs <= 0 ? 0 : 1 - Math.min(1, (1 - callback) / cs);
+      return source <= 0 ? 0 : 1 - min(1, (1 - backdrop) / source);
     }
 
     case "hard-light": {
-      return hardLight(callback, cs);
+      return hardLight(backdrop, source);
     }
 
     case "soft-light": {
-      return softLight(callback, cs);
+      return softLight(backdrop, source);
     }
 
     case "difference": {
-      return Math.abs(callback - cs);
+      return abs(backdrop - source);
     }
 
     case "exclusion": {
-      return callback + cs - 2 * callback * cs;
+      return backdrop + source - 2 * backdrop * source;
     }
 
     default: {
-      return cs;
+      return source;
     }
   }
 }
@@ -98,9 +100,8 @@ function setSat(
   s: number,
   out: [number, number, number],
 ): [number, number, number] {
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const range = max - min;
+  const lowest = min(r, g, b);
+  const range = max(r, g, b) - lowest;
 
   if (range <= 0) {
     out[0] = 0;
@@ -110,9 +111,9 @@ function setSat(
     return out;
   }
 
-  out[0] = ((r - min) * s) / range;
-  out[1] = ((g - min) * s) / range;
-  out[2] = ((b - min) * s) / range;
+  out[0] = ((r - lowest) * s) / range;
+  out[1] = ((g - lowest) * s) / range;
+  out[2] = ((b - lowest) * s) / range;
 
   return out;
 }
@@ -124,22 +125,22 @@ function setLum(
   l: number,
   out: [number, number, number],
 ): [number, number, number] {
-  const d = l - lum(r, g, b);
+  const lightness = clamp(l, 0, 1);
+  const d = lightness - lum(r, g, b);
   const red = r + d;
   const green = g + d;
   const blue = b + d;
-  const lightness = lum(red, green, blue);
-  const min = Math.min(red, green, blue);
-  const max = Math.max(red, green, blue);
+  const lowest = min(red, green, blue);
+  const highest = max(red, green, blue);
 
   let scale = 1;
 
-  if (min < 0) {
-    scale = lightness / (lightness - min);
+  if (lowest < 0) {
+    scale = lightness / (lightness - lowest);
   }
 
-  if (max > 1) {
-    scale = (1 - lightness) / (max - lightness);
+  if (lightness + (highest - lightness) * scale > 1) {
+    scale = (1 - lightness) / (highest - lightness);
   }
 
   out[0] = lightness + (red - lightness) * scale;

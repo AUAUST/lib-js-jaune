@@ -12,6 +12,7 @@ const scratch: [number, number, number] = [0, 0, 0];
  * @see https://www.w3.org/TR/WCAG21/#dfn-relative-luminance
  */
 export function luminance(color: Color, backdrop?: Color): number {
+  // @debt `lightness` repeats this optional compositing; a helper beside `flattenOnBackdrop` would own it, at the cost of one more public metrics export.
   const flat = backdrop == null ? color : composite(color, backdrop);
 
   return convertCoords(flat.space, xyzD65, flat.coords, scratch)[1];

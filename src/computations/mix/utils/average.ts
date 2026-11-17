@@ -65,7 +65,7 @@ export function average(
   { weights, space = oklab }: AverageOptions = {},
 ): Color {
   const normalized = resolveWeights(colors.length, weights);
-  const hueIndex = space.channels.findIndex((channel) => channel.isHue);
+  const { hueIndex } = space;
   const coords: [number, number, number] = [0, 0, 0];
   const plain: [number, number, number] = [0, 0, 0];
   const converted: [number, number, number] = [0, 0, 0];
@@ -88,7 +88,7 @@ export function average(
       plain[channel] += weight * converted[channel];
     }
 
-    if (hueIndex === -1 || (space.isAchromatic?.(converted) ?? false)) {
+    if (hueIndex == null || (space.isAchromatic?.(converted) ?? false)) {
       continue;
     }
 
@@ -109,7 +109,7 @@ export function average(
     ? plain
     : [coords[0] / alpha, coords[1] / alpha, coords[2] / alpha];
 
-  if (hueIndex !== -1) {
+  if (hueIndex != null) {
     result[hueIndex] = hypot(cosine, sine) < Number.EPSILON
       ? normalizeHue(heaviestHue)
       : normalizeHue(toDegrees(atan2(sine, cosine)));

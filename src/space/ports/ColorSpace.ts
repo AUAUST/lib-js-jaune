@@ -15,6 +15,10 @@ export interface ColorSpace {
    */
   readonly channels: readonly [ColorChannel, ColorChannel, ColorChannel];
   /**
+   * The index of the hue channel in `channels`; `undefined` without one.
+   */
+  readonly hueIndex: 0 | 1 | 2 | undefined;
+  /**
    * The space `toBase` converts into; `undefined` for a root space.
    */
   readonly base: ColorSpace | undefined;
@@ -39,9 +43,10 @@ export interface ColorSpace {
     coords: Coords,
     out: [number, number, number],
   ): [number, number, number];
+  // @debt the type leaves `isAchromatic` optional when `hueIndex` is set; only `createSpace` enforces it, so consumers still guard with `?.`.
   /**
-   * Whether `coords` have no meaningful hue; defined by every space with
-   * a hue channel.
+   * Whether `coords` have no meaningful hue; `createSpace` requires it of every
+   * space with a hue channel.
    */
   isAchromatic?(coords: Coords): boolean;
 }

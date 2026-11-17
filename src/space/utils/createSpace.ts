@@ -3,10 +3,13 @@ import { freeze, type Writable } from "@auaust/toolkit";
 import type { ColorSpace } from "#space/ports/ColorSpace";
 import type { ColorSpaceDefinition } from "#space/types/ColorSpaceDefinition";
 
+const channelIndices = freeze([0, 1, 2] as const);
+
 /**
- * Creates a frozen color space from `definition`, resolving `gamut: "self"` to
- * the created space. Throws a `TypeError` when the definition does not have
- * exactly three channels.
+ * Creates a frozen color space from `definition`, resolving `gamut: "self"`
+ * to the created space and deriving `hueIndex`. Throws a `TypeError` when the
+ * definition does not have exactly three channels, has several hue channels, or
+ * has one without `isAchromatic`.
  */
 export function createSpace(definition: ColorSpaceDefinition): ColorSpace {
   const { channels, gamut } = definition;
@@ -17,6 +20,20 @@ export function createSpace(definition: ColorSpaceDefinition): ColorSpace {
     );
   }
 
+  const hueIndices = channelIndices.filter((index) => channels[index].isHue);
+
+  if (hueIndices.length > 1) {
+    throw new TypeError(
+      `Color space "${definition.id}" must have at most one hue channel, got ${hueIndices.length}.`,
+    );
+  }
+
+  if (hueIndices.length === 1 && definition.isAchromatic == null) {
+    throw new TypeError(
+      `Color space "${definition.id}" has a hue channel and must define \`isAchromatic\`.`,
+    );
+  }
+
   const space: Writable<ColorSpace> = {
     ...definition,
     channels: freeze([
@@ -24,6 +41,7 @@ export function createSpace(definition: ColorSpaceDefinition): ColorSpace {
       freeze({ ...channels[1] }),
       freeze({ ...channels[2] }),
     ]),
+    hueIndex: hueIndices[0],
     gamut: undefined,
   };
 

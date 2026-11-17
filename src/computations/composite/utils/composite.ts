@@ -21,15 +21,19 @@ export function composite(
     throw new TypeError(`Compositing needs an RGB space, got "${space.id}".`);
   }
 
-  const { coords: cs, alpha: as } = convert(source, space);
-  const { coords: callback, alpha: ab } = convert(backdrop, space);
+  const { coords: sourceCoords, alpha: as } = convert(source, space);
+  const { coords: backdropCoords, alpha: ab } = convert(backdrop, space);
   const alpha = as + ab * (1 - as);
 
   if (alpha === 0) {
     return createColor(space, [0, 0, 0], 0);
   }
 
-  const [br, bg, bb] = blendCoords(blend, callback, cs, [0, 0, 0]);
+  const [
+    br,
+    bg,
+    bb,
+  ] = blendCoords(blend, backdropCoords, sourceCoords, [0, 0, 0]);
 
   const channel = (
     backdropChannel: number,
@@ -46,9 +50,9 @@ export function composite(
   return createColor(
     space,
     [
-      channel(callback[0], cs[0], br),
-      channel(callback[1], cs[1], bg),
-      channel(callback[2], cs[2], bb),
+      channel(backdropCoords[0], sourceCoords[0], br),
+      channel(backdropCoords[1], sourceCoords[1], bg),
+      channel(backdropCoords[2], sourceCoords[2], bb),
     ],
     alpha,
   );

@@ -74,11 +74,11 @@ export function interpolateCoords(
   out: [number, number, number],
 ): number {
   const alpha = fromAlpha + (toAlpha - fromAlpha) * t;
-  const hueIndex = space.channels.findIndex((channel) => channel.isHue);
+  const { hueIndex } = space;
 
   let interpolatedHue = 0;
 
-  if (hueIndex !== -1) {
+  if (hueIndex != null) {
     const fromAchromatic = space.isAchromatic?.(from) ?? false;
     const toAchromatic = space.isAchromatic?.(to) ?? false;
 
@@ -109,7 +109,7 @@ export function interpolateCoords(
         );
   }
 
-  if (hueIndex !== -1) {
+  if (hueIndex != null) {
     out[hueIndex] = interpolatedHue;
   }
 

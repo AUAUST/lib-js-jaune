@@ -68,6 +68,25 @@ describe("composite", () => {
     );
   });
 
+  test("clip an out-of-gamut color blend below 0 without rescaling above 1", () => {
+    const source = createColor(srgb, [1.5, -0.5, 0]);
+    const backdrop = createColor(srgb, [0.2, 0.2, 0.2]);
+
+    expectCoords(
+      composite(source, backdrop, { blend: "color" }).coords,
+      [0.6107, 0, 0.1527],
+    );
+  });
+
+  test("clamp an out-of-range source luminosity before clipping", () => {
+    const source = createColor(srgb, [1.5, 1.5, 1.5]);
+
+    expectCoords(
+      composite(source, red, { blend: "luminosity" }).coords,
+      [1, 1, 1],
+    );
+  });
+
   test("reject a non-RGB space", () => {
     expect(() => composite(red, black, { space: hsl })).toThrow(TypeError);
   });

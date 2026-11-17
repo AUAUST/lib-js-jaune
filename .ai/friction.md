@@ -31,3 +31,4 @@
 - git compound commands in worktree agent: cd && git ... chained — isolation guard refused; split into plain separate commands
 - git apply --index: worktree patch touching .ai/friction.md failed against main's uncommitted line — used --3way and union-resolved
 - npx vitest: ran tests via npx — devEngines requires pnpm; used pnpm exec
+- zsh glob in grep: `grep -rn … --include=*.ts` and an unmatched `**` path — zsh nomatch aborted the command; dropped the filter

@@ -51,6 +51,30 @@ describe("createSpace", () => {
     }).toThrow(TypeError);
   });
 
+  test("derives the hue index and rejects several hue channels", () => {
+    const definition = {
+      id: "cylinder",
+      base: undefined,
+      toBase: root("unused").toBase,
+      fromBase: root("unused").fromBase,
+      isAchromatic: () => false,
+    };
+
+    expect(root("flat").hueIndex).toBeUndefined();
+
+    expect(
+      createSpace({ ...definition, channels: [channel, channel, hueChannel] })
+        .hueIndex,
+    ).toBe(2);
+
+    expect(() => {
+      return createSpace({
+        ...definition,
+        channels: [hueChannel, channel, hueChannel],
+      });
+    }).toThrow(TypeError);
+  });
+
   test("resolves a self gamut and freezes the space", () => {
     const space = createSpace({ ...root("self"), gamut: "self" });
 

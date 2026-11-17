@@ -1,7 +1,6 @@
 import { colorEncoding } from "#color/utils/colorEncoding";
 import { createGradient } from "#computations/mix/utils/createGradient";
 import { convertCoords } from "#space/utils/convertCoords";
-import { oklab } from "#spaces/oklab/adapters/oklab";
 import type { ColorEncoding } from "#color/ports/ColorEncoding";
 import type { Color } from "#color/types/Color";
 import type { Gradient } from "#computations/mix/types/Gradient";
@@ -52,9 +51,5 @@ export function gradient<T>(
 
   const sampler = createGradient(stops, gradientOptions);
 
-  return sampleColors(
-    sampler,
-    count,
-    encoding ?? colorEncoding(gradientOptions.space ?? oklab),
-  );
+  return sampleColors(sampler, count, encoding ?? colorEncoding(sampler.space));
 }

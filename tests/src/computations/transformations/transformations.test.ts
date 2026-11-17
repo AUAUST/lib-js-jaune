@@ -6,11 +6,13 @@ import { oklch } from "@auaust/jaune/oklab";
 import { toColor } from "@auaust/jaune/parse";
 import { srgb } from "@auaust/jaune/rgb";
 import {
+  darken,
   desaturate,
   grayscale,
   invert,
   lighten,
   rotateHue,
+  saturate,
 } from "@auaust/jaune/transformations";
 
 describe("transformations", () => {
@@ -32,6 +34,19 @@ describe("transformations", () => {
     expect(lightened.space).toBe(srgb);
     expect(convert(lightened, oklch).coords[0]).toBeCloseTo(0.1);
     expect(toHex(lighten(toColor("white")))).toBe("#ffffff");
+  });
+
+  test("darken clamps at black", () => {
+    expect(toHex(darken(toColor("#0a0a0a"), 1))).toBe("#000000");
+  });
+
+  test("saturate scales the chroma up", () => {
+    const color = toColor("#c08060");
+    const before = convert(color, oklch).coords;
+    const after = convert(saturate(color, 0.5), oklch).coords;
+
+    expect(after[1]).toBeCloseTo(before[1] * 1.5);
+    expect(after[0]).toBeCloseTo(before[0]);
   });
 
   test("desaturate fully to zero chroma at the same lightness", () => {
