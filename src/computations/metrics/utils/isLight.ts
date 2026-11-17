@@ -3,11 +3,13 @@ import { lightness } from "#computations/metrics/utils/lightness";
 import type { Color } from "#color/types/Color";
 
 /**
- * Whether the lightness of `color` is above `threshold`.
+ * Whether the lightness of `color` is above `threshold`. Composites `color` over
+ * `backdrop` first when given; ignores alpha otherwise.
  */
 export function isLight(
   color: Color,
   threshold: number = lightnessThreshold,
+  backdrop?: Color,
 ): boolean {
-  return lightness(color) > threshold;
+  return lightness(color, backdrop) > threshold;
 }

@@ -1,10 +1,12 @@
 import { describe, expect, test } from "vitest";
 
-import { createColor } from "@auaust/jaune/color";
+import { convert, createColor } from "@auaust/jaune/color";
 import {
+  apcaContrast,
   closestNamedColor,
   contrast,
-  distance,
+  deltaE,
+  equals,
   isDark,
   isLight,
   isOpaque,
@@ -13,6 +15,7 @@ import {
   lightness,
   luminance,
 } from "@auaust/jaune/metrics";
+import { oklch } from "@auaust/jaune/oklab";
 import { toColor } from "@auaust/jaune/parse";
 import { srgb } from "@auaust/jaune/rgb";
 
@@ -40,8 +43,33 @@ describe("metrics", () => {
     expect(isTransparent(toColor("transparent"))).toBe(true);
   });
 
-  test("measure distance on 8-bit channels", () => {
-    expect(distance(toColor("black"), toColor("blue"))).toBeCloseTo(255);
-    expect(closestNamedColor(toColor([250, 0, 5]))).toBe("red");
+  test("composite translucent colors before measuring contrast", () => {
+    const white = toColor("white");
+    const transparentBlack = createColor(srgb, [0, 0, 0], 0);
+
+    expect(contrast(white, transparentBlack)).toBeCloseTo(1);
+    expect(contrast(white, transparentBlack, toColor("black"))).toBeCloseTo(21);
+  });
+
+  test("count alpha when naming the closest color", () => {
+    expect(closestNamedColor(createColor(srgb, [0, 0, 0], 0.5))).toBe("black");
+
+    expect(closestNamedColor(createColor(srgb, [1, 0, 0], 0))).toBe(
+      "transparent",
+    );
+  });
+
+  test("measure perceptual difference and equality", () => {
+    const red = toColor("#ff0000");
+
+    expect(deltaE(toColor("white"), toColor("black"))).toBeCloseTo(1, 4);
+    expect(equals(red, convert(red, oklch))).toBe(true);
+  });
+
+  test("measure APCA lightness contrast", () => {
+    expect(apcaContrast(toColor("black"), toColor("white"))).toBeCloseTo(
+      106.04,
+      1,
+    );
   });
 });

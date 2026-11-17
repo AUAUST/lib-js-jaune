@@ -10,7 +10,7 @@ src/  space < spaces < color < gamut < formats < computations < parse  (global r
 ├─ color*  The color record, the color encoding contract and record conversion.
 ├─ computations/  #computations/…  Operations over color records: measures, derived colors, mixing and randomness.
 │  ├─ composite*  Compositing and blending colors over a backdrop.
-│  ├─ metrics*  Measures and predicates over colors: luminance, lightness, contrast, distance and opacity.
+│  ├─ metrics*  Measures and predicates over colors: luminance, lightness, contrast, perceptual difference, equality and opacity.
 │  ├─ random*  Random colors and channels.
 │  └─ transformations*  Colors derived from one color: grayscale, inversion and hue rotation.
 ├─ formats/  #formats/…  * < named  Color notations: 8-bit channels, HEX strings and CSS names.

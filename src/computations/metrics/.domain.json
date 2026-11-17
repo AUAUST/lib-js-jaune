@@ -1,5 +1,5 @@
 {
-  "purpose": "Measures and predicates over colors: luminance, lightness, contrast, distance and opacity.",
+  "purpose": "Measures and predicates over colors: luminance, lightness, contrast, perceptual difference, equality and opacity.",
   "public": true,
   "reexport": "flat",
   "specifier": "./metrics"
