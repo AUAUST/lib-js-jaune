@@ -3,6 +3,7 @@ import { isString } from "@auaust/toolkit/guard";
 import { isColor } from "#color/utils/isColor";
 import { isRgbChannels } from "#formats/channels/utils/isRgbChannels";
 import { isRgbTuple } from "#formats/channels/utils/isRgbTuple";
+import { parseCss } from "#formats/css/utils/parseCss";
 import { isHex } from "#formats/hex/utils/isHex";
 import { isNamedColor } from "#formats/named/utils/isNamedColor";
 import type { ColorInputType } from "#parse/types/ColorInputType";
@@ -17,7 +18,11 @@ export function colorType(value: unknown): ColorInputType | undefined {
       return "hex";
     }
 
-    return isNamedColor(value.toLowerCase()) ? "named" : undefined;
+    if (isNamedColor(value.toLowerCase())) {
+      return "named";
+    }
+
+    return parseCss(value) ? "css" : undefined;
   }
 
   if (isColor(value)) {

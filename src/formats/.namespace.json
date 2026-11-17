@@ -1,4 +1,4 @@
 {
-  "purpose": "Color notations: 8-bit channels, HEX strings and CSS names.",
-  "layers": ["*", "named"]
+  "purpose": "Color notations: 8-bit channels, HEX strings, CSS names and CSS color strings.",
+  "layers": ["*", "named", "css"]
 }

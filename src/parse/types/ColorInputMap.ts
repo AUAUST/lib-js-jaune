@@ -9,6 +9,10 @@ import type { NamedColor } from "#formats/named/types/NamedColor";
  */
 export interface ColorInputMap {
   color: Color;
+  /**
+   * Any CSS Color 4 string `parseCss` accepts.
+   */
+  css: string;
   hex: Hex;
   named: NamedColor;
   rgbChannels: RgbChannels;

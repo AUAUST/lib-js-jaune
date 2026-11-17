@@ -13,8 +13,9 @@ src/  space < spaces < color < gamut < formats < computations < parse  (global r
 │  ├─ metrics*  Measures and predicates over colors: luminance, lightness, contrast, perceptual difference, equality and opacity.
 │  ├─ random*  Random colors and channels.
 │  └─ transformations*  Colors derived from one color: grayscale, inversion and hue rotation.
-├─ formats/  #formats/…  * < named  Color notations: 8-bit channels, HEX strings and CSS names.
+├─ formats/  #formats/…  * < named < css  Color notations: 8-bit channels, HEX strings, CSS names and CSS color strings.
 │  ├─ channels*  8-bit sRGB channels as objects, tuples and packed integers.
+│  ├─ css*  CSS color strings: parsing and serialization of every CSS Color 4 notation.
 │  ├─ hex*  HEX color strings: detection, parsing and serialization.
 │  └─ named*  CSS named colors, their aliases and their records.
 ├─ gamut*  Gamut checks, clipping and CSS Color 4 gamut mapping.

@@ -6,6 +6,7 @@ export * from "#computations/metrics/entry";
 export * from "#computations/random/entry";
 export * from "#computations/transformations/entry";
 export * from "#formats/channels/entry";
+export * from "#formats/css/entry";
 export * from "#formats/hex/entry";
 export * from "#formats/named/entry";
 export * from "#gamut/entry";

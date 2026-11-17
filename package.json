@@ -46,6 +46,7 @@
     "./channels": "./dist/channels.mjs",
     "./color": "./dist/color.mjs",
     "./composite": "./dist/composite.mjs",
+    "./css": "./dist/css.mjs",
     "./gamut": "./dist/gamut.mjs",
     "./hex": "./dist/hex.mjs",
     "./hsl": "./dist/hsl.mjs",

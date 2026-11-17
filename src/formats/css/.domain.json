@@ -1,0 +1,6 @@
+{
+  "purpose": "CSS color strings: parsing and serialization of every CSS Color 4 notation.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./css"
+}

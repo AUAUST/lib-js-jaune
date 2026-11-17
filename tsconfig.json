@@ -23,6 +23,7 @@
         "./src/computations/transformations/entry.ts"
       ],
       "@auaust/jaune/channels": ["./src/formats/channels/entry.ts"],
+      "@auaust/jaune/css": ["./src/formats/css/entry.ts"],
       "@auaust/jaune/hex": ["./src/formats/hex/entry.ts"],
       "@auaust/jaune/named": ["./src/formats/named/entry.ts"],
       "@auaust/jaune/gamut": ["./src/gamut/entry.ts"],
