@@ -1,5 +1,5 @@
 {
-  "purpose": "Colors derived from one color: grayscale, inversion and hue rotation.",
+  "purpose": "Colors derived from one color: grayscale, inversion, hue rotation and OKLCH lightness and chroma adjustment.",
   "public": true,
   "reexport": "flat",
   "specifier": "./transformations"

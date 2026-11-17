@@ -29,3 +29,5 @@
 - engrenage via npx: ran npx engrenage sync — npm devEngines rejects npm, used pnpm exec
 - SendMessage to integration merger: resumed past 2× context — refused; new merger needed with carry-over
 - git compound commands in worktree agent: cd && git ... chained — isolation guard refused; split into plain separate commands
+- git apply --index: worktree patch touching .ai/friction.md failed against main's uncommitted line — used --3way and union-resolved
+- npx vitest: ran tests via npx — devEngines requires pnpm; used pnpm exec
