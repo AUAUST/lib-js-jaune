@@ -11,5 +11,12 @@
     {
       "path": "./tsconfig.scripts.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "paths": {
+      "@auaust/jaune": ["./src/entry.ts"],
+      "@auaust/jaune/color": ["./src/color/entry.ts"],
+      "@auaust/jaune/utils": ["./src/helpers/entry.ts"]
+    }
+  }
 }

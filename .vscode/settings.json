@@ -122,11 +122,11 @@
   "json.schemas": [
     {
       "fileMatch": ["**/.namespace.json"],
-      "url": "./node_modules/.pnpm/@auaust+engrenage@0.14.1_@typescript-eslint+eslint-plugin@8.73.0_@typescript-eslint+par_91cc17f2d8967176c6f38dc6e0f02a41/node_modules/@auaust/engrenage/data/schemas/namespace.schema.json"
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.14.1_@typescript-eslint+eslint-plugin@8.73.0_@typescript-eslint+par_bcf01d1fd15834c82ed997ddd22969c4/node_modules/@auaust/engrenage/data/schemas/namespace.schema.json"
     },
     {
       "fileMatch": ["**/.domain.json"],
-      "url": "./node_modules/.pnpm/@auaust+engrenage@0.14.1_@typescript-eslint+eslint-plugin@8.73.0_@typescript-eslint+par_91cc17f2d8967176c6f38dc6e0f02a41/node_modules/@auaust/engrenage/data/schemas/domain.schema.json"
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.14.1_@typescript-eslint+eslint-plugin@8.73.0_@typescript-eslint+par_bcf01d1fd15834c82ed997ddd22969c4/node_modules/@auaust/engrenage/data/schemas/domain.schema.json"
     }
   ],
   "eslint.codeActionsOnSave.mode": "problems",

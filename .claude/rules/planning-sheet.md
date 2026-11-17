@@ -14,6 +14,7 @@ Skills and checks name issue types, fields, options and close reasons by their m
 | Short name  | Repository                |
 | ----------- | ------------------------- |
 | `jaune`     | `AUAUST/lib-js-jaune`     |
+| `toolkit`   | `AUAUST/lib-js-toolkit`   |
 | `engrenage` | `AUAUST/lib-js-engrenage` |
 
 ## Labels

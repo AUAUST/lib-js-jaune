@@ -1,0 +1,4 @@
+{
+  "purpose": "Color representations: channel objects, HEX strings, RGB tuples and CSS names.",
+  "layers": ["channels", "*", "named"]
+}

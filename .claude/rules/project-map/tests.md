@@ -7,4 +7,5 @@ paths:
 
 ```
 tests/  (global roles: constants.ts *.d.ts setup.ts)
+└─ src/  mirrors src
 ```

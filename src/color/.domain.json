@@ -1,0 +1,6 @@
+{
+  "purpose": "The Color class and the detection and parsing of any color value.",
+  "public": true,
+  "reexport": "flat",
+  "collects": ["types"]
+}
