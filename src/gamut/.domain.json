@@ -1,0 +1,6 @@
+{
+  "purpose": "Gamut checks, clipping and CSS Color 4 gamut mapping.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./gamut"
+}

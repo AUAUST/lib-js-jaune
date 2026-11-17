@@ -1,0 +1,6 @@
+{
+  "purpose": "Perceptual spaces: OKLab and OKLCH.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./oklab"
+}

@@ -34,6 +34,7 @@
     "#color/*": "./src/color/*.ts",
     "#computations/*": "./src/computations/*.ts",
     "#formats/*": "./src/formats/*.ts",
+    "#gamut/*": "./src/gamut/*.ts",
     "#helpers/*": "./src/helpers/*.ts",
     "#package.json": "./package.json",
     "#space/*": "./src/space/*.ts",
@@ -48,7 +49,9 @@
     "./xyz": "./dist/xyz.mjs",
     "./rgb": "./dist/rgb.mjs",
     "./hsl": "./dist/hsl.mjs",
-    "./lab": "./dist/lab.mjs"
+    "./lab": "./dist/lab.mjs",
+    "./gamut": "./dist/gamut.mjs",
+    "./oklab": "./dist/oklab.mjs"
   },
   "files": [
     "dist",

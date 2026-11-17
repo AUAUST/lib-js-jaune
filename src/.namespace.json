@@ -1,3 +1,11 @@
 {
-  "layers": ["space", "spaces", "formats", "computations", "color", "helpers"]
+  "layers": [
+    "space",
+    "spaces",
+    "gamut",
+    "formats",
+    "computations",
+    "color",
+    "helpers"
+  ]
 }
