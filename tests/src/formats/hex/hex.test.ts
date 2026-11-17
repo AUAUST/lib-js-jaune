@@ -1,8 +1,15 @@
-import { isHex, parseHex, toHex } from "@auaust/jaune/utils";
-import { entries } from "@auaust/toolkit/object";
 import { describe, expect, test } from "vitest";
 
+import { isHex, parseHex, toHex } from "@auaust/jaune/utils";
+import { entries } from "@auaust/toolkit/object";
+
 describe("HEX colors", () => {
+  test("parse to the fallback color when invalid", () => {
+    for (const value of ["", "#", "12", "#12345", "#ggg"]) {
+      expect(parseHex(value).isFallback).toBe(true);
+    }
+  });
+
   test("can be recognized", () => {
     const hex = [
       "#c85",
@@ -15,9 +22,9 @@ describe("HEX colors", () => {
       "abcdef",
     ];
 
-    hex.forEach((h) => {
+    for (const h of hex) {
       expect(isHex(h)).toBe(true);
-    });
+    }
 
     const notHex = [
       "#xyz",
@@ -31,9 +38,9 @@ describe("HEX colors", () => {
       "",
     ];
 
-    notHex.forEach((h) => {
+    for (const h of notHex) {
       expect(isHex(h)).toBe(false);
-    });
+    }
   });
 
   test("can be parsed", () => {
@@ -76,14 +83,14 @@ describe("HEX colors", () => {
       },
     };
 
-    entries(hex).forEach(([input, expected]) => {
+    for (const [input, expected] of entries(hex)) {
       const components = parseHex(input);
 
       expect(components.r).toBe(expected.r);
       expect(components.g).toBe(expected.g);
       expect(components.b).toBe(expected.b);
       expect(components.a).toBeCloseTo(expected.a);
-    });
+    }
 
     expect(parseHex("zzzzzz").isFallback).toBe(true);
     expect(parseHex("abcdef").isFallback).toBe(false);

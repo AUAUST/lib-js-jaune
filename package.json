@@ -38,11 +38,19 @@
     "#package.json": "./package.json",
     "#tests/*": "./tests/*.ts"
   },
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./color": "./dist/color.mjs",
+    "./utils": "./dist/utils.mjs"
+  },
   "files": [
     "dist",
     "data",
     "src"
   ],
+  "dependencies": {
+    "@auaust/toolkit": "^0.8.0"
+  },
   "devDependencies": {
     "@auaust/engrenage": "^0.14.1",
     "@types/node": "^26.6.6",
@@ -76,13 +84,5 @@
   },
   "publishConfig": {
     "access": "restricted"
-  },
-  "dependencies": {
-    "@auaust/toolkit": "^0.8.0"
-  },
-  "exports": {
-    ".": "./dist/index.mjs",
-    "./color": "./dist/color.mjs",
-    "./utils": "./dist/utils.mjs"
   }
 }

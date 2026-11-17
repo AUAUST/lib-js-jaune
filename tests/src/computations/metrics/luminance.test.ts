@@ -1,9 +1,10 @@
-import { Color } from "@auaust/jaune";
-import { isBetween } from "@auaust/toolkit/number";
 import { assert, expect, test } from "vitest";
 
+import { Color } from "@auaust/jaune";
+import { isBetween } from "@auaust/toolkit/number";
+
 test("Colors have a luminance and brightness value", () => {
-  black: {
+  {
     const c = Color.from([0, 0, 0]);
 
     expect(c.luminance).toBe(0);
@@ -12,7 +13,7 @@ test("Colors have a luminance and brightness value", () => {
     expect(c.isDark).toBe(true);
   }
 
-  white: {
+  {
     const c = Color.from([255, 255, 255]);
 
     expect(c.luminance).toBe(1);
@@ -21,14 +22,14 @@ test("Colors have a luminance and brightness value", () => {
     expect(c.isDark).toBe(false);
   }
 
-  gray: {
+  {
     const c = Color.from([128, 128, 128]);
 
     expect(c.luminance).toBeCloseTo(0.215);
     expect(c.brightness).toBeCloseTo(0.535);
   }
 
-  lightgray: {
+  {
     const c = Color.from("lightgray");
 
     expect(c.luminance).toBeCloseTo(0.65);
@@ -37,7 +38,7 @@ test("Colors have a luminance and brightness value", () => {
     expect(c.isDark).toBe(false);
   }
 
-  darkgray: {
+  {
     const c = Color.from("#080808");
 
     expect(c.luminance).toBeLessThan(0.05);
@@ -46,14 +47,14 @@ test("Colors have a luminance and brightness value", () => {
     expect(c.isDark).toBe(true);
   }
 
-  lime: {
+  {
     const c = Color.from("lime");
 
     expect(c.isBright).toBe(true);
     expect(c.isDark).toBe(false);
   }
 
-  random: for (let i = 0; i <= 100; i++) {
+  for (let index = 0; index <= 100; index++) {
     const c = Color.random();
 
     assert(isBetween(c.luminance, 0, 1));

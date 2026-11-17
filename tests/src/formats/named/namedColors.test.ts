@@ -1,3 +1,5 @@
+import { describe, expect, test } from "vitest";
+
 import { Color, type ColorChannels, type NamedColor } from "@auaust/jaune";
 import {
   isAliasToNamedColor,
@@ -8,7 +10,6 @@ import {
   parseNamedColor,
 } from "@auaust/jaune/utils";
 import { entries } from "@auaust/toolkit/object";
-import { describe, expect, test } from "vitest";
 
 describe("Named colors", () => {
   test("can be recognized", () => {
@@ -21,9 +22,9 @@ describe("Named colors", () => {
       "YELLOW",
     ];
 
-    namedColors.forEach((h) => {
+    for (const h of namedColors) {
       expect(isNamedColor(h)).toBe(true);
-    });
+    }
 
     const notNamedColors = [
       "",
@@ -38,9 +39,9 @@ describe("Named colors", () => {
       [1, 2],
     ];
 
-    notNamedColors.forEach((h) => {
+    for (const h of notNamedColors) {
       expect(isNamedColor(h)).toBe(false);
-    });
+    }
   });
 
   test("can be parsed", () => {
@@ -105,7 +106,7 @@ describe("Named colors", () => {
       ], // fallback black
     ] as [string, ColorChannels][];
 
-    namedColors.forEach(([input, expected]) => {
+    for (const [input, expected] of namedColors) {
       const components = parseNamedColor(input);
 
       expect(components).toBeDefined();
@@ -114,7 +115,7 @@ describe("Named colors", () => {
       expect(components.b).toBe(expected.b);
       expect(components.a).toBe(expected.a ?? 1);
       expect(components.isFallback).toBe(expected.isFallback ?? false);
-    });
+    }
   });
 
   test("may have aliases", () => {
@@ -153,7 +154,7 @@ describe("Named colors", () => {
     expect(isAliasToNamedColor("darkgray", "lightgray")).toBe(false);
 
     expect(
-      isAliasToNamedColor(<NamedColor>"unknown", <NamedColor>"unknown"),
+      isAliasToNamedColor("unknown" as NamedColor, "unknown" as NamedColor),
     ).toBe(false);
   });
 
@@ -161,6 +162,14 @@ describe("Named colors", () => {
     expect(namedColorToHex("white")).toBe("#ffffffff"); // this low level function returns the whole hex, including alpha
     expect(namedColorToHex("black")).toBe("#000000ff");
     expect(namedColorToHex("")).toBeUndefined();
+  });
+
+  test("ignore inherited object keys", () => {
+    for (const key of ["constructor", "toString", "__proto__"]) {
+      expect(isNamedColor(key)).toBe(false);
+      expect(namedColorToHex(key)).toBeUndefined();
+      expect(parseNamedColor(key).isFallback).toBe(true);
+    }
   });
 });
 

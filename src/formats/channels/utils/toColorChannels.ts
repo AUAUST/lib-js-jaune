@@ -1,17 +1,19 @@
-import type { ResolvedColorChannels } from "#formats/channels/types/ResolvedColorChannels";
 import { isObject } from "@auaust/toolkit/guard";
+import { isNaN } from "@auaust/toolkit/number";
+import { freeze } from "@auaust/toolkit/object";
+
 import { fallbackColor } from "#formats/channels/constants";
-import type { ColorChannels } from "#formats/channels/types/ColorChannels";
 import { toAlphaChannel } from "#formats/channels/utils/toAlphaChannel";
 import { toRgbChannel } from "#formats/channels/utils/toRgbChannel";
+import type { ColorChannels } from "#formats/channels/types/ColorChannels";
+import type { ResolvedColorChannels } from "#formats/channels/types/ResolvedColorChannels";
 
 /**
- * Formats the input into a readonly object of color channels.
+ * Formats the input into a frozen object of color channels.
  *
- * It clamps the values to the valid range and sets the alpha channel to 1 if not
- * provided. If the passed `isTransformed` isn't already `true`, it will set it
- * to `true` if any of the values were clamped. If some channels are missing, it
- * will return the fallback color.
+ * It rounds and clamps the values to their valid range, sets a missing RGB
+ * channel to 0 and a missing alpha channel to 1, and sets `isTransformed` when
+ * any value changed. A `NaN` RGB channel returns the fallback color.
  */
 export function toColorChannels(value: ColorChannels): ResolvedColorChannels;
 export function toColorChannels(
@@ -44,7 +46,7 @@ export function toColorChannels(
 
   const finalA = toAlphaChannel(a);
 
-  return Object.freeze({
+  return freeze({
     r: finalR,
     g: finalG,
     b: finalB,

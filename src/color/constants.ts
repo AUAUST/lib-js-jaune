@@ -1,3 +1,4 @@
+// @debt the `constants` role is public and collected, so the symbols meant to keep `Color` storage private are exported by both package entries.
 /**
  * Used to privately store the cached channels of a color.
  */

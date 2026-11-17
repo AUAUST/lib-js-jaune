@@ -1,5 +1,8 @@
-import { type ColorChannels, toColorChannels } from "#formats/channels/index";
+import { toColorChannels, type ColorChannels } from "#formats/channels/index";
 
+/**
+ * Returns the color with each RGB channel inverted, preserving the alpha channel.
+ */
 export function invert(channels: ColorChannels): ColorChannels {
   return toColorChannels(
     255 - channels.r,

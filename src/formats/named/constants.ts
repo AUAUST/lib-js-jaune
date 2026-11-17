@@ -1,11 +1,11 @@
-import type { NamedColor } from "#formats/named/types/NamedColor";
+import { freeze, keys } from "@auaust/toolkit/object";
 
 /**
  * A map of named colors and their HEX values.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
  */
-export const namedColorsMap = Object.freeze({
+export const namedColorsMap = freeze({
   aliceblue: "#f0f8ffff",
   antiquewhite: "#faebd7ff",
   aqua: "#00ffffff",
@@ -157,7 +157,7 @@ export const namedColorsMap = Object.freeze({
   yellowgreen: "#9acd32ff",
 });
 
-// @debt `namedColors` is a mutable `Set` and its keys need an `as` cast, though the `constants` role expects deeply read-only values.
-export const namedColors = new Set<NamedColor>(
-  Object.keys(namedColorsMap) as NamedColor[],
-);
+/**
+ * Every CSS color name, lowercased, in alphabetical order.
+ */
+export const namedColors = freeze(keys(namedColorsMap));

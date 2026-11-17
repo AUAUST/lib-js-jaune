@@ -1,3 +1,5 @@
+import { describe, expect, test } from "vitest";
+
 import { Color } from "@auaust/jaune";
 import {
   isAliasToNamedColor,
@@ -9,7 +11,6 @@ import {
   namedColorAliases,
   type,
 } from "@auaust/jaune/utils";
-import { describe, expect, test } from "vitest";
 
 describe("Static Color", () => {
   describe("can instantiate Color instances", () => {
@@ -38,7 +39,7 @@ describe("Static Color", () => {
     });
 
     test("from unknown sources", () => {
-      undefined: {
+      {
         // @ts-expect-error
         const c = Color.from();
 
@@ -67,11 +68,11 @@ describe("Static Color", () => {
         });
       }
 
-      color: {
+      {
         expect(Color.from(Color.from("black")).toHex()).toBe("#000000");
       }
 
-      named: {
+      {
         const c = Color.from("magenta");
 
         expect(c.r).toBe(255);
@@ -80,7 +81,7 @@ describe("Static Color", () => {
         expect(c.a).toBe(1);
       }
 
-      spread: {
+      {
         const c = Color.from(255, 0, 255, 0.5);
 
         expect(c.r).toBe(255);
@@ -89,7 +90,7 @@ describe("Static Color", () => {
         expect(c.a).toBe(0.5);
       }
 
-      hex: {
+      {
         const c = Color.from("#f0f");
 
         expect(c.r).toBe(255);
@@ -98,7 +99,7 @@ describe("Static Color", () => {
         expect(c.a).toBe(1);
       }
 
-      rgb: {
+      {
         const c = Color.from([255, 0, 255]);
 
         expect(c.r).toBe(255);
@@ -107,7 +108,7 @@ describe("Static Color", () => {
         expect(c.a).toBe(1);
       }
 
-      fallback: {
+      {
         const c = Color.from(null!);
 
         expect(c.r).toBe(0);
@@ -188,10 +189,10 @@ describe("Color instances", () => {
   });
 
   test("can be converted to strings", () => {
-    expect(Color.from("black") + "").toBe("#000000");
+    expect(String(Color.from("black"))).toBe("#000000");
     expect(Color.from("white").valueOf()).toBe("#ffffff");
     expect(Color.from("gray").toString()).toBe("#808080");
-    expect(`${Color.from("red")}`).toBe("#ff0000");
+    expect(Color.from("red")[Symbol.toPrimitive]()).toBe("#ff0000");
   });
 
   test("expose inner channels", () => {
@@ -263,8 +264,17 @@ describe("Color instances", () => {
     expect(c.toRgb()).toEqual([0, 0, 255, 1]);
   });
 
+  test("never expose their writable channels through parsing", () => {
+    const c = Color.from("red");
+    const parsed = Color.parse(c);
+
+    expect(Object.isFrozen(parsed)).toBe(true);
+    expect(Color.from(c)).not.toBe(c);
+    expect(c.red).toBe(255);
+  });
+
   test("can be cloned", () => {
-    clonesAndKeepFallbackState: {
+    {
       const c = Color.from("unknown");
       const clone = c.clone();
 
@@ -273,7 +283,7 @@ describe("Color instances", () => {
       expect(clone.isFallback).toBe(true);
     }
 
-    clonesAndKeepTransformedState: {
+    {
       const c = Color.from([-1, 0, 3400]);
       const clone = c.clone();
 
@@ -284,7 +294,7 @@ describe("Color instances", () => {
   });
 
   test("can be cloned with new channels", () => {
-    withChannels: {
+    {
       const c = Color.from("black");
       const clone = c.with({ r: 255, a: 0.5 });
 
@@ -295,7 +305,7 @@ describe("Color instances", () => {
       expect(clone.a).toBe(0.5);
     }
 
-    withChannel: {
+    {
       const c = Color.from("black");
       const clone = c.withRed(255);
 
@@ -308,7 +318,7 @@ describe("Color instances", () => {
       expect(clone.withBlue(255).b).toBe(255);
     }
 
-    withAlphaChannel: {
+    {
       const c = Color.from("black");
       const clone = c.withAlpha(-1);
 

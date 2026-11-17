@@ -1,24 +1,32 @@
-import { type ColorChannels, toColorChannels } from "#formats/channels/index";
+import { withoutPrefix } from "@auaust/toolkit/string";
+
+import {
+  fallbackColor,
+  toColorChannels,
+  type ColorChannels,
+} from "#formats/channels/index";
+import { isHex } from "#formats/hex/utils/isHex";
 import type { Hex } from "#formats/hex/types/Hex";
 
 /**
- * Parses a hex string into an object of color channels.
- *
- * The input must already be a valid HEX color, otherwise the result will
- * be unexpected.
+ * Parses a HEX color into an object of color channels, or returns the fallback
+ * color when the input is not a HEX color.
  */
 export function parseHex(value: Hex): ColorChannels {
-  value = value.startsWith("#") ? value.slice(1) : value;
+  if (!isHex(value)) {
+    return fallbackColor;
+  }
 
-  const isShort = value.length < 6;
-  const hasAlpha = isShort ? value.length === 4 : value.length === 8;
+  const digits = withoutPrefix(value, "#");
+  const isShort = digits.length < 6;
+  const hasAlpha = isShort ? digits.length === 4 : digits.length === 8;
 
-  const r = parseInt(isShort ? value[0].repeat(2) : value.slice(0, 2), 16);
-  const g = parseInt(isShort ? value[1].repeat(2) : value.slice(2, 4), 16);
-  const b = parseInt(isShort ? value[2].repeat(2) : value.slice(4, 6), 16);
+  const r = parseInt(isShort ? digits[0].repeat(2) : digits.slice(0, 2), 16);
+  const g = parseInt(isShort ? digits[1].repeat(2) : digits.slice(2, 4), 16);
+  const b = parseInt(isShort ? digits[2].repeat(2) : digits.slice(4, 6), 16);
 
   const a = hasAlpha
-    ? parseInt(isShort ? value[3].repeat(2) : value.slice(6, 8), 16) / 255
+    ? parseInt(isShort ? digits[3].repeat(2) : digits.slice(6, 8), 16) / 255
     : 1;
 
   return toColorChannels(r, g, b, a);

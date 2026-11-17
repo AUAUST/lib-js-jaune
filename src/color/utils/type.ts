@@ -1,16 +1,16 @@
 import { isColorInstance } from "#color/utils/isColorInstance";
-import type { ColorType } from "#color/types/ColorType";
 import { isColorChannels } from "#formats/channels/index";
 import { isHex } from "#formats/hex/index";
 import { isNamedColor } from "#formats/named/index";
 import { isRgb } from "#formats/rgb/index";
+import type { ColorType } from "#color/types/ColorType";
 
 /**
  * Returns the color type of the value, or undefined if it's not a color.
  */
 export function type(value: unknown): ColorType | undefined {
   if (!value) {
-    return undefined;
+    return;
   }
 
   if (isColorInstance(value)) {
@@ -32,6 +32,4 @@ export function type(value: unknown): ColorType | undefined {
   if (isColorChannels(value)) {
     return "channels";
   }
-
-  return undefined;
 }

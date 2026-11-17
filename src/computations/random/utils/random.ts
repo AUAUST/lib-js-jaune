@@ -1,10 +1,7 @@
 import { randomAlphaChannel } from "#computations/random/utils/randomAlphaChannel";
 import { randomRgbChannel } from "#computations/random/utils/randomRgbChannel";
-import {
-  type ChannelRange,
-  type ColorChannels,
-  toColorChannels,
-} from "#formats/channels/index";
+import { toColorChannels, type ColorChannels } from "#formats/channels/index";
+import type { ChannelRange } from "#computations/random/types/ChannelRange";
 
 /**
  * Generates a random color.

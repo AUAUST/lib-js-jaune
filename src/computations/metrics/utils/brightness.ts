@@ -1,3 +1,5 @@
+import { cbrt } from "@auaust/toolkit/math";
+
 import { luminance } from "#computations/metrics/utils/luminance";
 import type { ColorChannels } from "#formats/channels/index";
 
@@ -9,9 +11,9 @@ import type { ColorChannels } from "#formats/channels/index";
 export function brightness(channels: ColorChannels): number {
   const l = luminance(channels);
 
-  if (l <= 216 / 24389) {
-    return (l * (24389 / 27)) / 100;
+  if (l <= 216 / 24_389) {
+    return (l * (24_389 / 27)) / 100;
   }
 
-  return (Math.pow(l, 1 / 3) * 116 - 16) / 100;
+  return (cbrt(l) * 116 - 16) / 100;
 }

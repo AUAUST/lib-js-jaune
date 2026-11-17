@@ -1,6 +1,7 @@
-import type { ColorChannels, Rgb } from "@auaust/jaune";
-import { isRgb, parseRgb, toRgb } from "@auaust/jaune/utils";
 import { describe, expect, test } from "vitest";
+
+import { isRgb, parseRgb, toRgb } from "@auaust/jaune/utils";
+import type { ColorChannels, Rgb } from "@auaust/jaune";
 
 describe("RGB colors", () => {
   test("can be recognized", () => {
@@ -10,12 +11,12 @@ describe("RGB colors", () => {
       [16, 49, 1],
       [2, 34, 11, 0.5],
       [255, 255, 255],
-      [185.54, 0, 0, 0.9999999],
+      [185.54, 0, 0, 0.99999_99],
     ];
 
-    rgb.forEach((h) => {
+    for (const h of rgb) {
       expect(isRgb(h)).toBe(true);
-    });
+    }
 
     const notRgb = [
       "#xyz",
@@ -29,9 +30,9 @@ describe("RGB colors", () => {
       [1811, 491, 1],
     ];
 
-    notRgb.forEach((h) => {
+    for (const h of notRgb) {
       expect(isRgb(h)).toBe(false);
-    });
+    }
   });
 
   test("can be parsed", () => {
@@ -79,12 +80,12 @@ describe("RGB colors", () => {
         },
       ],
       [
-        [185.54, 0, 0, 0.9999999],
+        [185.54, 0, 0, 0.99999_99],
         {
           r: 186,
           g: 0,
           b: 0,
-          a: 0.9999999,
+          a: 0.99999_99,
           isTransformed: true,
         },
       ],
@@ -108,7 +109,7 @@ describe("RGB colors", () => {
       ],
     ] as [Rgb, ColorChannels][];
 
-    rgb.forEach(([input, expected]) => {
+    for (const [input, expected] of rgb) {
       const components = parseRgb(input);
 
       expect(components.r).toBe(expected.r);
@@ -117,7 +118,7 @@ describe("RGB colors", () => {
       expect(components.a).toBeCloseTo(expected.a ?? 1);
       expect(components.isTransformed).toBe(expected.isTransformed ?? false);
       expect(components.isFallback).toBe(expected.isFallback ?? false);
-    });
+    }
   });
 
   test("can be created", () => {

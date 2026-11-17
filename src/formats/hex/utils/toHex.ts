@@ -1,6 +1,7 @@
 import { isNumber } from "@auaust/toolkit/guard";
 import { max, round } from "@auaust/toolkit/math";
-import { type ColorChannels, toRgbChannel } from "#formats/channels/index";
+
+import { toRgbChannel, type ColorChannels } from "#formats/channels/index";
 import type { Hex } from "#formats/hex/types/Hex";
 
 /**
@@ -20,7 +21,7 @@ export function toHex(channels: ColorChannels): Hex {
       toRgbChannel(b)
     )
       .toString(16)
-      .substring(1) +
+      .slice(1) +
     (isNumber(a) && a < 1
       ? round(max(0, a) * 255)
           .toString(16)

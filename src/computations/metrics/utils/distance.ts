@@ -1,3 +1,5 @@
+import { pow, sqrt } from "@auaust/toolkit/math";
+
 import type { ColorChannels } from "#formats/channels/index";
 
 /**
@@ -9,10 +11,10 @@ export function distance(
   b: ColorChannels,
   alpha = false,
 ): number {
-  return Math.sqrt(
-    Math.pow(a.r - b.r, 2) +
-      Math.pow(a.g - b.g, 2) +
-      Math.pow(a.b - b.b, 2) +
-      (alpha ? Math.pow((a.a ?? 1) - (b.a ?? 1), 2) : 0),
+  return sqrt(
+    pow(a.r - b.r, 2) +
+      pow(a.g - b.g, 2) +
+      pow(a.b - b.b, 2) +
+      (alpha ? pow((a.a ?? 1) - (b.a ?? 1), 2) : 0),
   );
 }

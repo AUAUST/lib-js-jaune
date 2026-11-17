@@ -1,6 +1,7 @@
 import { isObject } from "@auaust/toolkit/guard";
-import type { Color } from "#color/classes/Color";
+
 import { channels } from "#color/constants";
+import type { Color } from "#color/classes/Color";
 
 /**
  * Whether the value is a `Color` instance, recognized by the channels it holds

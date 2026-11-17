@@ -1,5 +1,5 @@
 import { linearTosRGB, luminance } from "#computations/metrics/index";
-import { type ColorChannels, toColorChannels } from "#formats/channels/index";
+import { toColorChannels, type ColorChannels } from "#formats/channels/index";
 
 /**
  * Returns the grayscale equivalent of a color as a new color channels object.

@@ -13,7 +13,7 @@ export type * from "#color/utils/isColor";
 export type * from "#color/utils/isColorInstance";
 export type * from "#color/utils/parseColor";
 export type * from "#color/utils/type";
-export type * from "#formats/channels/types/ChannelRange";
+export type * from "#computations/random/types/ChannelRange";
 export type * from "#formats/channels/types/ColorChannels";
 export type * from "#formats/channels/types/ResolvedColorChannels";
 export type * from "#formats/hex/types/Hex";

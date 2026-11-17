@@ -1,10 +1,10 @@
 import { distance } from "#computations/metrics/utils/distance";
-import type { ColorChannels } from "#formats/channels/index";
 import {
-  type NamedColor,
   namedColorChannels,
   namedColors,
+  type NamedColor,
 } from "#formats/named/index";
+import type { ColorChannels } from "#formats/channels/index";
 
 /**
  * Returns the closest named color to the passed color channels.
@@ -15,17 +15,15 @@ export function closestNamedColor(channels: ColorChannels): NamedColor {
 
   for (const name of namedColors) {
     const value = namedColorChannels(name);
+    const comparesAlpha = value.a === 1;
+    const d = distance(value, channels, comparesAlpha);
 
-    const d = distance(
-      value,
-      channels,
-      value.a === 1, // Ignore alpha channel only if it's 1 -> allows to match transparent/black correctly
-    );
-
-    if (d < smallestDistance) {
-      closest = name;
-      smallestDistance = d;
+    if (d >= smallestDistance) {
+      continue;
     }
+
+    closest = name;
+    smallestDistance = d;
   }
 
   return closest!;

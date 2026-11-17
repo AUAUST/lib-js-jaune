@@ -1,6 +1,8 @@
 import { isNumber } from "@auaust/toolkit/guard";
+import { getOrSet } from "@auaust/toolkit/maplike";
+import type { Writable } from "@auaust/toolkit/types";
+
 import { cache, channels } from "#color/constants";
-import type { ColorValue } from "#color/types/ColorValue";
 import { isColor } from "#color/utils/isColor";
 import { parseColor } from "#color/utils/parseColor";
 import { type } from "#color/utils/type";
@@ -19,31 +21,33 @@ import {
 import { random } from "#computations/random/index";
 import { grayscale, invert } from "#computations/transformations/index";
 import {
-  type ColorChannels,
-  type ResolvedColorChannels,
-  fallbackColor,
   isColorChannels,
   toAlphaChannel,
   toColorChannels,
   toRgbChannel,
+  type ColorChannels,
+  type ResolvedColorChannels,
 } from "#formats/channels/index";
 import { isHex, parseHex, toHex } from "#formats/hex/index";
 import {
-  type MaybeNamedColor,
-  type NamedColor,
   isAliasToNamedColor,
   isNamedColor,
   namedColorAliases,
   parseNamedColor,
+  type MaybeNamedColor,
+  type NamedColor,
 } from "#formats/named/index";
-import { type Rgb, isRgb, parseRgb, toRgb } from "#formats/rgb/index";
+import { isRgb, parseRgb, toRgb, type Rgb } from "#formats/rgb/index";
+import type { ColorValue } from "#color/types/ColorValue";
 
-import type { Writable } from "@auaust/toolkit/types";
-
+/**
+ * A mutable color holding RGB and alpha channels. Setting a channel clears its
+ * memoized values and its `isFallback` and `isTransformed` flags.
+ */
 export class Color {
   protected [channels]: Writable<ResolvedColorChannels> = undefined!;
   // @debt the memo cache is keyed by `Function` and holds `any`, so `memoize` returns untyped values.
-  protected [cache]: Map<string | Function, any> = new Map();
+  protected [cache] = new Map<string | Function, any>();
 
   constructor(value: ColorChannels) {
     this[channels] = { ...toColorChannels(value) };
@@ -61,7 +65,7 @@ export class Color {
       });
     }
 
-    return new Color(parseColor(value ?? fallbackColor));
+    return new Color(parseColor(value));
   }
 
   static fromChannels(channels: ColorChannels): Color {
@@ -106,7 +110,7 @@ export class Color {
   static isColor = isColor;
 
   /**
-   * @alias Color#isColor
+   * Alias of `Color.isColor`.
    */
   static is = isColor;
 
@@ -214,15 +218,15 @@ export class Color {
     return this[channels].r;
   }
 
+  set red(value: number) {
+    this.setRed(value);
+  }
+
   /**
    * @see Color#red
    */
   get r(): number {
     return this[channels].r;
-  }
-
-  set red(value: number) {
-    this.setRed(value);
   }
 
   setRed(value: number): this {
@@ -236,15 +240,15 @@ export class Color {
     return this[channels].g;
   }
 
+  set green(value: number) {
+    this.setGreen(value);
+  }
+
   /**
    * @see Color#green
    */
   get g(): number {
     return this[channels].g;
-  }
-
-  set green(value: number) {
-    this.setGreen(value);
   }
 
   setGreen(value: number): this {
@@ -258,15 +262,15 @@ export class Color {
     return this[channels].b;
   }
 
+  set blue(value: number) {
+    this.setBlue(value);
+  }
+
   /**
    * @see Color#blue
    */
   get b(): number {
     return this[channels].b;
-  }
-
-  set blue(value: number) {
-    this.setBlue(value);
   }
 
   setBlue(value: number): this {
@@ -280,15 +284,15 @@ export class Color {
     return this[channels].a;
   }
 
+  set alpha(value: number) {
+    this.setAlpha(value);
+  }
+
   /**
    * @see Color#alpha
    */
   get a(): number {
     return this[channels].a;
-  }
-
-  set alpha(value: number) {
-    this.setAlpha(value);
   }
 
   setAlpha(value: number): this {
@@ -319,11 +323,9 @@ export class Color {
     // This means no key is required when the getter is a named function, while allowing to use anonymous functions within getters as well by passing a key
     const cacheKey = key ?? getter;
 
-    if (!this[cache].has(cacheKey)) {
-      this[cache].set(cacheKey, getter(this[channels]));
-    }
-
-    return this[cache].get(cacheKey);
+    return getOrSet(this[cache], cacheKey, () => {
+      return getter(this[channels]);
+    });
   }
 
   /**
@@ -382,8 +384,7 @@ export class Color {
    */
   isBrighterThan(threshold: Color | number): boolean {
     return (
-      this.brightness >
-      (threshold instanceof Color ? threshold.brightness : threshold)
+      this.brightness > (isNumber(threshold) ? threshold : threshold.brightness)
     );
   }
 
@@ -392,8 +393,7 @@ export class Color {
    */
   isDarkerThan(threshold: Color | number): boolean {
     return (
-      this.brightness <
-      (threshold instanceof Color ? threshold.brightness : threshold)
+      this.brightness < (isNumber(threshold) ? threshold : threshold.brightness)
     );
   }
 

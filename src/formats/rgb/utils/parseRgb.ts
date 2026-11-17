@@ -1,8 +1,9 @@
 import { isArray } from "@auaust/toolkit/guard";
+
 import {
-  type ColorChannels,
   fallbackColor,
   toColorChannels,
+  type ColorChannels,
 } from "#formats/channels/index";
 import type { Rgb } from "#formats/rgb/types/Rgb";
 

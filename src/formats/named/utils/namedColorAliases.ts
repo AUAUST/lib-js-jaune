@@ -1,35 +1,31 @@
-import { entries } from "@auaust/toolkit/object";
-import { namedColorsMap } from "#formats/named/constants";
-import type { NamedColor } from "#formats/named/types/NamedColor";
+import { getOrSet } from "@auaust/toolkit/maplike";
+import { freeze } from "@auaust/toolkit/object";
+
+import { namedColors } from "#formats/named/constants";
 import { isNamedColor } from "#formats/named/utils/isNamedColor";
 import { namedColorToHex } from "#formats/named/utils/namedColorToHex";
+import type { NamedColor } from "#formats/named/types/NamedColor";
 
-const namedColorsAliasesCache: Partial<
-  Record<NamedColor, readonly NamedColor[]>
-> = {};
+const namedColorsAliasesCache = new Map<NamedColor, readonly NamedColor[]>();
 
 /**
- * Returns all the aliases of a named color.
+ * Returns all the aliases of a named color, matched case-insensitively, including
+ * the name itself, or an empty list when it is not a named color.
  */
 export function namedColorAliases(name: NamedColor): readonly NamedColor[] {
-  name = <NamedColor>name.toLowerCase();
+  const lowercased = name.toLowerCase();
 
-  if (!isNamedColor(name)) {
+  if (!isNamedColor(lowercased)) {
     return [];
   }
 
-  if (namedColorsAliasesCache[name]) {
-    return namedColorsAliasesCache[name]!;
-  }
+  return getOrSet(namedColorsAliasesCache, lowercased, () => {
+    const targetHex = namedColorToHex(lowercased);
 
-  const aliases: NamedColor[] = [];
-  const targetHex = namedColorToHex(name);
-
-  for (const [name, hex] of entries(namedColorsMap)) {
-    if (hex === targetHex) {
-      aliases.push(name);
-    }
-  }
-
-  return (namedColorsAliasesCache[name] = Object.freeze(aliases));
+    return freeze(
+      namedColors.filter((candidate) => {
+        return namedColorToHex(candidate) === targetHex;
+      }),
+    );
+  });
 }

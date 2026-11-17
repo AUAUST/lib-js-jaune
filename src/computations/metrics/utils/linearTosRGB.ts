@@ -1,3 +1,5 @@
+import { pow } from "@auaust/toolkit/math";
+
 /**
  * Returns the gamma corrected sRGB value of a linear channel.
  */
@@ -6,5 +8,5 @@ export function linearTosRGB(channel: number) {
     return channel * 12.92;
   }
 
-  return 1.055 * Math.pow(channel, 1 / 2.4) - 0.055;
+  return 1.055 * pow(channel, 1 / 2.4) - 0.055;
 }

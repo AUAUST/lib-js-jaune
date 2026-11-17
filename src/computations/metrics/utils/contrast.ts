@@ -1,4 +1,5 @@
 import { minMax } from "@auaust/toolkit/math";
+
 import { luminance } from "#computations/metrics/utils/luminance";
 import type { ColorChannels } from "#formats/channels/index";
 

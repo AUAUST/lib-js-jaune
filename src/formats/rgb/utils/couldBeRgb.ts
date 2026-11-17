@@ -1,5 +1,6 @@
 import { isArray, isNumber } from "@auaust/toolkit/guard";
 import { isBetween } from "@auaust/toolkit/number";
+
 import type { Rgb } from "#formats/rgb/types/Rgb";
 
 /**

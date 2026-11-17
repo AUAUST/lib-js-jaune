@@ -1,11 +1,12 @@
+import { assert, describe, expect, test } from "vitest";
+
 import { Color } from "@auaust/jaune";
 import { isInteger } from "@auaust/toolkit/guard";
 import { isBetween } from "@auaust/toolkit/number";
-import { assert, describe, expect, test } from "vitest";
 
 describe("Random colors", () => {
   test("can be generated", () => {
-    for (let i = 0; i < 10; i++) {
+    for (let index = 0; index < 10; index++) {
       const c = Color.random();
 
       assert(isBetween(c.r, 0, 255));
@@ -22,7 +23,7 @@ describe("Random colors", () => {
   });
 
   test("can be generated with defined channels", () => {
-    single: for (let i = 0; i < 10; i++) {
+    for (let index = 0; index < 10; index++) {
       const c = Color.random({
         r: 24,
       });
@@ -34,7 +35,7 @@ describe("Random colors", () => {
       assert(isBetween(c.b, 0, 255));
     }
 
-    multiple: for (let i = 0; i < 10; i++) {
+    for (let index = 0; index < 10; index++) {
       const c = Color.random({
         r: 24,
         g: 32,
@@ -48,7 +49,7 @@ describe("Random colors", () => {
       assert(isBetween(c.b, 0, 255));
     }
 
-    all: {
+    {
       // Setting all channels to a single value is effectively creating the provided color
       const c = Color.random({
         r: 24,
@@ -62,7 +63,7 @@ describe("Random colors", () => {
   });
 
   test("can be generated with channel ranges", () => {
-    for (let i = 0; i < 10; i++) {
+    for (let index = 0; index < 10; index++) {
       const c = Color.random({
         r: [24, 32],
         a: [0.5, 0.55],
@@ -79,7 +80,7 @@ describe("Random colors", () => {
   });
 
   test("can be generated with mixed channel ranges and values", () => {
-    for (let i = 0; i < 10; i++) {
+    for (let index = 0; index < 10; index++) {
       const c = Color.random({
         r: 24,
         g: [32, 64],

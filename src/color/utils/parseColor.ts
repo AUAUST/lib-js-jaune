@@ -1,9 +1,10 @@
-import { isColorInstance } from "#color/utils/isColorInstance";
 import { channels } from "#color/constants";
+import { isColorInstance } from "#color/utils/isColorInstance";
 import {
-  type ColorChannels,
   fallbackColor,
   isColorChannels,
+  toColorChannels,
+  type ColorChannels,
 } from "#formats/channels/index";
 import { isHex, parseHex } from "#formats/hex/index";
 import { isNamedColor, parseNamedColor } from "#formats/named/index";
@@ -18,7 +19,7 @@ export function parseColor(value: unknown): ColorChannels {
   }
 
   if (isColorInstance(value)) {
-    return value[channels];
+    return toColorChannels(value[channels]);
   }
 
   if (isColorChannels(value)) {

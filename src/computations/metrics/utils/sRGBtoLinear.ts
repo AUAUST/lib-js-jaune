@@ -1,3 +1,5 @@
+import { pow } from "@auaust/toolkit/math";
+
 /**
  * Returns the linearized value of a sRGB channel.
  *
@@ -8,5 +10,5 @@ export function sRGBtoLinear(channel: number) {
     return channel / 12.92;
   }
 
-  return Math.pow((channel + 0.055) / 1.055, 2.4);
+  return pow((channel + 0.055) / 1.055, 2.4);
 }

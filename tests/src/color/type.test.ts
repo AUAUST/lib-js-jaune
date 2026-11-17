@@ -1,6 +1,7 @@
+import { describe, expect, test } from "vitest";
+
 import { Color } from "@auaust/jaune";
 import { isColor, type } from "@auaust/jaune/utils";
-import { describe, expect, test } from "vitest";
 
 describe("Colors", () => {
   test("'s type can be checked", () => {
@@ -37,9 +38,9 @@ describe("Colors", () => {
       [1, 2, 3, 0.1],
     ];
 
-    colors.forEach((h) => {
+    for (const h of colors) {
       expect(isColor(h)).toBe(true);
-    });
+    }
 
     const notColors = [
       "#xyz",
@@ -57,8 +58,8 @@ describe("Colors", () => {
       [0, 0, 0, 1, 0],
     ];
 
-    notColors.forEach((h) => {
+    for (const h of notColors) {
       expect(isColor(h)).toBe(false);
-    });
+    }
   });
 });
