@@ -1,6 +1,12 @@
 import { describe, expect, test } from "vitest";
 
-import { convertCoords, createSpace } from "@auaust/jaune/space";
+import {
+  convertCoords,
+  createPolarSpace,
+  createSpace,
+  hueChannel,
+  normalizeHue,
+} from "@auaust/jaune/space";
 import { isFrozen } from "@auaust/toolkit/object";
 
 const channel = {
@@ -54,10 +60,41 @@ describe("createSpace", () => {
   });
 });
 
+describe("createPolarSpace", () => {
+  const base = root("lab-like");
+
+  const polar = createPolarSpace({
+    id: "polar",
+    base,
+    chromaRange: [0, 1],
+    achromaticThreshold: 1e-3,
+  });
+
+  test("keeps the base's lightness channel and adds the shared hue", () => {
+    expect(polar.channels[0]).toEqual(base.channels[0]);
+    expect(polar.channels[2]).toEqual(hueChannel);
+    expect(polar.gamut).toBe(base.gamut);
+  });
+
+  test("wraps negative angles and gives achromatic colors hue 0", () => {
+    expect(polar.fromBase([0.5, 0, -1], [0, 0, 0])).toEqual([0.5, 1, 270]);
+    expect(polar.fromBase([0.5, 1e-4, -1e-4], [0, 0, 0])[2]).toBe(0);
+    expect(polar.isAchromatic?.([0.5, 1e-4, 90])).toBe(true);
+  });
+});
+
 describe("convertCoords", () => {
   test("throws between spaces of different roots", () => {
     expect(() => {
       return convertCoords(root("a"), root("b"), [0, 0, 0], [0, 0, 0]);
     }).toThrow(TypeError);
+  });
+});
+
+describe("normalizeHue", () => {
+  test("wraps angles into [0, 360)", () => {
+    expect(normalizeHue(-90)).toBe(270);
+    expect(normalizeHue(720)).toBe(0);
+    expect(normalizeHue(-1e-14)).toBe(0);
   });
 });

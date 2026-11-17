@@ -1,5 +1,6 @@
 import { abs, max, min } from "@auaust/toolkit/math";
 
+import { hueChannel } from "#space/constants";
 import { createSpace } from "#space/utils/createSpace";
 import { normalizeHue } from "#space/utils/normalizeHue";
 import { hslAchromaticThreshold } from "#spaces/hsl/constants";
@@ -13,11 +14,7 @@ import { srgb } from "#spaces/rgb/adapters/srgb";
 export const hsl = createSpace({
   id: "hsl",
   channels: [
-    {
-      name: "h",
-      range: [0, 360],
-      isHue: true,
-    },
+    hueChannel,
     {
       name: "s",
       range: [0, 1],

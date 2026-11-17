@@ -8,6 +8,8 @@ export { srgb } from "#spaces/rgb/adapters/srgb";
 export { srgbLinear } from "#spaces/rgb/adapters/srgbLinear";
 export { linearChannelToSrgb } from "#spaces/rgb/utils/linearChannelToSrgb";
 export { srgbChannelToLinear } from "#spaces/rgb/utils/srgbChannelToLinear";
+export { transferChannels } from "#spaces/rgb/utils/transferChannels";
 export * from "#spaces/rgb/constants";
 export type * from "#spaces/rgb/utils/linearChannelToSrgb";
 export type * from "#spaces/rgb/utils/srgbChannelToLinear";
+export type * from "#spaces/rgb/utils/transferChannels";

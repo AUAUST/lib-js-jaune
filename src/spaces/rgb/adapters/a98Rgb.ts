@@ -8,10 +8,15 @@ import {
   a98RgbLinearToXyzD65,
   xyzD65ToA98RgbLinear,
 } from "#spaces/rgb/constants";
+import { transferChannels } from "#spaces/rgb/utils/transferChannels";
 import { xyzD65 } from "#spaces/xyz/adapters/xyzD65";
 
-function signedPow(value: number, exponent: number): number {
-  return sign(value) * pow(abs(value), exponent);
+function toLinear(value: number): number {
+  return sign(value) * pow(abs(value), a98RgbGamma);
+}
+
+function toEncoded(value: number): number {
+  return sign(value) * pow(abs(value), 1 / a98RgbGamma);
 }
 
 /**
@@ -23,18 +28,13 @@ export const a98Rgb = createSpace({
   base: xyzD65,
   gamut: "self",
   toBase(coords, out) {
-    out[0] = signedPow(coords[0], a98RgbGamma);
-    out[1] = signedPow(coords[1], a98RgbGamma);
-    out[2] = signedPow(coords[2], a98RgbGamma);
+    transferChannels(toLinear, coords, out);
 
     return multiplyMatrix(a98RgbLinearToXyzD65, out, out);
   },
   fromBase(coords, out) {
     multiplyMatrix(xyzD65ToA98RgbLinear, coords, out);
-    out[0] = signedPow(out[0], 1 / a98RgbGamma);
-    out[1] = signedPow(out[1], 1 / a98RgbGamma);
-    out[2] = signedPow(out[2], 1 / a98RgbGamma);
 
-    return out;
+    return transferChannels(toEncoded, out, out);
   },
 });

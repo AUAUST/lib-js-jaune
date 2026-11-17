@@ -11,6 +11,7 @@ import {
   prophotoRgbLinearToXyzD50,
   xyzD50ToProphotoRgbLinear,
 } from "#spaces/rgb/constants";
+import { transferChannels } from "#spaces/rgb/utils/transferChannels";
 import { xyzD50 } from "#spaces/xyz/adapters/xyzD50";
 
 function toLinear(value: number): number {
@@ -42,18 +43,13 @@ export const prophotoRgb = createSpace({
   base: xyzD50,
   gamut: "self",
   toBase(coords, out) {
-    out[0] = toLinear(coords[0]);
-    out[1] = toLinear(coords[1]);
-    out[2] = toLinear(coords[2]);
+    transferChannels(toLinear, coords, out);
 
     return multiplyMatrix(prophotoRgbLinearToXyzD50, out, out);
   },
   fromBase(coords, out) {
     multiplyMatrix(xyzD50ToProphotoRgbLinear, coords, out);
-    out[0] = toEncoded(out[0]);
-    out[1] = toEncoded(out[1]);
-    out[2] = toEncoded(out[2]);
 
-    return out;
+    return transferChannels(toEncoded, out, out);
   },
 });

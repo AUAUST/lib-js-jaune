@@ -24,3 +24,4 @@ export type * from "#space/types/ColorChannel";
 export type * from "#space/types/ColorSpaceDefinition";
 export type * from "#space/types/Coords";
 export type * from "#space/types/Matrix3";
+export type * from "#space/types/PolarSpaceDefinition";

@@ -44,14 +44,14 @@
   "exports": {
     ".": "./dist/index.mjs",
     "./color": "./dist/color.mjs",
-    "./utils": "./dist/utils.mjs",
-    "./space": "./dist/space.mjs",
-    "./xyz": "./dist/xyz.mjs",
-    "./rgb": "./dist/rgb.mjs",
+    "./gamut": "./dist/gamut.mjs",
     "./hsl": "./dist/hsl.mjs",
     "./lab": "./dist/lab.mjs",
-    "./gamut": "./dist/gamut.mjs",
-    "./oklab": "./dist/oklab.mjs"
+    "./oklab": "./dist/oklab.mjs",
+    "./rgb": "./dist/rgb.mjs",
+    "./space": "./dist/space.mjs",
+    "./utils": "./dist/utils.mjs",
+    "./xyz": "./dist/xyz.mjs"
   },
   "files": [
     "dist",

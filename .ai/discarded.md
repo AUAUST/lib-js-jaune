@@ -16,3 +16,6 @@
 - custom `spaces.ts` role: built-in color spaces — new jaune-only role where the existing ports/adapters roles fit
 - confined constants role: defaults built from spaces (`mixSpace`, `contrastBackdrop`) — needs an upstream engrenage change; user chose adapters as signature defaults
 - custom `defaults.ts` role: defaults built from spaces — new jaune-only role; user chose adapters as signature defaults and private util tables
+- shared no-gamut guard helper: `clipCoordsToGamut`/`mapCoordsToGamut` jscpd twin — a three-line guard on a shared signature; a helper adds indirection, no gain
+- createRgbSpace factory: RGB transfer-loop duplication — sRGB's base is srgbLinear without a matrix, so the factory fits four of five spaces; `transferChannels` util covers all five
+- polar conversion kernels: lch/oklch duplication — leave the chroma channel, hue channel and `isAchromatic` repeated; `createPolarSpace` owns them all

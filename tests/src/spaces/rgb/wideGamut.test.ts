@@ -13,10 +13,15 @@ import { xyzD65 } from "@auaust/jaune/xyz";
 import { expectCoordsClose } from "#tests/src/space/utils/expectCoordsClose";
 
 describe("wide-gamut RGB spaces", () => {
-  test("convert sRGB red to Display P3", () => {
+  test.each([
+    { space: displayP3, red: [0.9175, 0.2003, 0.1386] },
+    { space: a98Rgb, red: [0.8586, 0, 0] },
+    { space: prophotoRgb, red: [0.7022, 0.2757, 0.1035] },
+    { space: rec2020, red: [0.792, 0.231, 0.0738] },
+  ] as const)("convert sRGB red to $space.id", ({ space, red }) => {
     expectCoordsClose(
-      convertCoords(srgb, displayP3, [1, 0, 0], [0, 0, 0]),
-      [0.9175, 0.2003, 0.1386],
+      convertCoords(srgb, space, [1, 0, 0], [0, 0, 0]),
+      red,
       1e-4,
     );
   });

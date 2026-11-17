@@ -3,7 +3,10 @@ import { freeze } from "@auaust/toolkit";
 import type { ColorSpace } from "#space/ports/ColorSpace";
 import type { Coords } from "#space/types/Coords";
 
-const paths = new WeakMap<ColorSpace, Map<ColorSpace, readonly ColorSpace[]>>();
+const paths = new WeakMap<
+  ColorSpace,
+  WeakMap<ColorSpace, readonly ColorSpace[]>
+>();
 
 function ancestry(space: ColorSpace): ColorSpace[] {
   const chain: ColorSpace[] = [];
@@ -23,7 +26,7 @@ function resolvePath(from: ColorSpace, to: ColorSpace): readonly ColorSpace[] {
   let cached = paths.get(from);
 
   if (!cached) {
-    cached = new Map();
+    cached = new WeakMap();
     paths.set(from, cached);
   }
 

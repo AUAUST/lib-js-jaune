@@ -1,5 +1,6 @@
 import { max, min } from "@auaust/toolkit/math";
 
+import { hueChannel } from "#space/constants";
 import { createSpace } from "#space/utils/createSpace";
 import { normalizeHue } from "#space/utils/normalizeHue";
 import { hslAchromaticThreshold } from "#spaces/hsl/constants";
@@ -7,19 +8,13 @@ import { hslToSrgbChannel } from "#spaces/hsl/utils/hslToSrgbChannel";
 import { srgbToHue } from "#spaces/hsl/utils/srgbToHue";
 import { srgb } from "#spaces/rgb/adapters/srgb";
 
-// @debt hsl and hwb repeat their hue channel definition; share it from the hsl domain.
-
 /**
  * HWB over gamma-encoded sRGB, bounded by the sRGB cube; hue 0 when achromatic.
  */
 export const hwb = createSpace({
   id: "hwb",
   channels: [
-    {
-      name: "h",
-      range: [0, 360],
-      isHue: true,
-    },
+    hueChannel,
     {
       name: "w",
       range: [0, 1],

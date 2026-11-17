@@ -7,6 +7,7 @@ import {
 } from "#spaces/rgb/constants";
 import { linearChannelToSrgb } from "#spaces/rgb/utils/linearChannelToSrgb";
 import { srgbChannelToLinear } from "#spaces/rgb/utils/srgbChannelToLinear";
+import { transferChannels } from "#spaces/rgb/utils/transferChannels";
 import { xyzD65 } from "#spaces/xyz/adapters/xyzD65";
 
 /**
@@ -18,18 +19,13 @@ export const displayP3 = createSpace({
   base: xyzD65,
   gamut: "self",
   toBase(coords, out) {
-    out[0] = srgbChannelToLinear(coords[0]);
-    out[1] = srgbChannelToLinear(coords[1]);
-    out[2] = srgbChannelToLinear(coords[2]);
+    transferChannels(srgbChannelToLinear, coords, out);
 
     return multiplyMatrix(displayP3LinearToXyzD65, out, out);
   },
   fromBase(coords, out) {
     multiplyMatrix(xyzD65ToDisplayP3Linear, coords, out);
-    out[0] = linearChannelToSrgb(out[0]);
-    out[1] = linearChannelToSrgb(out[1]);
-    out[2] = linearChannelToSrgb(out[2]);
 
-    return out;
+    return transferChannels(linearChannelToSrgb, out, out);
   },
 });
