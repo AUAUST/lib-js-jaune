@@ -3,6 +3,7 @@
 export * from "#color/entry";
 export * from "#computations/composite/entry";
 export * from "#computations/metrics/entry";
+export * from "#computations/mix/entry";
 export * from "#computations/random/entry";
 export * from "#computations/transformations/entry";
 export * from "#formats/channels/entry";

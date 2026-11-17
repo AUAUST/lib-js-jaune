@@ -52,6 +52,7 @@
     "./hsl": "./dist/hsl.mjs",
     "./lab": "./dist/lab.mjs",
     "./metrics": "./dist/metrics.mjs",
+    "./mix": "./dist/mix.mjs",
     "./named": "./dist/named.mjs",
     "./oklab": "./dist/oklab.mjs",
     "./parse": "./dist/parse.mjs",

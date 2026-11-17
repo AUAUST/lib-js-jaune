@@ -27,3 +27,5 @@
 - npx engrenage: ran via npx — EBADDEVENGINES (pnpm required), used pnpm exec
 - engrenage eslint:fix: ran without file args expecting per-file use — it lints the whole project; pass file paths
 - engrenage via npx: ran npx engrenage sync — npm devEngines rejects npm, used pnpm exec
+- SendMessage to integration merger: resumed past 2× context — refused; new merger needed with carry-over
+- git compound commands in worktree agent: cd && git ... chained — isolation guard refused; split into plain separate commands

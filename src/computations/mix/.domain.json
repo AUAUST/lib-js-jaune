@@ -1,0 +1,6 @@
+{
+  "purpose": "Mixing, gradients and palettes.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./mix"
+}

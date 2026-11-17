@@ -18,6 +18,7 @@
       "@auaust/jaune/color": ["./src/color/entry.ts"],
       "@auaust/jaune/composite": ["./src/computations/composite/entry.ts"],
       "@auaust/jaune/metrics": ["./src/computations/metrics/entry.ts"],
+      "@auaust/jaune/mix": ["./src/computations/mix/entry.ts"],
       "@auaust/jaune/random": ["./src/computations/random/entry.ts"],
       "@auaust/jaune/transformations": [
         "./src/computations/transformations/entry.ts"
