@@ -35,3 +35,5 @@
 - npx/engrenage on PATH: ran \`npx prettier\` and bare \`engrenage gate\` — npx fails on pnpm devEngines and engrenage is not on PATH; used \`pnpm exec\`
 - npx/engrenage on PATH: ran `npx engrenage jscpd:new` from the merging skill — npx fails on pnpm devEngines; used `pnpm exec`
 - engrenage gate: ran bare `engrenage` then `npx` — not on PATH, npx rejected by devEngines; used `pnpm exec`
+- engrenage barrels: looked up which roles a domain entry re-exports — no doc; read planBarrels/listRootReexports in dist (collected+public+!subpath)
+- npm pkg set: tried to add a package.json script — devEngines rejects npm (EBADDEVENGINES); edited package.json directly

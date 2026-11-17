@@ -18,6 +18,7 @@
     "ci": "pnpm run ci:check && pnpm run ci:test && pnpm run ci:build",
     "ci:build": "pnpm run build",
     "ci:check": "engrenage sync --check && engrenage typecheck && engrenage eslint",
+    "ci:publish": "changeset publish",
     "ci:test": "engrenage vitest",
     "coverage": "engrenage vitest:coverage",
     "format": "engrenage prettier",
@@ -72,6 +73,7 @@
   },
   "devDependencies": {
     "@auaust/engrenage": "^0.14.1",
+    "@changesets/cli": "^3.0.3",
     "@types/node": "^26.6.6",
     "@vitest/coverage-istanbul": "^5.0.0",
     "eslint": "^10.0.0",

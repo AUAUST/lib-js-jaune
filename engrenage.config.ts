@@ -43,10 +43,21 @@ export default defineConfig({
         subpath: false,
         effects: "confined",
       }),
-      types({ public: true, collected: true }),
-      utils({ public: true, collected: true }),
-      ports({ collected: true }),
-      adapters({ effects: "confined", collected: true }),
+      types({
+        public: true,
+        collected: true,
+      }),
+      utils({
+        public: true,
+        collected: true,
+      }),
+      ports({
+        collected: true,
+      }),
+      adapters({
+        effects: "confined",
+        collected: true,
+      }),
     ],
   },
   tests: {
