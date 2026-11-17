@@ -62,7 +62,7 @@ convertCoords(srgb, oklch, [1, 0.5, 0], out); // out now holds OKLCH coordinates
 
 ### `@auaust/jaune/xyz`, `/rgb`, `/hsl`, `/lab`, `/oklab`
 
-The spaces: `xyzD65`, `xyzD50`; `srgb`, `srgbLinear`, `displayP3`, `a98Rgb`, `prophotoRgb`, `rec2020`; `hsl`, `hwb`; `lab`, `lch`; `oklab`, `oklch`, with `deltaEOK`.
+The spaces: `xyzD65`, `xyzD50`; `srgb`, `srgbLinear`, `displayP3`, `a98Rgb`, `prophotoRgb`, `rec2020`; `hsl`, `hwb`; `lab`, `lch`; `oklab`, `oklch`, with `deltaEOK`; the channel helpers `hslToSrgbChannel`, `srgbToHue`, `srgbChannelToLinear`, `linearChannelToSrgb`, `transferChannels`.
 
 ```ts
 import { convert, toColor } from "@auaust/jaune";

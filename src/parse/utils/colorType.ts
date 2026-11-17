@@ -15,17 +15,17 @@ import type { ColorInputType } from "#parse/types/ColorInputType";
  */
 export function colorType(value: unknown): ColorInputType | undefined {
   if (isString(value)) {
-    if (!parseCss(value)) {
-      return;
-    }
-
     const normalized = normalizeCss(value);
 
     if (isHex(normalized)) {
       return "hex";
     }
 
-    return isNamedColor(normalized) ? "named" : "css";
+    if (isNamedColor(normalized)) {
+      return "named";
+    }
+
+    return parseCss(normalized) ? "css" : undefined;
   }
 
   if (isColor(value)) {

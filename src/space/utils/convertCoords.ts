@@ -1,4 +1,4 @@
-import { freeze } from "@auaust/toolkit";
+import { freeze } from "@auaust/toolkit/object";
 
 import type { ColorSpace } from "#space/ports/ColorSpace";
 import type { Coords } from "#space/types/Coords";

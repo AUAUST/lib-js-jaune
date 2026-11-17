@@ -43,7 +43,7 @@ export interface ColorSpace {
     coords: Coords,
     out: [number, number, number],
   ): [number, number, number];
-  // @debt the type leaves `isAchromatic` optional when `hueIndex` is set; only `createSpace` enforces it, so consumers still guard with `?.`.
+  // @debt the type ties neither `hueIndex` to a hue channel in `channels` nor `isAchromatic` to a set `hueIndex`; only `createSpace` enforces both, so spaces built without it can mismatch and consumers still guard with `?.`.
   /**
    * Whether `coords` have no meaningful hue; `createSpace` requires it of every
    * space with a hue channel.

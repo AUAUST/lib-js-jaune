@@ -1,4 +1,5 @@
-import { freeze, type Writable } from "@auaust/toolkit";
+import { freeze } from "@auaust/toolkit/object";
+import type { Writable } from "@auaust/toolkit/types";
 
 import type { ColorSpace } from "#space/ports/ColorSpace";
 import type { ColorSpaceDefinition } from "#space/types/ColorSpaceDefinition";
