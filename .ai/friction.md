@@ -7,3 +7,9 @@
 - sed: deleted lines with a `\|` alternation — BSD sed on macOS ignores it; used `grep -vE` instead
 - npm view: queried package metadata — devEngines requires pnpm and npm fails with EBADDEVENGINES; used `pnpm view` outside the repo
 - zsh word splitting: passed refs as `$R` string — zsh does not split unquoted variables; used an array
+- zsh word splitting: stored `pnpm exec engrenage planning issue create` in `$E` — zsh ran it as one command name; used a shell function
+- pnpm pack: fetched a registry tarball with `pnpm pack culori` outside a package — fails without a package.json; used `curl` on `pnpm view … dist.tarball`
+- planning skill: wrote plan `subIssues` `sections` as a comma string — `check` expects an array; the skill names the key without its type
+- zsh glob in grep: `grep -rn … --include=*.ts` — zsh nomatch aborted the command; quoted the pattern
+- engrenage planning issue claim: claimed a closed one-line issue to close it — publish rejected the body as a header and the claim left `Drafting` on GitHub; re-claimed, added a section, cleared `Blockers` by hand
+- npx engrenage: ran planning --help through npx — devEngines requires pnpm; use pnpm exec
