@@ -1,24 +1,15 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "outDir": "dist",
-    "declaration": true,
-    "declarationDir": "dist/types",
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["./src/*"],
-      "@auaust/jaune": ["./src/index.ts"],
-      "@auaust/jaune/utils": ["./src/utils/index.ts"]
+  "extends": "@auaust/engrenage/tsconfig/library.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.src.json"
+    },
+    {
+      "path": "./tsconfig.tests.json"
+    },
+    {
+      "path": "./tsconfig.scripts.json"
     }
-  },
-  "include": ["src", "tests"],
-  "exclude": ["node_modules", "dist"]
+  ]
 }

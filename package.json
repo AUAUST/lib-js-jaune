@@ -1,59 +1,82 @@
 {
   "name": "@auaust/jaune",
-  "license": "GPL-3.0-only",
-  "type": "module",
   "version": "0.0.5",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "A Color class that helps you work with colors!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AUAUST/lib-js-jaune.git"
+  },
+  "license": "UNLICENSED",
   "author": {
     "name": "Aurian Aubert",
     "email": "aurian@auaust.ch",
     "url": "https://auaust.ch"
   },
+  "type": "module",
   "scripts": {
-    "build": "pnpm test && pnpm build:notest",
-    "build:notest": "pnpm run build:clean && pnpm run build:js",
-    "build:clean": "rimraf dist",
-    "build:js": "tsup",
-    "test": "vitest run --config vitest.config.ts --typecheck -- && pnpm typecheck",
-    "test:dist": "pnpm build:notest && vitest run --config vitest.config.ts --typecheck --mode build --",
-    "watch": "vitest --config vitest.config.ts --typecheck --",
-    "coverage": "vitest run --coverage",
-    "typecheck": "echo 'Typechecking...' && tsc --noEmit && echo 'All good!'",
-    "ci:publish": "changeset publish"
+    "build": "engrenage tsdown && engrenage typecheck:dist && engrenage vitest:dist",
+    "ci": "pnpm run ci:check && pnpm run ci:test && pnpm run ci:build",
+    "ci:build": "pnpm run build",
+    "ci:check": "engrenage sync --check && engrenage typecheck && engrenage eslint",
+    "ci:test": "engrenage vitest",
+    "coverage": "engrenage vitest:coverage",
+    "format": "engrenage prettier",
+    "lint": "engrenage eslint",
+    "lint:check": "engrenage eslint",
+    "lint:fix": "engrenage eslint:fix",
+    "lint:suppress": "engrenage eslint:suppress",
+    "prepare": "lefthook install",
+    "ready": "pnpm install --frozen-lockfile && engrenage sync && pnpm run ci",
+    "test": "engrenage vitest && engrenage typecheck",
+    "typecheck": "engrenage typecheck"
   },
-  "devDependencies": {
-    "@auaust/engrenage": "^0.13.1",
-    "@changesets/cli": "^2.29.8",
-    "@vitest/coverage-istanbul": "^4.0.16",
-    "rimraf": "^6.1.2",
-    "tsup": "^8.5.1",
-    "type-fest": "^5.3.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.16"
+  "imports": {
+    "#classes/*": "./src/classes/*.ts",
+    "#data/*": "./src/data/*.ts",
+    "#package.json": "./package.json",
+    "#tests/*": "./tests/*.ts",
+    "#types": "./src/types/index.ts",
+    "#types/*": "./src/types/*.ts",
+    "#utils": "./src/utils/index.ts",
+    "#utils/*": "./src/utils/*.ts"
   },
   "files": [
     "dist",
+    "data",
     "src"
   ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/types/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+  "devDependencies": {
+    "@auaust/engrenage": "^0.14.1",
+    "@types/node": "^26.6.6",
+    "@vitest/coverage-istanbul": "^5.0.0",
+    "eslint": "^10.0.0",
+    "jiti": "^2.7.0",
+    "jscpd": "^5.0.0",
+    "lefthook": "^2.0.0",
+    "prettier": "^3.9.0",
+    "tsdown": "^0.23.0",
+    "tsx": "^4.0.0",
+    "typescript": "^6.0.0",
+    "vitest": "^5.0.0"
+  },
+  "sideEffects": false,
+  "prettier": "@auaust/engrenage/prettier",
+  "engines": {
+    "node": ">=22"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^12.21.0",
+      "onFail": "download"
     },
-    "./utils": {
-      "types": "./dist/utils.d.ts",
-      "import": "./dist/utils.js",
-      "require": "./dist/utils.cjs"
+    "runtime": {
+      "name": "node",
+      "version": "24",
+      "onFail": "error"
     }
   },
-  "dependencies": {
-    "@auaust/primitive-kit": "^0.41.9"
+  "publishConfig": {
+    "access": "restricted"
   }
 }

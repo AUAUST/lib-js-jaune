@@ -1,0 +1,136 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never",
+    "source.sortImports": "never"
+  },
+  "eslint.rules.customizations": [
+    {
+      "rule": "@typescript-eslint/no-unnecessary-type-arguments",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-type-assertion",
+      "severity": "info"
+    },
+    {
+      "rule": "@typescript-eslint/require-await",
+      "severity": "info"
+    },
+    {
+      "rule": "auaust/documented",
+      "severity": "info"
+    },
+    {
+      "rule": "auaust/naming-convention",
+      "severity": "info"
+    },
+    {
+      "rule": "auaust/no-redundant-types",
+      "severity": "info"
+    },
+    {
+      "rule": "auaust/no-unnecessary-type-parameters",
+      "severity": "info"
+    },
+    {
+      "rule": "auaust/no-unused-vars",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/better-dom-traversing",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/no-console-spaces",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/no-incorrect-query-selector",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/no-invalid-dom-token",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/no-invalid-remove-event-listener",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/no-late-current-target-access",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/no-late-event-control",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/no-prevent-default-in-passive-listener",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-add-event-listener",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-classlist-toggle",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-dom-node-append",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-dom-node-remove",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-dom-node-text-content",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-keyboard-event-key",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-modern-dom-apis",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-query-selector",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-simplified-conditions",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/prefer-toggle-attribute",
+      "severity": "info"
+    },
+    {
+      "rule": "unicorn/require-css-escape",
+      "severity": "info"
+    }
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "prettier.requireConfig": true,
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "json.schemas": [
+    {
+      "fileMatch": ["**/.namespace.json"],
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.14.1_@typescript-eslint+eslint-plugin@8.73.0_@typescript-eslint+par_91cc17f2d8967176c6f38dc6e0f02a41/node_modules/@auaust/engrenage/data/schemas/namespace.schema.json"
+    },
+    {
+      "fileMatch": ["**/.domain.json"],
+      "url": "./node_modules/.pnpm/@auaust+engrenage@0.14.1_@typescript-eslint+eslint-plugin@8.73.0_@typescript-eslint+par_91cc17f2d8967176c6f38dc6e0f02a41/node_modules/@auaust/engrenage/data/schemas/domain.schema.json"
+    }
+  ],
+  "eslint.codeActionsOnSave.mode": "problems",
+  "eslint.options": {
+    "flags": ["unstable_native_nodejs_ts_config"]
+  }
+}

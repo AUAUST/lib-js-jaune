@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.tests.json",
+  "include": [
+    "tests/**/*.test.ts",
+    "tests/**/*.test.tsx",
+    "tests/**/*.test.dist.ts",
+    "tests/**/*.test.dist.tsx",
+    "tests/setup.ts",
+    "tests/*.d.ts",
+    "env.d.ts"
+  ],
+  "compilerOptions": {
+    "paths": {},
+    "incremental": true,
+    "tsBuildInfoFile": "./node_modules/.cache/typescript/tsconfig.tests.dist.tsbuildinfo",
+    "skipLibCheck": false
+  }
+}
