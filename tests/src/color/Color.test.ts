@@ -11,6 +11,7 @@ import {
   namedColorAliases,
   type,
 } from "@auaust/jaune/utils";
+import { isFrozen } from "@auaust/toolkit/object";
 
 describe("Static Color", () => {
   describe("can instantiate Color instances", () => {
@@ -268,7 +269,7 @@ describe("Color instances", () => {
     const c = Color.from("red");
     const parsed = Color.parse(c);
 
-    expect(Object.isFrozen(parsed)).toBe(true);
+    expect(isFrozen(parsed)).toBe(true);
     expect(Color.from(c)).not.toBe(c);
     expect(c.red).toBe(255);
   });

@@ -1,3 +1,5 @@
+import { from } from "@auaust/toolkit/array";
+
 import {
   toAlphaChannel,
   toRgbChannel,
@@ -11,7 +13,7 @@ import type { Rgb } from "#formats/rgb/types/Rgb";
 export function toRgb(channels: ColorChannels): Rgb {
   const { r, g, b, a } = channels;
 
-  return Array.from([r, g, b, a], (value, index) => {
+  return from([r, g, b, a], (value, index) => {
     return index === 3 ? toAlphaChannel(value) : toRgbChannel(value);
   });
 }
