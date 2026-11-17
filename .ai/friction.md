@@ -13,3 +13,5 @@
 - zsh glob in grep: `grep -rn … --include=*.ts` — zsh nomatch aborted the command; quoted the pattern
 - engrenage planning issue claim: claimed a closed one-line issue to close it — publish rejected the body as a header and the claim left `Drafting` on GitHub; re-claimed, added a section, cleared `Blockers` by hand
 - npx engrenage: ran planning --help through npx — devEngines requires pnpm; use pnpm exec
+- engrenage: ran bare `engrenage planning walk check` — not on PATH; used `pnpm exec engrenage`
+- engrenage sync: put `children: "domains"` in `.namespace.json` as an issue asked — schema rejects it (config-only option); dropped it, each child has its own `.domain.json`

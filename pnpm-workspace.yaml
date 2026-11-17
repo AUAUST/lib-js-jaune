@@ -1,5 +1,4 @@
 allowBuilds:
-  "@auaust/primitive-kit": false
   esbuild: false
   lefthook: false
   unrs-resolver: true
