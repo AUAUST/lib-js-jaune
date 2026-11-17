@@ -1,0 +1,6 @@
+{
+  "purpose": "Cylindrical sRGB spaces: HSL and HWB.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./hsl"
+}

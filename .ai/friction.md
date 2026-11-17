@@ -16,3 +16,4 @@
 - engrenage: ran bare `engrenage planning walk check` — not on PATH; used `pnpm exec engrenage`
 - engrenage sync: put `children: "domains"` in `.namespace.json` as an issue asked — schema rejects it (config-only option); dropped it, each child has its own `.domain.json`
 - zsh glob in grep: `grep -rn … --include=*.ts` in engrenage sources — zsh nomatch aborted it; dropped the filter
+- PreToolUse hook: worker in fresh worktree had every Bash call blocked — engrenage missing before `pnpm install`; walker installed deps in the worktree

@@ -21,6 +21,7 @@ src/  space < spaces < formats < computations < color < helpers  (global roles: 
 ├─ helpers*[collects: utils constants]  Every helper of the library, exposed as the utils entry.
 ├─ space*  The color space contract, space creation and coordinate conversion.
 └─ spaces/  #spaces/…  xyz < rgb < *  Built-in color spaces, one domain per family.
+   ├─ hsl*  Cylindrical sRGB spaces: HSL and HWB.
    ├─ rgb*  RGB spaces: sRGB, linear sRGB and the wide-gamut RGB spaces.
    └─ xyz*  CIE XYZ spaces: the D65 reference and D50.
 ```

@@ -46,7 +46,8 @@
     "./utils": "./dist/utils.mjs",
     "./space": "./dist/space.mjs",
     "./xyz": "./dist/xyz.mjs",
-    "./rgb": "./dist/rgb.mjs"
+    "./rgb": "./dist/rgb.mjs",
+    "./hsl": "./dist/hsl.mjs"
   },
   "files": [
     "dist",
