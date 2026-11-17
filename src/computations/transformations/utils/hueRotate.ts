@@ -1,3 +1,5 @@
+import { abs, floor, max, min } from "@auaust/toolkit/math";
+
 import { toColorChannels, type ColorChannels } from "#formats/channels/index";
 
 /**
@@ -10,43 +12,48 @@ export function hueRotate(
   degrees: number,
 ): ColorChannels {
   const { r, g, b, a } = channels;
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const chroma = max - min;
+  const highest = max(r, g, b);
+  const lowest = min(r, g, b);
+  const chroma = highest - lowest;
 
   if (chroma === 0) {
     return toColorChannels(r, g, b, a);
   }
 
   // @debt hue extraction and HSL-to-RGB conversion live here; an HSL format domain would own them.
-  const hue = max === r
+  const hue = highest === r
     ? (g - b) / chroma
-    : max === g
+    : highest === g
       ? (b - r) / chroma + 2
       : (r - g) / chroma + 4;
 
   const rotated = (((hue + degrees / 60) % 6) + 6) % 6;
-  const x = chroma * (1 - Math.abs((rotated % 2) - 1)) + min;
-  const c = chroma + min;
+  const x = chroma * (1 - abs((rotated % 2) - 1)) + lowest;
+  const c = chroma + lowest;
 
-  switch (Math.floor(rotated)) {
+  switch (floor(rotated)) {
     case 0: {
-      return toColorChannels(c, x, min, a);
+      return toColorChannels(c, x, lowest, a);
     }
+
     case 1: {
-      return toColorChannels(x, c, min, a);
+      return toColorChannels(x, c, lowest, a);
     }
+
     case 2: {
-      return toColorChannels(min, c, x, a);
+      return toColorChannels(lowest, c, x, a);
     }
+
     case 3: {
-      return toColorChannels(min, x, c, a);
+      return toColorChannels(lowest, x, c, a);
     }
+
     case 4: {
-      return toColorChannels(x, min, c, a);
+      return toColorChannels(x, lowest, c, a);
     }
+
     default: {
-      return toColorChannels(c, min, x, a);
+      return toColorChannels(c, lowest, x, a);
     }
   }
 }
