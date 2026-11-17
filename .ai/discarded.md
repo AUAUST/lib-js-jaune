@@ -19,3 +19,8 @@
 - shared no-gamut guard helper: `clipCoordsToGamut`/`mapCoordsToGamut` jscpd twin — a three-line guard on a shared signature; a helper adds indirection, no gain
 - createRgbSpace factory: RGB transfer-loop duplication — sRGB's base is srgbLinear without a matrix, so the factory fits four of five spaces; `transferChannels` util covers all five
 - polar conversion kernels: lch/oklch duplication — leave the chroma channel, hue channel and `isAchromatic` repeated; `createPolarSpace` owns them all
+- spread min/max over coords: shorter `min(...coords)` in hsl/hwb/srgbToHue — spread and rest allocate and iterate per call in hot kernels; explicit indices stay
+- shared coords utils domain: generic min/max/each-channel helpers — only two hsl sites; `transferChannels`, `multiplyMatrix` already own their patterns
+- Float64Array coords: fixed-length, typed coordinates — cannot be frozen, breaks `readonly` tuple types and literals; plain arrays already packed doubles
+- packed-number coords: one number per color — 3 float64 do not fit 53 bits; `rgba32Encoding` already covers lossy per-pixel packing
+- symbol keys on records: cheaper property access — V8 hidden classes make string and symbol keys cost the same; symbols hurt debugging, JSON and spread

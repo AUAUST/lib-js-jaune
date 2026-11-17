@@ -1,40 +1,40 @@
-import type { Matrix3 } from "#space/types/Matrix3";
+import { createMatrix } from "#space/utils/createMatrix";
 
 /**
  * CIE XYZ D65 to OKLab LMS cone responses, per CSS Color 4.
  */
-export const xyzD65ToLms: Matrix3 = [
+export const xyzD65ToLms = createMatrix([
   [0.81902_24379_96703, 0.36190_62600_52890_4, -0.12887_37815_20987_9],
   [0.03298_36539_32388_5, 0.92928_68615_86343_4, 0.03614_46663_50642_4],
   [0.04817_71893_59624_2, 0.26423_95317_52730_8, 0.63354_78284_69430_9],
-];
+]);
 
 /**
  * Cube-rooted LMS to OKLab, per CSS Color 4.
  */
-export const lmsToOklab: Matrix3 = [
+export const lmsToOklab = createMatrix([
   [0.21045_42683_09314, 0.79361_77747_02305_4, -0.00407_20430_11619_3],
   [1.97799_85324_31168_4, -2.42859_22420_48579_9, 0.45059_37096_17411],
   [0.02590_40424_65547_8, 0.78277_17124_57529_6, -0.80867_57549_23077_4],
-];
+]);
 
 /**
  * OKLab to cube-rooted LMS, per CSS Color 4.
  */
-export const oklabToLms: Matrix3 = [
+export const oklabToLms = createMatrix([
   [1, 0.39633_77773_76174_9, 0.21580_37573_09913_6],
   [1, -0.10556_13458_15658_6, -0.06385_41728_25813_3],
   [1, -0.08948_41775_29811_9, -1.29148_55480_19409_2],
-];
+]);
 
 /**
  * OKLab LMS cone responses to CIE XYZ D65, per CSS Color 4.
  */
-export const lmsToXyzD65: Matrix3 = [
+export const lmsToXyzD65 = createMatrix([
   [1.22687_98758_45924_3, -0.55781_49944_60217_1, 0.28139_10456_65964_7],
   [-0.04057_57452_14800_8, 1.11228_68032_80317, -0.07171_10580_65516_4],
   [-0.07637_29366_74660_1, -0.42149_33324_02243_2, 1.58692_40198_36781_6],
-];
+]);
 
 /**
  * OKLCH chroma below which a color has no meaningful hue.

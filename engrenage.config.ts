@@ -51,6 +51,7 @@ export default defineConfig({
         public: true,
         collected: true,
         subpath: false,
+        effects: "confined",
       }),
       types({ public: true, collected: true }),
       utils({ public: true, collected: true }),
