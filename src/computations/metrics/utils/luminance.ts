@@ -1,4 +1,4 @@
-import { sRGBtoLinear } from "#computations/metrics/utils/sRGBtoLinear";
+import { sRGBtoLinear } from "#computations/gamma/index";
 import type { ColorChannels } from "#formats/channels/index";
 
 /**

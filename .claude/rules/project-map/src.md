@@ -8,7 +8,8 @@ paths:
 ```
 src/  formats < computations < color < helpers  (global roles: *.d.ts constants.ts)
 ├─ color*[collects: types]  The Color class and the detection and parsing of any color value.
-├─ computations/  #computations/…  Computations over color channels: measures, derived colors and randomness.
+├─ computations/  #computations/…  Computations over color channels: gamma transfer, measures, derived colors and randomness.
+│  ├─ gamma  sRGB gamma transfer: conversions between gamma-encoded and linear channel values.
 │  ├─ metrics  Measures and predicates over colors: luminance, brightness, contrast, distance and opacity.
 │  ├─ random  Random colors and channels.
 │  └─ transformations  Colors derived from others: grayscale and inversion.

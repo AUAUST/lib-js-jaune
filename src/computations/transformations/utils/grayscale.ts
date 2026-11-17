@@ -1,4 +1,5 @@
-import { linearTosRGB, luminance } from "#computations/metrics/index";
+import { linearTosRGB } from "#computations/gamma/index";
+import { luminance } from "#computations/metrics/index";
 import { toColorChannels, type ColorChannels } from "#formats/channels/index";
 
 /**

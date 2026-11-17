@@ -7,6 +7,4 @@ export { isDark } from "#computations/metrics/utils/isDark";
 export { isOpaque } from "#computations/metrics/utils/isOpaque";
 export { isTranslucent } from "#computations/metrics/utils/isTranslucent";
 export { isTransparent } from "#computations/metrics/utils/isTransparent";
-export { linearTosRGB } from "#computations/metrics/utils/linearTosRGB";
 export { luminance } from "#computations/metrics/utils/luminance";
-export { sRGBtoLinear } from "#computations/metrics/utils/sRGBtoLinear";
