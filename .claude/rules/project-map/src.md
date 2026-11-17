@@ -12,7 +12,7 @@ src/  formats < computations < color < helpers  (global roles: *.d.ts constants.
 │  ├─ gamma  sRGB gamma transfer: conversions between gamma-encoded and linear channel values.
 │  ├─ metrics  Measures and predicates over colors: luminance, brightness, contrast, distance and opacity.
 │  ├─ random  Random colors and channels.
-│  └─ transformations  Colors derived from others: grayscale and inversion.
+│  └─ transformations  Colors derived from others: grayscale, inversion and hue rotation.
 ├─ formats/  #formats/…  channels < * < named  Color representations: channel objects, HEX strings, RGB tuples and CSS names.
 │  ├─ channels  The canonical channel object, channel validation and normalization, and the fallback color.
 │  ├─ hex  HEX color strings: detection, parsing and serialization.

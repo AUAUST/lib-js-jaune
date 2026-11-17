@@ -19,7 +19,11 @@ import {
   luminance,
 } from "#computations/metrics/index";
 import { random } from "#computations/random/index";
-import { grayscale, invert } from "#computations/transformations/index";
+import {
+  grayscale,
+  hueRotate,
+  invert,
+} from "#computations/transformations/index";
 import {
   isColorChannels,
   toAlphaChannel,
@@ -429,6 +433,14 @@ export class Color {
 
   toInvert(): Color {
     return Color.fromChannels(invert(this[channels]));
+  }
+
+  /**
+   * Returns a new color with the HSL hue rotated by `degrees`, preserving the
+   * saturation, lightness and alpha channel.
+   */
+  toHueRotate(degrees: number): Color {
+    return Color.fromChannels(hueRotate(this[channels], degrees));
   }
 
   toHex(): string {

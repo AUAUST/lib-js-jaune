@@ -1,1 +1,3 @@
-{ "purpose": "Colors derived from others: grayscale and inversion." }
+{
+  "purpose": "Colors derived from others: grayscale, inversion and hue rotation."
+}
