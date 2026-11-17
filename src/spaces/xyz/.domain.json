@@ -1,0 +1,6 @@
+{
+  "purpose": "CIE XYZ spaces: the D65 reference and D50.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./xyz"
+}

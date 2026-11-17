@@ -16,7 +16,10 @@
     "paths": {
       "@auaust/jaune": ["./src/entry.ts"],
       "@auaust/jaune/color": ["./src/color/entry.ts"],
-      "@auaust/jaune/utils": ["./src/helpers/entry.ts"]
+      "@auaust/jaune/utils": ["./src/helpers/entry.ts"],
+      "@auaust/jaune/space": ["./src/space/entry.ts"],
+      "@auaust/jaune/rgb": ["./src/spaces/rgb/entry.ts"],
+      "@auaust/jaune/xyz": ["./src/spaces/xyz/entry.ts"]
     }
   }
 }

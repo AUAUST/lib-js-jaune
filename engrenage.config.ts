@@ -55,6 +55,8 @@ export default defineConfig({
       types({ public: true, collected: true }),
       utils({ public: true, collected: true }),
       classes,
+      ports({ collected: true }),
+      adapters({ effects: "confined", collected: true }),
     ],
   },
   tests: {

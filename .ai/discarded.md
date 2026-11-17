@@ -12,3 +12,5 @@
 - space id string with a global registry: `Color.space` — a record of an unloaded space fails at conversion; the record carries its `ColorSpace` instead
 - Color class as data holder: color record — a frozen plain record needs no prototype or brand
 - fixed set of compact color types: per-pixel output — no extension point; `ColorEncoding` contract with built-ins instead
+- hand-frozen space literals in constants.ts: built-in color spaces — user: spaces are not constants; pure constants cannot call `createSpace` and methods fail readonly-constants
+- custom `spaces.ts` role: built-in color spaces — new jaune-only role where the existing ports/adapters roles fit

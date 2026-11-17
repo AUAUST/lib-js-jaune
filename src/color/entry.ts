@@ -20,3 +20,7 @@ export type * from "#formats/hex/types/Hex";
 export type * from "#formats/named/types/MaybeNamedColor";
 export type * from "#formats/named/types/NamedColor";
 export type * from "#formats/rgb/types/Rgb";
+export type * from "#space/types/ColorChannel";
+export type * from "#space/types/ColorSpaceDefinition";
+export type * from "#space/types/Coords";
+export type * from "#space/types/Matrix3";

@@ -1,0 +1,6 @@
+{
+  "purpose": "The color space contract, space creation and coordinate conversion.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./space"
+}

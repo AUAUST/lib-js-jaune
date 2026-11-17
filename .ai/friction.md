@@ -15,3 +15,4 @@
 - npx engrenage: ran planning --help through npx — devEngines requires pnpm; use pnpm exec
 - engrenage: ran bare `engrenage planning walk check` — not on PATH; used `pnpm exec engrenage`
 - engrenage sync: put `children: "domains"` in `.namespace.json` as an issue asked — schema rejects it (config-only option); dropped it, each child has its own `.domain.json`
+- zsh glob in grep: `grep -rn … --include=*.ts` in engrenage sources — zsh nomatch aborted it; dropped the filter

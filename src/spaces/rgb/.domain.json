@@ -1,0 +1,6 @@
+{
+  "purpose": "RGB spaces: sRGB, linear sRGB and the wide-gamut RGB spaces.",
+  "public": true,
+  "reexport": "flat",
+  "specifier": "./rgb"
+}

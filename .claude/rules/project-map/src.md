@@ -6,7 +6,7 @@ paths:
 # Project map: src
 
 ```
-src/  formats < computations < color < helpers  (global roles: *.d.ts constants.ts)
+src/  space < spaces < formats < computations < color < helpers  (global roles: *.d.ts constants.ts)
 ├─ color*[collects: types]  The Color class and the detection and parsing of any color value.
 ├─ computations/  #computations/…  Computations over color channels: gamma transfer, measures, derived colors and randomness.
 │  ├─ gamma  sRGB gamma transfer: conversions between gamma-encoded and linear channel values.
@@ -18,5 +18,9 @@ src/  formats < computations < color < helpers  (global roles: *.d.ts constants.
 │  ├─ hex  HEX color strings: detection, parsing and serialization.
 │  ├─ named  CSS named colors, their aliases and their channels.
 │  └─ rgb  RGB tuples: detection, parsing and serialization.
-└─ helpers*[collects: utils constants]  Every helper of the library, exposed as the utils entry.
+├─ helpers*[collects: utils constants]  Every helper of the library, exposed as the utils entry.
+├─ space*  The color space contract, space creation and coordinate conversion.
+└─ spaces/  #spaces/…  xyz < rgb < *  Built-in color spaces, one domain per family.
+   ├─ rgb*  RGB spaces: sRGB, linear sRGB and the wide-gamut RGB spaces.
+   └─ xyz*  CIE XYZ spaces: the D65 reference and D50.
 ```

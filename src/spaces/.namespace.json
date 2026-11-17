@@ -1,0 +1,4 @@
+{
+  "purpose": "Built-in color spaces, one domain per family.",
+  "layers": ["xyz", "rgb", "*"]
+}
